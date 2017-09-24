@@ -1,0 +1,14 @@
+- key: evalencode
+  name: Eval
+- key: arrayencode
+  name: Array
+- key: _numberencode
+  name: _Number
+- key: urlencode
+  name: URL encode
+- key: p_a_c_k_e_r
+  name: Packer
+- key: javascriptobfuscator
+  name: Javascript Obfuscator
+- key: myobfuscate
+  name: My Obfuscate

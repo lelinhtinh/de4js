@@ -1,0 +1,66 @@
+---
+---
+
+$base-color: #eaeaea;
+$primary-color: #b5e853;
+
+@import  "{{ site.theme }}";
+{% include highlight-js/styles/tomorrow-night-bright.css %}
+@import  "magic-check/sass/magic-check.scss";
+
+.container {
+  max-width: 1280px;
+}
+
+.content {
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.9);
+  color: $base-color;
+  display: block;
+  width: 100%!important;
+  padding: .5em;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  resize: vertical;
+}
+
+#output {
+  display: none;
+}
+
+.config {
+  font-size: smaller;
+  color: #595656;
+
+  input {
+    margin-right: 4px;
+    vertical-align: middle;
+    &:checked + label {
+      color: $base-color;
+    }
+  }
+
+  label {
+    display: inline-block;
+    margin: 0.5em;
+  }
+}
+
+.center {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.btn {
+  &:hover,
+  &:focus,
+  &:active {
+    outline: 0 none;
+  }
+  &:active {
+    background: rgba(0, 0, 0, 0.8);
+    color: $primary-color;
+  }
+  &::-moz-focus-inner {
+    border: 0 none;
+  }
+}

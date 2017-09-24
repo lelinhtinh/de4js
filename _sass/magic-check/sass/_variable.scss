@@ -1,0 +1,7 @@
+$magic-radio-size: 20px !default;
+$magic-checkbox-size: 20px !default;
+$magic-dot-size: 8px !default;
+$magic-border-color: #5A5A5A !default;
+$magic-main-color: #b5e853 !default;
+$magic-disabled-color: lighten($magic-border-color, 14%) !default;
+$magic-disabled-checked-color: lighten($magic-main-color, 30%) !default;
