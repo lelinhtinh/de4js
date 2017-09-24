@@ -3,8 +3,7 @@ description: JavaScript Deobfuscator and Unpacker
 version: 0.1.0
 author: Zzbaivong
 author_email: Zzbaivong@gmail.com
-url: https://baivong.github.io
-baseurl: /de4js/
+url: https://baivong.github.io/de4js/
 theme: jekyll-theme-hacker
 show_downloads: false
 google_analytics: UA-106940288-1

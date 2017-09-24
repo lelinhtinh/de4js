@@ -75,13 +75,13 @@
         </section>
     </div>
 
-    <script type="text/javascript" src="/assets/js/lib/highlight-js/highlight.pack.js"></script>
-    <script type="text/javascript" src="/assets/js/lib/clipboard-js/clipboard.js"></script>
-    <script type="text/javascript" src="/assets/js/lib/js-beautify/beautify.js"></script>
-    <script type="text/javascript" src="/assets/js/lib/js-beautify/unpackers/javascriptobfuscator_unpacker.js"></script>
-    <script type="text/javascript" src="/assets/js/lib/js-beautify/unpackers/myobfuscate_unpacker.js"></script>
-    <script type="text/javascript" src="/assets/js/lib/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js"></script>
-    <script type="text/javascript" src="/assets/js/lib/js-beautify/unpackers/urlencode_unpacker.js"></script>
+    <script type="text/javascript" src="{{ '/assets/js/lib/highlight-js/highlight.pack.js?v=' | append: site.github.build_revision | relative_url }}"></script>
+    <script type="text/javascript" src="{{ '/assets/js/lib/clipboard-js/clipboard.js?v=' | append: site.github.build_revision | relative_url }}"></script>
+    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/beautify.js?v=' | append: site.github.build_revision | relative_url }}"></script>
+    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/unpackers/javascriptobfuscator_unpacker.js?v=' | append: site.github.build_revision | relative_url }}"></script>
+    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/unpackers/myobfuscate_unpacker.js?v=' | append: site.github.build_revision | relative_url }}"></script>
+    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js?v=' | append: site.github.build_revision | relative_url }}"></script>
+    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/unpackers/urlencode_unpacker.js?v=' | append: site.github.build_revision | relative_url }}"></script>
 
     <script src="{{ '/assets/js/main.js?v=' | append: site.github.build_revision | relative_url }}" type="text/javascript"></script>
 </body>
