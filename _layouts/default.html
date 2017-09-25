@@ -48,7 +48,9 @@
                     {% for opt in site.data.options %}
                         <input id="{{ opt.key }}" class="magic-radio" type="radio" value="{{ opt.key }}" name="encode">
                         <label for="{{ opt.key }}">{{ opt.name }}</label>
-                    {% endfor %}
+                    {% endfor %}                    
+                    <input id="nicify" class="magic-radio" type="radio" name="nicify" disabled>
+                    <label for="nicify">Nicify</label>
                 </div>
 
                 <div class="config center">
@@ -56,8 +58,6 @@
                     <label for="beautify">Beautify</label>
                     <input id="highlight" class="magic-checkbox" type="checkbox" name="highlight" checked>
                     <label for="highlight">Highlight</label>
-                    <input id="nicify" class="magic-checkbox" type="checkbox" name="nicify" disabled>
-                    <label for="nicify">Nicify</label>
                 </div>
 
                 <div class="center">
