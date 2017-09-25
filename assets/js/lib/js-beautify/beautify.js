@@ -2812,6 +2812,9 @@ if (typeof define === "function" && define.amd) {
 } else if (typeof window !== "undefined") {
     // If we're running a web page and don't have either of the above, add our one global
     window.js_beautify = js_beautify;
+} else if (typeof self !== "undefined") {
+    // Add support for Web Workers
+    self.js_beautify = js_beautify;
 } else if (typeof global !== "undefined") {
     // If we don't even have window, try global.
     global.js_beautify = js_beautify;
