@@ -26,13 +26,14 @@
         source = source.trim();
 
         if (packer === 'evalencode') {
+            window._eval = window.eval;
+            window.eval = function (_source) {
+                source = _source;
+            };
             try {
-                var _source = source.replace('eval(', 'window.sourceEvalEncodeZz = (');
-
-                eval(_source);
-
-                if (window.sourceEvalEncodeZz !== undefined) source = window.sourceEvalEncodeZz;
+                window._eval(source);
             } catch (err) {}
+            window.eval = window._eval;
         } else if (packer === '_numberencode') {
             try {
                 var patt = /_\d{4}\((_\d{4})\)\;\}/,
