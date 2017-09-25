@@ -1,4 +1,13 @@
-// by Zzbaivong - https://baivong.github.io
+---
+---
+/**
+ * @name  {{ site.name }}
+ * @description  {{ site.description }}
+ * @author  {{ site.author }} <{{ site.author_email }}> ({{ site.url }})
+ * @version  {{ site.version }}
+ * @copyright  {{ site.author }} 2017
+ * @license  {{ site.license }}
+ */
 
 (function () {
 
@@ -38,63 +47,65 @@
             try {
                 var patt = /_\d{4}\((_\d{4})\)\;\}/,
                     _source = source;
-                if (!patt.test(_source)) return;
 
-                _source = _source.replace(/var\s/g, 'this.');
-                _source = _source.replace(/function\s(_\d{4})\(/, 'this.$1=function(');
-                _source = _source.replace(patt, 'window.sourceNumberEncodeZz=$1;};');
+                if (patt.test(_source)) {
+                    _source = _source.replace(/var\s/g, 'this.');
+                    _source = _source.replace(/function\s(_\d{4})\(/, 'this.$1=function(');
+                    _source = _source.replace(patt, 'window.sourceNumberEncodeZz=$1;};');
 
-                _source = '(function(){' + _source + '})();';
-                eval(_source);
+                    _source = '(function(){' + _source + '})();';
+                    eval(_source);
 
-                source = window.sourceNumberEncodeZz;
+                    source = window.sourceNumberEncodeZz;
+                }
             } catch (err) {}
         } else if (packer === 'arrayencode') {
             try {
                 var pattsplit = /(?:[^\\])"];/,
                     lastchar = '';
-                if (!pattsplit.test(source)) return;
 
-                lastchar = source.match(pattsplit)[0].charAt(0);
+                if (pattsplit.test(source)) {
+                    lastchar = source.match(pattsplit)[0].charAt(0);
 
-                var _source = source.split(pattsplit),
-                    _var = _source[0] + lastchar + '"]',
-                    _name = _var.match(/var\s([\w\d]+)\s?=\s?\["/)[1],
-                    _code = _source[1],
+                    var _source = source.split(pattsplit),
+                        _var = _source[0] + lastchar + '"]',
+                        _name = _var.match(/var\s([\w\d]+)\s?=\s?\["/)[1],
+                        _code = _source[1],
 
-                    pattname = new RegExp('var\\s' + _name + '\\s?=\\s?\\["'),
-                    pattkey = new RegExp(_name + '\\[(\\d+)\\]', 'g'),
+                        pattname = new RegExp('var\\s' + _name + '\\s?=\\s?\\["'),
+                        pattkey = new RegExp(_name + '\\[(\\d+)\\]', 'g'),
 
-                    escapable = /[\\\"\x00-\x1f\x7f-\uffff]/g,
-                    meta = {
-                        '\b': '\\b',
-                        '\t': '\\t',
-                        '\n': '\\n',
-                        '\f': '\\f',
-                        '\r': '\\r',
-                        '"': '\\"',
-                        '\\': '\\\\'
-                    },
-                    quote = function (string) {
-                        escapable.lastIndex = 0;
-                        return escapable.test(string) ?
-                            string.replace(escapable, function (a) {
-                                var c = meta[a];
-                                return typeof c === 'string' ? c :
-                                    '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-                            }) : string;
-                    };
+                        escapable = /[\\\"\x00-\x1f\x7f-\uffff]/g,
+                        meta = {
+                            '\b': '\\b',
+                            '\t': '\\t',
+                            '\n': '\\n',
+                            '\f': '\\f',
+                            '\r': '\\r',
+                            '"': '\\"',
+                            '\\': '\\\\'
+                        },
+                        quote = function (string) {
+                            escapable.lastIndex = 0;
+                            return escapable.test(string) ?
+                                string.replace(escapable, function (a) {
+                                    var c = meta[a];
+                                    return typeof c === 'string' ? c :
+                                        '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+                                }) : string;
+                        };
 
-                _var = _var.replace(pattname, '["');
-                _var = eval(_var);
+                    _var = _var.replace(pattname, '["');
+                    _var = eval(_var);
 
-                _code.replace(pattkey, function (key, index) {
-                    _code = _code.replace(key, '"' + quote(_var[index]) + '"');
-                    return _code;
-                });
+                    _code.replace(pattkey, function (key, index) {
+                        _code = _code.replace(key, '"' + quote(_var[index]) + '"');
+                        return _code;
+                    });
 
-                _source = _code.replace(/(\["([a-z\d\_]+)"\])/gi, '.$2');
-                source = _source;
+                    _source = _code.replace(/(\["([a-z\d\_]+)"\])/gi, '.$2');
+                    source = _source;
+                }
             } catch (err) {}
         } else if (packer === 'urlencode' && Urlencoded.detect(source)) {
             source = Urlencoded.unpack(source);
@@ -174,7 +185,6 @@
         input.value = '';
         output.value = '';
         view.textContent = clearText;
-        delete window.sourceEvalEncodeZz;
         delete window.sourceNumberEncodeZz;
     }
 
