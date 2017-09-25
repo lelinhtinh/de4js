@@ -2,11 +2,12 @@
 // @name         de4js helper
 // @namespace    https://baivong.github.io/de4js/
 // @description  Enable Unreadable option in de4js
-// @version      0.4.1
+// @version      0.5.0
 // @icon         https://i.imgur.com/CJ5MfxV.png
 // @author       Zzbaivong
 // @license      MIT
 // @match        https://baivong.github.io/de4js/
+// @include      http://127.0.0.1:4000/
 // @noframes
 // @connect      jsnice.org
 // @supportURL   https://github.com/baivong/de4js/issues
@@ -25,19 +26,26 @@
     function jsnice() {
         if (input.value.trim() === '') return;
 
-        view.textContent = 'Please waiting...';
+        view.classList.add('waiting');
         GM_xmlhttpRequest({
             method: 'POST',
             url: 'http://www.jsnice.org/beautify?pretty=0&rename=1&types=0&suggest=0',
             responseType: 'json',
             data: input.value,
             onload: function (response) {
-                output.value = response.response.js;
+                var source = response.response.js;
+
+                if (source.indexOf('Error compiling input') === 0) {
+                    source = input.value;
+                } else {
+                    source = response.response.js;
+                }
+
+                output.value = source;
                 document.getElementById('highlight').onchange();
             },
             onerror: function (e) {
                 console.error(e);
-                view.textContent = 'Internal error. Please try again later.';
             }
         });
     }

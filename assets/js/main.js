@@ -86,6 +86,7 @@
                 packer = bvDecode.encode.value;
 
             if (source === '') return;
+            if (packer === 'nicify') return;
             if (packer === '') {
                 output.value = source;
                 format();
@@ -113,7 +114,6 @@
     workerDecode.addEventListener('message', function (e) {
         output.value = e.data;
         format();
-        stopEffect();
     });
     workerFormat.addEventListener('message', function (e) {
         view[(highlight.checked ? 'innerHTML' : 'textContent')] = e.data;
