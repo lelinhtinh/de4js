@@ -4,7 +4,7 @@ JavaScript Deobfuscator and Unpacker
 
 ## Helper
 
-The **Nicify** option is disabled by default, because it uses data from [JS Nice](http://www.jsnice.org/). This cannot be done with JavaScript. You need to install UserScript [de4js_helper.user.js](https://github.com/baivong/de4js/blob/master/de4js_helper.user.js) to enable it.
+The **Unreadable** option is disabled by default, because it uses data from [JS Nice](http://www.jsnice.org/). This cannot be done with JavaScript. You need to install UserScript [de4js_helper.user.js](https://github.com/baivong/de4js/blob/master/de4js_helper.user.js) to enable it.
 
 Install one of the following links:
 
