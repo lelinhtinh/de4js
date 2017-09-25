@@ -10,7 +10,7 @@ Install one of the following links:
 
 - [Open User JS](https://openuserjs.org/scripts/baivong/de4js_helper)
 - [Greasy Fork](https://greasyfork.org/vi/scripts/33479-de4js-helper)
-- [Github](https://github.com/baivong/de4js/raw/master/de4js_helper.user.js) 
+- [Github](https://github.com/baivong/de4js/raw/master/de4js_helper.user.js)
 
 ## Development
 
