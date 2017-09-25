@@ -4,13 +4,13 @@ JavaScript Deobfuscator and Unpacker
 
 ## Helper
 
-The **Unreadable** option is disabled by default, because it uses data from [JS Nice](http://www.jsnice.org/). This cannot be done with JavaScript. You need to install UserScript [de4js_helper.user.js](https://github.com/baivong/de4js/blob/master/de4js_helper.user.js) to enable it.
+The **Unreadable** option is disabled by default, because it uses data from [JS Nice](http://www.jsnice.org/). This cannot be done with JavaScript. You need to install UserScript [de4js_helper.user.js](https://github.com/baivong/de4js/blob/master/userscript/de4js_helper.user.js) to enable it.
 
 Install one of the following links:
 
 - [Open User JS](https://openuserjs.org/scripts/baivong/de4js_helper)
 - [Greasy Fork](https://greasyfork.org/vi/scripts/33479-de4js-helper)
-- [Github](https://github.com/baivong/de4js/raw/master/de4js_helper.user.js)
+- [Github](https://github.com/baivong/de4js/raw/master/userscript/de4js_helper.user.js)
 
 ## Development
 
