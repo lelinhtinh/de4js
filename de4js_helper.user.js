@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         de4js helper
 // @namespace    https://baivong.github.io/de4js/
-// @description  Enable Nicify option in de4js
-// @version      0.4.0
+// @description  Enable Unreadable option in de4js
+// @version      0.4.1
 // @icon         https://i.imgur.com/CJ5MfxV.png
 // @author       Zzbaivong
 // @license      MIT
