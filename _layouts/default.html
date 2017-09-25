@@ -49,7 +49,7 @@
                     {% for opt in site.data.options %}
                         <input id="{{ opt.key }}" class="magic-radio" type="radio" value="{{ opt.key }}" name="encode">
                         <label for="{{ opt.key }}">{{ opt.name }}</label>
-                    {% endfor %}                    
+                    {% endfor %}
                     <input id="nicify" class="magic-radio" type="radio" name="encode" disabled>
                     <label for="nicify">Unreadable</label>
                 </div>
@@ -78,14 +78,7 @@
         </section>
     </div>
 
-    <script type="text/javascript" src="{{ '/assets/js/lib/highlight-js/highlight.pack.js?v=' | append: site.github.build_revision | relative_url }}"></script>
     <script type="text/javascript" src="{{ '/assets/js/lib/clipboard-js/clipboard.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/beautify.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/unpackers/javascriptobfuscator_unpacker.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/unpackers/myobfuscate_unpacker.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-    <script type="text/javascript" src="{{ '/assets/js/lib/js-beautify/unpackers/urlencode_unpacker.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-
     <script src="{{ '/assets/js/main.js?v=' | append: site.github.build_revision | relative_url }}" type="text/javascript"></script>
 </body>
 

@@ -11,128 +11,22 @@
 
 (function () {
 
-    function format() {
-        var source = output.value;
-
-        if (beautify.checked) source = js_beautify(source, {
-            unescape_strings: true,
-            jslint_happy: true
-        });
-        if (highlight.checked) source = hljs.highlight('javascript', source).value;
-
-        view[(highlight.checked ? 'innerHTML' : 'textContent')] = source || clearText;
-    }
-
-    function decode() {
-        var source = input.value,
-            packer = bvDecode.encode.value;
-
-        if (source.trim() === '') return;
-
-        view.textContent = clearText;
-        output.value = '';
-
-        source = source.trim();
-
-        if (packer === 'evalencode') {
-            window._eval = window.eval;
-            window.eval = function (_source) {
-                source = _source;
+    // https://davidwalsh.name/javascript-debounce-function
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function () {
+            var context = this,
+                args = arguments;
+            var later = function () {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
             };
-            try {
-                window._eval(source);
-            } catch (err) {}
-            window.eval = window._eval;
-        } else if (packer === '_numberencode') {
-            try {
-                var patt = /_\d{4}\((_\d{4})\)\;\}/,
-                    _source = source;
-
-                if (patt.test(_source)) {
-                    _source = _source.replace(/var\s/g, 'this.');
-                    _source = _source.replace(/function\s(_\d{4})\(/, 'this.$1=function(');
-                    _source = _source.replace(patt, 'window.sourceNumberEncodeZz=$1;};');
-
-                    _source = '(function(){' + _source + '})();';
-                    eval(_source);
-
-                    source = window.sourceNumberEncodeZz;
-                }
-            } catch (err) {}
-        } else if (packer === 'arrayencode') {
-            try {
-                var pattsplit = /(?:[^\\])"];/,
-                    lastchar = '';
-
-                if (pattsplit.test(source)) {
-                    lastchar = source.match(pattsplit)[0].charAt(0);
-
-                    var _source = source.split(pattsplit),
-                        _var = _source[0] + lastchar + '"]',
-                        _name = _var.match(/var\s([\w\d]+)\s?=\s?\["/)[1],
-                        _code = _source[1],
-
-                        pattname = new RegExp('var\\s' + _name + '\\s?=\\s?\\["'),
-                        pattkey = new RegExp(_name + '\\[(\\d+)\\]', 'g'),
-
-                        escapable = /[\\\"\x00-\x1f\x7f-\uffff]/g,
-                        meta = {
-                            '\b': '\\b',
-                            '\t': '\\t',
-                            '\n': '\\n',
-                            '\f': '\\f',
-                            '\r': '\\r',
-                            '"': '\\"',
-                            '\\': '\\\\'
-                        },
-                        quote = function (string) {
-                            escapable.lastIndex = 0;
-                            return escapable.test(string) ?
-                                string.replace(escapable, function (a) {
-                                    var c = meta[a];
-                                    return typeof c === 'string' ? c :
-                                        '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-                                }) : string;
-                        };
-
-                    _var = _var.replace(pattname, '["');
-                    _var = eval(_var);
-
-                    _code.replace(pattkey, function (key, index) {
-                        _code = _code.replace(key, '"' + quote(_var[index]) + '"');
-                        return _code;
-                    });
-
-                    _source = _code.replace(/(\["([a-z\d\_]+)"\])/gi, '.$2');
-                    source = _source;
-                }
-            } catch (err) {}
-        } else if (packer === 'urlencode' && Urlencoded.detect(source)) {
-            source = Urlencoded.unpack(source);
-        } else if (packer === 'p_a_c_k_e_r' && P_A_C_K_E_R.detect(source)) {
-            source = P_A_C_K_E_R.unpack(source);
-        } else if (packer === 'javascriptobfuscator' && JavascriptObfuscator.detect(source)) {
-            source = JavascriptObfuscator.unpack(source);
-        } else if (packer === 'myobfuscate' && MyObfuscate.detect(source)) {
-            source = MyObfuscate.unpack(source);
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
         }
-
-        output.value = source;
-        format();
     }
-
-    function textreset() {
-        if (copyjs.textContent === 'Copy') return;
-        copyjs.textContent = 'Copy';
-        copyjs.removeAttribute('style');
-    }
-
-    function timereset() {
-        copytimeout = setTimeout(function () {
-            textreset();
-        }, 3000);
-    }
-
 
     var input = document.getElementById('input'),
         output = document.getElementById('output'),
@@ -150,15 +44,81 @@
         clipboard = new Clipboard('#copyjs'),
         copytimeout,
 
-        clearText = 'Please choose a right encoding type!';
+        clearText = function(){
+            view.textContent = 'Please choose a right encoding type!';
+        },
 
-    input.oninput = decode;
+        startEffect = function(){
+            view.classList.add('waiting');
+        },
+        stopEffect = function(){
+            view.classList.remove('waiting');
+        },
+
+        textreset = function () {
+            if (copyjs.textContent === 'Copy') return;
+            copyjs.textContent = 'Copy';
+            copyjs.removeAttribute('style');
+        },
+        timereset = function () {
+            copytimeout = setTimeout(function () {
+                textreset();
+            }, 3000);
+        },
+
+        workerFormat = new Worker('{{ "/assets/js/worker/format.js?v=" | append: site.github.build_revision | relative_url }}'),
+        workerDecode = new Worker('{{ "/assets/js/worker/decode.js?v=" | append: site.github.build_revision | relative_url }}'),
+
+        format = debounce(function () {
+            var source = output.value.trim();
+            if (source === '') return;
+
+            startEffect();
+            workerFormat.postMessage({
+                source: source,
+                beautify: beautify.checked,
+                highlight: highlight.checked
+            });
+        }, 250),
+
+        decode = debounce(function () {
+            var source = input.value.trim(),
+                packer = bvDecode.encode.value;
+
+            if (source === '') return;
+            if (packer === '') {
+                output.value = source;
+                format();
+                return;
+            }
+
+            startEffect();
+            output.value = '';
+            workerDecode.postMessage({
+                source: source,
+                packer: packer
+            });
+        }, 250);
+
+    input.oninput = debounce(function () {
+        decode();
+    });
     for (var i = 0; i < encode.length; i++) {
         encode[i].onchange = decode;
     }
 
     beautify.onchange = format;
     highlight.onchange = format;
+
+    workerDecode.addEventListener('message', function (e) {
+        output.value = e.data;
+        format();
+        stopEffect();
+    });
+    workerFormat.addEventListener('message', function (e) {
+        view[(highlight.checked ? 'innerHTML' : 'textContent')] = e.data;
+        stopEffect();
+    });
 
     copyjs.onmouseout = function () {
         textreset();
@@ -184,7 +144,7 @@
     clear.onclick = function () {
         input.value = '';
         output.value = '';
-        view.textContent = clearText;
+        clearText();
         delete window.sourceNumberEncodeZz;
     }
 

@@ -64,3 +64,10 @@ $primary-color: #b5e853;
     border: 0 none;
   }
 }
+
+#view {
+  transition: opacity ease-in-out .2s;
+  &.waiting {
+    opacity: 0.3;
+  }
+}
