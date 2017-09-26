@@ -1,11 +1,6 @@
 ---
 ---
 self.addEventListener('message', function (e) {
-    self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/javascriptobfuscator_unpacker.js?v=" | append: site.github.build_revision | relative_url }}',
-        '{{ "/assets/js/lib/js-beautify/unpackers/myobfuscate_unpacker.js?v=" | append: site.github.build_revision | relative_url }}',
-        '{{ "/assets/js/lib/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js?v=" | append: site.github.build_revision | relative_url }}',
-        '{{ "/assets/js/lib/js-beautify/unpackers/urlencode_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
-
     var source = e.data.source,
         packer = e.data.packer;
 
@@ -82,14 +77,22 @@ self.addEventListener('message', function (e) {
                 source = _source;
             }
         } catch (err) {}
-    } else if (packer === 'urlencode' && Urlencoded.detect(source)) {
-        source = Urlencoded.unpack(source);
-    } else if (packer === 'p_a_c_k_e_r' && P_A_C_K_E_R.detect(source)) {
-        source = P_A_C_K_E_R.unpack(source);
-    } else if (packer === 'javascriptobfuscator' && JavascriptObfuscator.detect(source)) {
-        source = JavascriptObfuscator.unpack(source);
-    } else if (packer === 'myobfuscate' && MyObfuscate.detect(source)) {
-        source = MyObfuscate.unpack(source);
+    } else if (packer === 'urlencode') {
+        self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/urlencode_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
+
+        if (Urlencoded.detect(source)) source = Urlencoded.unpack(source);
+    } else if (packer === 'p_a_c_k_e_r') {
+        self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
+
+        if (P_A_C_K_E_R.detect(source)) source = P_A_C_K_E_R.unpack(source);
+    } else if (packer === 'javascriptobfuscator') {
+        self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/javascriptobfuscator_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
+
+        if (JavascriptObfuscator.detect(source)) source = JavascriptObfuscator.unpack(source);
+    } else if (packer === 'myobfuscate') {
+        self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/myobfuscate_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
+
+        if (MyObfuscate.detect(source)) source = MyObfuscate.unpack(source);
     }
 
     self.postMessage(source);

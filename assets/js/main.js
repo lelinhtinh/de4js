@@ -44,14 +44,14 @@
         clipboard = new Clipboard('#copyjs'),
         copytimeout,
 
-        clearText = function(){
+        clearText = function () {
             view.textContent = 'Please choose a right encoding type!';
         },
 
-        startEffect = function(){
+        startEffect = function () {
             view.classList.add('waiting');
         },
-        stopEffect = function(){
+        stopEffect = function () {
             view.classList.remove('waiting');
         },
 
@@ -66,12 +66,25 @@
             }, 3000);
         },
 
-        workerFormat = new Worker('{{ "/assets/js/worker/format.js?v=" | append: site.github.build_revision | relative_url }}'),
-        workerDecode = new Worker('{{ "/assets/js/worker/decode.js?v=" | append: site.github.build_revision | relative_url }}'),
+        workerFormat,
+        workerDecode,
 
         format = debounce(function () {
             var source = output.value.trim();
+
             if (source === '') return;
+            if (!beautify.checked && !highlight.checked) {
+                view.textContent = source;
+                return;
+            }
+
+            if (!workerFormat) {
+                workerFormat = new Worker('{{ "/assets/js/worker/format.js?v=" | append: site.github.build_revision | relative_url }}');
+                workerFormat.addEventListener('message', function (e) {
+                    view[(highlight.checked ? 'innerHTML' : 'textContent')] = e.data;
+                    stopEffect();
+                });
+            }
 
             startEffect();
             workerFormat.postMessage({
@@ -93,6 +106,15 @@
                 return;
             }
 
+            if (!workerDecode) {
+                workerDecode = new Worker('{{ "/assets/js/worker/decode.js?v=" | append: site.github.build_revision | relative_url }}');
+                workerDecode.addEventListener('message', function (e) {
+                    output.value = e.data;
+                    if (!beautify.checked && !highlight.checked) stopEffect();
+                    format();
+                });
+            }
+
             startEffect();
             output.value = '';
             workerDecode.postMessage({
@@ -110,15 +132,6 @@
 
     beautify.onchange = format;
     highlight.onchange = format;
-
-    workerDecode.addEventListener('message', function (e) {
-        output.value = e.data;
-        format();
-    });
-    workerFormat.addEventListener('message', function (e) {
-        view[(highlight.checked ? 'innerHTML' : 'textContent')] = e.data;
-        stopEffect();
-    });
 
     copyjs.onmouseout = function () {
         textreset();
