@@ -158,7 +158,6 @@
         input.value = '';
         output.value = '';
         clearText();
-        delete window.sourceNumberEncodeZz;
     }
 
 })();
