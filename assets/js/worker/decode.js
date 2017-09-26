@@ -88,6 +88,12 @@ self.addEventListener('message', function (e) {
 
             source = AADecode.decode(source);
         } catch (err) {}
+    } else if (packer === 'jjencode') {
+        try {
+            self.importScripts('{{ "/assets/js/lib/decoder-jjencode/jjdecode.js?v=" | append: site.github.build_revision | relative_url }}');
+
+            source = JJdecode.decode(source);
+        } catch (err) {}
     } else if (packer === 'urlencode') {
         try {
             self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/urlencode_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
