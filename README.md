@@ -12,6 +12,22 @@ Install one of the following links:
 - [Greasy Fork](https://greasyfork.org/vi/scripts/33479-de4js-helper)
 - [Github](https://github.com/baivong/de4js/raw/master/userscript/de4js_helper.user.js)
 
+## Features
+
+- Source code beautifier / syntax highlighter.
+- Make obfuscated code [readable](#helper).
+- Performance unpackers:
+    - **Eval**, e.g. Packer, [WiseLoop](http://wiseloop.com/demo/php-javascript-obfuscator)
+    - **Array**, e.g. Javascript Obfuscator
+    - [_Number](http://giapqb.blogspot.com/p/mahoa-javascript.html)
+    - [Packer](http://dean.edwards.name/packer/)
+    - [Javascript Obfuscator](https://javascriptobfuscator.com/Javascript-Obfuscator.aspx)
+    - [My Obfuscate](http://myobfuscate.com/)
+    - **URL encode**, e.g. bookmarklet
+    - [JSFuck](https://github.com/aemkei/jsfuck)
+    - [JJencode](http://utf-8.jp/public/jjencode.html)
+    - [AAencode](http://utf-8.jp/public/aaencode.html)
+
 ## Development
 
 ### Install
