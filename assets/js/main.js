@@ -154,10 +154,15 @@
     clear.onclick = function () {
         view.textContent = 'Please choose a right encoding type!';
         stopEffect();
-        workerDecode.terminate();
-        workerDecode = undefined;
-        workerFormat.terminate();
-        workerFormat = undefined;
+
+        if (workerDecode) {
+            workerDecode.terminate();
+            workerDecode = undefined;
+        }
+        if (workerFormat) {
+            workerFormat.terminate();
+            workerFormat = undefined;
+        }
     }
 
 })();
