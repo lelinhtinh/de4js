@@ -82,6 +82,12 @@ self.addEventListener('message', function (e) {
         try {
             source = /.+(?=\n})/.exec(eval(source.slice(0,-2)));
         } catch (err) {}
+    } else if (packer === 'aaencode') {
+        try {
+            self.importScripts('{{ "/assets/js/lib/cat-in-136/aadecode.js?v=" | append: site.github.build_revision | relative_url }}');
+
+            source = AADecode.decode(source);
+        } catch (err) {}
     } else if (packer === 'urlencode') {
         try {
             self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/urlencode_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
