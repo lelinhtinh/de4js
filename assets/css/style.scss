@@ -1,12 +1,12 @@
 ---
 ---
-
 $base-color: #eaeaea;
 $primary-color: #b5e853;
+$secondary-color: #ff2323;
 
-@import  "{{ site.theme }}";
+@import "{{ site.theme }}";
 {% include highlight-js/styles/tomorrow-night-bright.css %}
-@import  "magic-check/sass/magic-check.scss";
+@import "magic-check/sass/magic-check.scss";
 
 .container {
   max-width: 1280px;
@@ -34,6 +34,7 @@ $primary-color: #b5e853;
   input {
     margin-right: 4px;
     vertical-align: middle;
+
     &:checked + label {
       color: $base-color;
     }
@@ -41,7 +42,7 @@ $primary-color: #b5e853;
 
   label {
     display: inline-block;
-    margin: 0.5em;
+    margin: .5em;
   }
 }
 
@@ -51,15 +52,17 @@ $primary-color: #b5e853;
 }
 
 .btn {
-  &:hover,
+  &:active,
   &:focus,
-  &:active {
+  &:hover {
     outline: 0 none;
   }
+
   &:active {
     background: rgba(0, 0, 0, 0.8);
     color: $primary-color;
   }
+
   &::-moz-focus-inner {
     border: 0 none;
   }
@@ -67,7 +70,17 @@ $primary-color: #b5e853;
 
 #view {
   transition: opacity ease-in-out .2s;
+
   &.waiting {
-    opacity: 0.3;
+    opacity: .3;
+  }
+}
+
+.magic-radio[disabled] + label {
+  color: $secondary-color;
+
+  &:before,
+  &:hover:before {
+    border-color: $secondary-color;
   }
 }
