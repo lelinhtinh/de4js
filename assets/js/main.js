@@ -44,11 +44,8 @@
         clipboard = new Clipboard('#copyjs'),
         copytimeout,
 
-        clearText = function () {
-            view.textContent = 'Please choose a right encoding type!';
-        },
-
         startEffect = function () {
+            if (output.value === '') view.textContent = 'Please wait...';
             view.classList.add('waiting');
         },
         stopEffect = function () {
@@ -155,9 +152,12 @@
     }
 
     clear.onclick = function () {
-        input.value = '';
-        output.value = '';
-        clearText();
+        view.textContent = 'Please choose a right encoding type!';
+        stopEffect();
+        workerDecode.terminate();
+        workerDecode = undefined;
+        workerFormat.terminate();
+        workerFormat = undefined;
     }
 
 })();
