@@ -2,13 +2,13 @@
 // @name         de4js helper
 // @namespace    https://baivong.github.io/de4js/
 // @description  Enable Unreadable option in de4js
-// @version      1.0.0
+// @version      1.1.0
 // @icon         https://i.imgur.com/CJ5MfxV.png
 // @author       Zzbaivong
 // @license      MIT
 // @match        https://baivong.github.io/de4js/
-// @include      http://127.0.0.1:4000/
-// @include      http://localhost:4000/
+// @include      http://127.0.0.1:4000/de4js/
+// @include      http://localhost:4000/de4js/
 // @noframes
 // @connect      jsnice.org
 // @supportURL   https://github.com/baivong/de4js/issues
