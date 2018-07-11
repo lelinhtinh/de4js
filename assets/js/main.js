@@ -30,6 +30,14 @@
         };
     }
 
+    function updateOnlineStatus() {
+        if (navigator.onLine) {
+            offlineBadge.classList.remove('show');
+        } else {
+            offlineBadge.classList.add('show');
+        }
+    }
+
     var input = document.getElementById('input'),
         output = document.getElementById('output'),
         view = document.getElementById('view'),
@@ -46,6 +54,8 @@
 
         clipboard = new ClipboardJS('#copyjs'),
         copytimeout,
+
+        offlineBadge = document.getElementById('offline'),
 
         startEffect = function () {
             if (output.value === '') view.textContent = 'Please wait...';
@@ -79,7 +89,7 @@
             }
 
             if (!workerFormat) {
-                workerFormat = new Worker('{{ "/assets/js/worker/format.js?v=" | append: site.github.build_revision | relative_url }}');
+                workerFormat = new Worker('{{ "/assets/js/worker/format.js" | relative_url }}');
                 workerFormat.addEventListener('message', function (e) {
                     view[(highlight.checked ? 'innerHTML' : 'textContent')] = e.data;
                     stopEffect();
@@ -135,7 +145,7 @@
             }
 
             if (!workerDecode) {
-                workerDecode = new Worker('{{ "/assets/js/worker/decode.js?v=" | append: site.github.build_revision | relative_url }}');
+                workerDecode = new Worker('{{ "/assets/js/worker/decode.js" | relative_url }}');
                 workerDecode.addEventListener('message', function (e) {
                     output.value = e.data;
                     if (!beautify.checked && !highlight.checked) stopEffect();
@@ -211,5 +221,9 @@
             workerFormat = undefined;
         }
     };
+
+    window.addEventListener('online',  updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    updateOnlineStatus();
 
 })();

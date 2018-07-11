@@ -16,7 +16,7 @@ self.addEventListener('message', function (e) {
     self.window = {};
 
     if (e.data.beautify) {
-        self.importScripts('{{ "/assets/js/lib/js-beautify/beautify.min.js?v=" | append: site.github.build_revision | relative_url }}');
+        self.importScripts('{{ "/assets/js/lib/js-beautify/beautify.min.js" | relative_url }}');
         source = self.window.js_beautify(source, {
             unescape_strings: true,
             jslint_happy: true
@@ -26,7 +26,7 @@ self.addEventListener('message', function (e) {
     self.window = self._window;
 
     if (e.data.highlight) {
-        self.importScripts('{{ "/assets/js/lib/highlight-js/highlight.pack.js?v=" | append: site.github.build_revision | relative_url }}');
+        self.importScripts('{{ "/assets/js/lib/highlight-js/highlight.pack.js" | relative_url }}');
         source = self.hljs.highlight('javascript', source).value;
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: " en-US " }}">
+<html lang="{{ site.lang | default: " en-US " }}" manifest="de4js.appcache">
 
 <head>
     <meta charset='utf-8'>
@@ -8,7 +8,7 @@
     <meta name="google-site-verification" content="BbaaM88Az_X9Kkutg_1d0lgK5u9URFdntKd8lB41hLs">
     <link rel="icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     {% seo %}
 
     {% if site.google_analytics %}
@@ -27,7 +27,7 @@
 
     <header>
         <div class="container">
-            <h1>{{ site.name }}</h1>
+            <h1>{{ site.name }}<sup id="offline">Offline</sup></h1>
             <h2>{{ site.description }}</h2>
 
             <section id="downloads">
@@ -82,8 +82,8 @@
         </section>
     </div>
 
-    <script type="text/javascript" src="{{ '/assets/js/lib/clipboard-js/clipboard.min.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-    <script src="{{ '/assets/js/main.js?v=' | append: site.github.build_revision | relative_url }}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ '/assets/js/lib/clipboard-js/clipboard.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/main.js' | relative_url }}" type="text/javascript"></script>
 </body>
 
 </html>

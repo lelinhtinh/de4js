@@ -104,7 +104,7 @@ self.addEventListener('message', function (e) {
         }
     } else if (packer === 'aaencode') {
         try {
-            self.importScripts('{{ "/assets/js/lib/cat-in-136/aadecode.js?v=" | append: site.github.build_revision | relative_url }}');
+            self.importScripts('{{ "/assets/js/lib/cat-in-136/aadecode.js" | relative_url }}');
 
             source = AADecode.decode(source);
         } catch (err) {
@@ -112,7 +112,7 @@ self.addEventListener('message', function (e) {
         }
     } else if (packer === 'jjencode') {
         try {
-            self.importScripts('{{ "/assets/js/lib/decoder-jjencode/jjdecode.js?v=" | append: site.github.build_revision | relative_url }}');
+            self.importScripts('{{ "/assets/js/lib/decoder-jjencode/jjdecode.js" | relative_url }}');
 
             source = JJdecode.decode(source);
         } catch (err) {
@@ -120,7 +120,7 @@ self.addEventListener('message', function (e) {
         }
     } else if (packer === 'urlencode') {
         try {
-            self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/urlencode_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
+            self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/urlencode_unpacker.js" | relative_url }}');
 
             if (Urlencoded.detect(source)) source = Urlencoded.unpack(source);
         } catch (err) {
@@ -128,7 +128,7 @@ self.addEventListener('message', function (e) {
         }
     } else if (packer === 'p_a_c_k_e_r') {
         try {
-            self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
+            self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js" | relative_url }}');
 
             if (P_A_C_K_E_R.detect(source)) source = P_A_C_K_E_R.unpack(source);
         } catch (err) {
@@ -136,7 +136,7 @@ self.addEventListener('message', function (e) {
         }
     } else if (packer === 'javascriptobfuscator') {
         try {
-            self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/javascriptobfuscator_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
+            self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/javascriptobfuscator_unpacker.js" | relative_url }}');
 
             if (JavascriptObfuscator.detect(source)) source = JavascriptObfuscator.unpack(source);
         } catch (err) {
@@ -144,7 +144,7 @@ self.addEventListener('message', function (e) {
         }
     } else if (packer === 'myobfuscate') {
         try {
-            self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/myobfuscate_unpacker.js?v=" | append: site.github.build_revision | relative_url }}');
+            self.importScripts('{{ "/assets/js/lib/js-beautify/unpackers/myobfuscate_unpacker.js" | relative_url }}');
 
             if (MyObfuscate.detect(source)) source = MyObfuscate.unpack(source);
         } catch (err) {
