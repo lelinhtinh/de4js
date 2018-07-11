@@ -96,7 +96,7 @@ self.addEventListener('message', function (e) {
             console.log(err);
         }
     } else if (packer === 'jsfuck') {
-        // https://codegolf.stackexchange.com/a/28745
+        // v6 | https://codegolf.stackexchange.com/a/28745
         try {
             source = /.+(?=\n})/.exec(eval(source.slice(0,-2)));
         } catch (err) {
