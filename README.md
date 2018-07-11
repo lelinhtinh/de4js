@@ -10,10 +10,13 @@ Install one of the following links:
 
 - [Open User JS](https://openuserjs.org/scripts/baivong/de4js_helper)
 - [Greasy Fork](https://greasyfork.org/vi/scripts/33479-de4js-helper)
-- [Github](https://github.com/lelinhtinh/de4js/raw/master/userscript/de4js_helper.user.js)
+- [Github](https://lelinhtinh.github.io/de4js/userscript/de4js_helper.user.js)
+
+`*` ***de4js helper** doesn't work offline.*
 
 ## Features
 
+- Work offline.
 - Source code beautifier / syntax highlighter.
 - Make obfuscated code [readable](#helper).
 - Performance unpackers:
