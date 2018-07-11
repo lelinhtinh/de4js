@@ -104,10 +104,10 @@
                 type = 'jsfuck';
             } else if (source.indexOf(' ') === -1 && (source.indexOf('%2') !== -1 || source.replace(/[^%]+/g, '').length > 3)) {
                 type = 'urlencode';
-            } else if (source.indexOf('eval(') !== -1) {
-                type = 'evalencode';
             } else if (/^[\s\n]*var\s_0x\w+\s?=\s?\["/.test(source)) {
                 type = 'arrayencode';
+            } else if (source.indexOf('eval(') !== -1) {
+                type = 'evalencode';
             }
 
             document.querySelector('.magic-radio:checked').checked = false;
