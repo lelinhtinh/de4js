@@ -1,4 +1,4 @@
-// https://github.com/jacobsoo/Decoder-JJEncode
+// 2ef524a | https://github.com/jacobsoo/Decoder-JJEncode/blob/master/decoder.html
 
 var JJdecode = {
     dst: '',

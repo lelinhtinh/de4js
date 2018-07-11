@@ -1,3 +1,5 @@
+// 80c24cd | https://github.com/cat-in-136/blog/blob/master/_posts/2010-12-04-aadecode-decode-encoded-as-aaencode.html
+
 /* AADecode - Decode encoded-as-aaencode JavaScript program.
  *
  * Copyright (C) 2010 @cat_in_136
