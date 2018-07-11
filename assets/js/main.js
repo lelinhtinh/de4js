@@ -9,7 +9,7 @@
  * @license  {{ site.license }}
  */
 
-/* globals Clipboard */
+/* globals ClipboardJS */
 
 (function () {
 
@@ -44,7 +44,7 @@
         redecode = document.getElementById('redecode'),
         clear = document.getElementById('clear'),
 
-        clipboard = new Clipboard('#copyjs'),
+        clipboard = new ClipboardJS('#copyjs'),
         copytimeout,
 
         startEffect = function () {
