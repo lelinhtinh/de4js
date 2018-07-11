@@ -1,12 +1,14 @@
+---
+---
 // ==UserScript==
 // @name         de4js helper
 // @namespace    https://baivong.github.io/de4js/
 // @description  Enable Unreadable option in de4js
-// @version      1.2.0
+// @version      {{ site.version }}
 // @icon         https://i.imgur.com/CJ5MfxV.png
-// @author       Zzbaivong
-// @license      MIT
-// @match        https://lelinhtinh.github.io/de4js/
+// @author       {{ site.author }}
+// @license      {{ site.license }}
+// @match        {{ site.url }}/de4js/
 // @include      http://127.0.0.1:4000/de4js/
 // @include      http://localhost:4000/de4js/
 // @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?v=a834d46
@@ -23,6 +25,7 @@
 
     var nicify = document.getElementById('nicify'),
         input = document.getElementById('input'),
+        output = document.getElementById('output'),
         view = document.getElementById('view'),
         redecode = document.getElementById('redecode');
 
@@ -48,7 +51,7 @@
                 document.getElementById('highlight').onchange();
             },
             onerror: function (e) {
-                console.error(e);
+                console.error(e); // eslint-disable-line no-console
             }
         });
     }

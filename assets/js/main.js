@@ -9,6 +9,8 @@
  * @license  {{ site.license }}
  */
 
+/* globals Clipboard */
+
 (function () {
 
     // https://davidwalsh.name/javascript-debounce-function
@@ -25,7 +27,7 @@
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
             if (callNow) func.apply(context, args);
-        }
+        };
     }
 
     var input = document.getElementById('input'),
@@ -95,13 +97,13 @@
         detect = function (source) {
             var type = '';
 
-            if (/^[\s\n]*var\s_\d{4}\;[\s\n]*var\s_\d{4}\s?=/.test(source)) {
+            if (/^[\s\n]*var\s_\d{4};[\s\n]*var\s_\d{4}\s?=/.test(source)) {
                 type = '_numberencode';
-            } else if (source.indexOf("/｀ｍ´）ﾉ ~┻━┻   //*´∇｀*/ ['_'];") !== -1) {
+            } else if (source.indexOf("/｀ｍ´）ﾉ ~┻━┻   //*´∇｀*/ ['_'];") !== -1) { // eslint-disable-line quotes
                 type = 'aaencode';
             } else if (source.indexOf('$={___:++$,$$$$:(![]+"")[$]') !== -1) {
                 type = 'jjencode';
-            } else if (source.replace(/[\[\]\(\)\!\+]/gm, '').trim() === '') {
+            } else if (source.replace(/[[\]()!+]/gm, '').trim() === '') {
                 type = 'jsfuck';
             } else if (source.indexOf(' ') === -1 && (source.indexOf('%2') !== -1 || source.replace(/[^%]+/g, '').length > 3)) {
                 type = 'urlencode';
@@ -120,7 +122,7 @@
 
         decode = debounce(function () {
             var source = input.value.trim(),
-                packer = bvDecode.encode.value;
+                packer = document.bvDecode.encode.value;
 
             if (source === '') return;
             if (auto.checked) packer = detect(source);
@@ -191,7 +193,7 @@
     redecode.onclick = function () {
         input.value = output.value;
         decode();
-    }
+    };
 
     clear.onclick = function () {
         view.textContent = 'Please choose a right encoding type!';
@@ -208,6 +210,6 @@
             workerFormat.terminate();
             workerFormat = undefined;
         }
-    }
+    };
 
 })();

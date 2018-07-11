@@ -1,5 +1,14 @@
 ---
 ---
+/**
+ * @name  {{ site.name }}
+ * @description  {{ site.description }}
+ * @author  {{ site.author }} <{{ site.author_email }}> ({{ site.url }})
+ * @version  {{ site.version }}
+ * @copyright  {{ site.author }} 2017
+ * @license  {{ site.license }}
+ */
+
 self.addEventListener('message', function (e) {
     var source = e.data.source;
 
