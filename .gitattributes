@@ -1,0 +1,30 @@
+# AUTO-DETECT
+* text=auto
+* text eol=lf
+
+## SOURCE CODE
+*.css           text
+*.scss          text
+*.html          text
+*.js            text
+*.json          text
+*.yml           text
+
+## DOCUMENTATION
+*.md            text
+LICENSE         text
+
+## LINTERS
+.eslintignore   text
+
+## CONFIGS
+.editorconfig   text
+.gitattributes  text
+.gitignore      text
+*.yml           text
+Gemfile         text
+*.lock          text
+
+## GRAPHICS
+*.ico           binary
+*.png           binary
