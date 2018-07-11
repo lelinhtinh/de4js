@@ -25,5 +25,9 @@
   "bugs": {
     "url": "https://github.com/lelinhtinh/de4js/issues"
   },
-  "homepage": "https://lelinhtinh.github.io/de4js/"
+  "homepage": "https://lelinhtinh.github.io/de4js/",
+  "devDependencies": {
+    "eslint": "^5.1.0",
+    "eslint-plugin-frontmatter": "0.0.6"
+  }
 }
