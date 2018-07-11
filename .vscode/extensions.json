@@ -1,0 +1,7 @@
+{
+	"recommendations": [
+    "hookyqr.beautify",
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint"
+	]
+}
