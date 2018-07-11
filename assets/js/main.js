@@ -94,6 +94,7 @@
 
         detect = function (source) {
             var type = '';
+
             if (/^[\s\n]*var\s_\d{4}\;[\s\n]*var\s_\d{4}\s?=/.test(source)) {
                 type = '_numberencode';
             } else if (source.indexOf("/｀ｍ´）ﾉ ~┻━┻   //*´∇｀*/ ['_'];") !== -1) {
@@ -107,6 +108,7 @@
             } else if (/^[\s\n]*var\s_0x\w+\s?=\s?\["/.test(source)) {
                 type = 'arrayencode';
             } else if (source.indexOf('eval(') !== -1) {
+                if (/\b(window|document|console)\.\b/i.test(source)) return type;
                 type = 'evalencode';
             }
 
