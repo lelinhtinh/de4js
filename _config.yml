@@ -1,9 +1,9 @@
 name: de4js
 description: JavaScript Deobfuscator and Unpacker
-version: 1.1.0
+version: 1.2.0
 author: Zzbaivong
 author_email: Zzbaivong@gmail.com
-url: https://baivong.github.io
+url: https://lelinhtinh.github.io
 baseurl: /de4js
 license: MIT
 
