@@ -2,7 +2,11 @@
 ---
 $base-color: #eaeaea;
 $primary-color: #b5e853;
-$secondary-color: #ff2323;
+$disabled-color: #ff2323;
+
+$special-base-color: #ffeb3b;
+$special-primary-color: #9C27B0;
+$special-disabled-color: #000000;
 
 @import "{{ site.theme }}";
 {% include highlight-js/styles/tomorrow-night-bright.css %}
@@ -77,10 +81,72 @@ $secondary-color: #ff2323;
 }
 
 .magic-radio[disabled] + label {
-  color: $secondary-color;
+  color: $disabled-color;
 
   &:before,
   &:hover:before {
-    border-color: $secondary-color;
+    border-color: $disabled-color;
+  }
+}
+
+#offline {
+  display: none;
+  font-size: .4em;
+  text-transform: uppercase;
+  color: #afafaf;
+  margin-left: 1em;
+  padding: 1px 4px;
+  border: 1px solid #111;
+  background: #444;
+  border-radius: 4px;
+  text-shadow: initial;
+
+  &.show {
+    display: inline-block;
+  }
+}
+
+#nicify {
+  &+label {
+    color: $special-base-color;
+
+    &:before {
+      border-color: $special-base-color;
+    }
+    &:hover:before{
+      animation-name: special-hover-color;
+    }
+    &:after{
+      background: $special-primary-color;
+    }
+  }
+
+  &[disabled]+label {
+    color: $special-disabled-color;
+
+    &:before {
+      border-color: $special-disabled-color;
+    }
+    &:hover:before {
+      animation: initial;
+    }
+  }
+
+  &:checked+label {
+    color: $special-primary-color;
+
+    &:before {
+      border-color: $special-primary-color;
+    }
+  }
+}
+
+@keyframes special-hover-color {
+  from {
+    border-color: $special-base-color;
+  }
+
+  to {
+    border-color: $special-primary-color;
   }
 }
