@@ -30,6 +30,7 @@
         redecode = document.getElementById('redecode');
 
     function jsnice() {
+        if (!isOnine()) return;
         if (input.value.trim() === '') return;
 
         view.classList.add('waiting');
@@ -56,6 +57,11 @@
         });
     }
 
+    function isOnine() {
+        nicify.disabled = !navigator.onLine;
+        return navigator.onLine;
+    }
+
     nicify.disabled = false;
     nicify.onchange = jsnice;
 
@@ -66,5 +72,9 @@
     redecode.addEventListener('click', function () {
         if (nicify.checked) jsnice();
     });
+
+    window.addEventListener('online', isOnine);
+    window.addEventListener('offline', isOnine);
+    isOnine();
 
 })();
