@@ -56,7 +56,7 @@ Install **Jekyll** and other [dependencies](https://pages.github.com/versions/) 
 
     bundle exec jekyll serve
 
-Preview **de4js** in your web browser at `http://localhost:4000`
+Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
 ## License
 
