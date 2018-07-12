@@ -40,13 +40,10 @@
             responseType: 'json',
             data: input.value,
             onload: function (response) {
-                var source = response.response.js;
+                var source = input.value;
 
-                if (source.indexOf('Error compiling input') === 0) {
-                    source = input.value;
-                } else {
+                if (response.response && response.response.js && source.indexOf('Error compiling input') !== 0)
                     source = response.response.js;
-                }
 
                 output.value = source;
                 document.getElementById('beautify').onchange();
