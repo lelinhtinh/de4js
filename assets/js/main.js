@@ -45,7 +45,6 @@
         encode = document.getElementsByName('encode'),
 
         beautify = document.getElementById('beautify'),
-        highlight = document.getElementById('highlight'),
         auto = document.getElementById('auto'),
 
         copyjs = document.getElementById('copyjs'),
@@ -83,15 +82,11 @@
             var source = output.value.trim();
 
             if (source === '') return;
-            if (!beautify.checked && !highlight.checked) {
-                view.textContent = source;
-                return;
-            }
 
             if (!workerFormat) {
                 workerFormat = new Worker('{{ "/assets/js/worker/format.js" | relative_url }}');
                 workerFormat.addEventListener('message', function (e) {
-                    view[(highlight.checked ? 'innerHTML' : 'textContent')] = e.data;
+                    view.innerHTML = e.data;
                     stopEffect();
                 });
             }
@@ -99,8 +94,7 @@
             startEffect();
             workerFormat.postMessage({
                 source: source,
-                beautify: beautify.checked,
-                highlight: highlight.checked
+                beautify: beautify.checked
             });
         }, 250),
 
@@ -148,7 +142,6 @@
                 workerDecode = new Worker('{{ "/assets/js/worker/decode.js" | relative_url }}');
                 workerDecode.addEventListener('message', function (e) {
                     output.value = e.data;
-                    if (!beautify.checked && !highlight.checked) stopEffect();
 
                     if (auto.checked && input.value !== output.value) {
                         redecode.onclick();
@@ -174,7 +167,6 @@
     }
 
     beautify.onchange = format;
-    highlight.onchange = format;
 
     auto.onchange = function () {
         for (var i = 0; i < encode.length; i++) {

@@ -49,7 +49,7 @@
                 }
 
                 output.value = source;
-                document.getElementById('highlight').onchange();
+                document.getElementById('beautify').onchange();
             },
             onerror: function (e) {
                 console.error(e); // eslint-disable-line no-console
