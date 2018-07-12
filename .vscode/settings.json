@@ -1,3 +1,7 @@
 {
-    "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "files.exclude": {
+    "_site/*": true,
+    "node_modules/*": true
+  }
 }
