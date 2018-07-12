@@ -42,7 +42,7 @@
             onload: function (response) {
                 var source = input.value;
 
-                if (response.response && response.response.js && source.indexOf('Error compiling input') !== 0)
+                if (response.response && response.response.js && response.response.js.indexOf('// Error compiling input') !== 0)
                     source = response.response.js;
 
                 output.value = source;
