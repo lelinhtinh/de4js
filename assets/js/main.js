@@ -47,12 +47,16 @@
         beautify = document.getElementById('beautify'),
         auto = document.getElementById('auto'),
 
-        copyjs = document.getElementById('copyjs'),
         redecode = document.getElementById('redecode'),
         clear = document.getElementById('clear'),
 
-        clipboard = new ClipboardJS('#copyjs'),
-        copytimeout,
+        preview = document.getElementById('preview'),
+
+        clipboard = new ClipboardJS('#copyjs', {
+            target: function() {
+                return view;
+            }
+        }),
 
         offlineBadge = document.getElementById('offline'),
 
@@ -64,15 +68,30 @@
             view.classList.remove('waiting');
         },
 
-        textreset = function () {
-            if (copyjs.textContent === 'Copy') return;
-            copyjs.textContent = 'Copy';
-            copyjs.removeAttribute('style');
+        resetcopy = function (trigger) {
+            if (!trigger.classList.contains('copied')) return;
+            trigger.classList.remove('copied');
         },
-        timereset = function () {
-            copytimeout = setTimeout(function () {
-                textreset();
-            }, 3000);
+        timereset = function (trigger) {
+            setTimeout(function () {
+                resetcopy(trigger);
+            }, 800);
+        },
+
+        externalStyle = '*{margin:0;padding:0}html{line-height:1em;background:#1d1f21;color:#c5c8c6}pre{counter-reset:line-numbers;white-space:pre-wrap;word-wrap:break-word;word-break:break-all}code::before{counter-increment:line-numbers;content:counter(line-numbers);display:block;position:absolute;left:-4.5em;top:0;width:4em;text-align:right;color:#60686f;white-space:pre}code{display:block;position:relative;margin-left:4em;padding-left:.5em;min-height:1em;border-left:1px solid #32363b}pre{padding:.5em .5em .5em 5em;border-left:1px solid #1d1f21}pre.hljs{padding-left:.5em;border-left:0 none}code::after{content:".";visibility:hidden} .hljs-comment,.hljs-quote{color:#969896}.hljs-variable,.hljs-template-variable,.hljs-tag,.hljs-name,.hljs-selector-id,.hljs-selector-class,.hljs-regexp,.hljs-deletion{color:#c66}.hljs-number,.hljs-built_in,.hljs-builtin-name,.hljs-literal,.hljs-type,.hljs-params,.hljs-meta,.hljs-link{color:#de935f}.hljs-attribute{color:#f0c674}.hljs-string,.hljs-symbol,.hljs-bullet,.hljs-addition{color:#b5bd68}.hljs-title,.hljs-section{color:#81a2be}.hljs-keyword,.hljs-selector-tag{color:#b294bb}.hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}',
+        externalUrl,
+        externalPreview = function (source) {
+            if (externalUrl) URL.revokeObjectURL(externalUrl);
+
+            source = '<html><head><meta charset="utf-8"><link rel="shortcut icon" type="image/png" href="{{ "/favicon.png" | relative_url }}"><title>{{ site.name }} | Preview</title><style>' + externalStyle + '</style></head><body><pre class="hljs">' + source + '</pre></body></html>';
+
+            externalUrl = new Blob([source], {
+                type: 'text/html'
+            });
+            externalUrl = URL.createObjectURL(externalUrl);
+
+            preview.classList.add('show');
+            preview.href = externalUrl;
         },
 
         workerFormat,
@@ -87,6 +106,8 @@
                 workerFormat = new Worker('{{ "/assets/js/worker/format.js" | relative_url }}');
                 workerFormat.addEventListener('message', function (e) {
                     view.innerHTML = e.data;
+                    externalPreview(e.data);
+
                     stopEffect();
                 });
             }
@@ -176,20 +197,14 @@
         decode();
     };
 
-    copyjs.onmouseout = function () {
-        textreset();
-        clearTimeout(copytimeout);
-    };
     clipboard.on('success', function (e) {
-        e.trigger.textContent = 'Copied';
-        e.trigger.style.color = '#b5e853';
+        e.trigger.classList.add('copied');
         e.clearSelection();
-        timereset();
+        timereset(e.trigger);
     });
     clipboard.on('error', function (e) {
-        e.trigger.textContent = 'Selected';
-        e.trigger.style.color = '#ff2323';
-        timereset();
+        e.trigger.classList.add('selected');
+        timereset(e.trigger);
     });
 
     redecode.onclick = function () {
@@ -212,6 +227,8 @@
             workerFormat.terminate();
             workerFormat = undefined;
         }
+
+        preview.classList.remove('show');
     };
 
     window.addEventListener('online',  updateOnlineStatus);

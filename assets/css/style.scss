@@ -119,9 +119,11 @@ code {
     &:before {
       border-color: $special-base-color;
     }
+
     &:hover:before{
       animation-name: special-hover-color;
     }
+
     &:after{
       background: $special-primary-color;
     }
@@ -133,6 +135,7 @@ code {
     &:before {
       border-color: $special-disabled-color;
     }
+
     &:hover:before {
       animation: initial;
     }
@@ -185,5 +188,70 @@ code {
     text-align: right;
     color: #4a4a4a;
     white-space: pre;
+  }
+}
+
+.view-wrap {
+  position: relative;
+
+  &:hover .view-control {
+    opacity: 1;
+  }
+}
+
+.view-control {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 200ms;
+
+  .btn {
+    display: block;
+    background: #000;
+    border: 0 none;
+    box-shadow: initial;
+    border-radius: 0;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    line-height: 40px;
+    transition: background 200ms;
+    text-align: center;
+    float: right;
+
+    &:hover {
+      background: #444;
+    }
+
+    &:active {
+      background: #222;
+    }
+
+    .btn-icon {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+    }
+  }
+}
+
+#copyjs {
+  &.copied {
+    background: $primary-color;
+  }
+
+  &.selected {
+    background: $disabled-color;
+  }
+}
+
+#preview {
+  display: none;
+
+  &.show {
+    display: block;
   }
 }

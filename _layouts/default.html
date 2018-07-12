@@ -65,9 +65,6 @@
                 </div>
 
                 <div class="center">
-                    <button id="copyjs" data-clipboard-target="#view" class="btn" type="button">
-                        Copy
-                    </button>
                     <button id="redecode" class="btn" type="button">
                         Continue decoding
                     </button>
@@ -76,7 +73,17 @@
                     </button>
                 </div>
 
-                <pre id="view" class="hljs">Please choose a right encoding type!</pre>
+                <div class="view-wrap">
+                    <div class="view-control">
+                        <button id="copyjs" class="btn" type="button">
+                            <img class="btn-icon" src="{{ 'assets/icon/copy-document.png' | relative_url }}" alt="Copy to clipboard">
+                        </button>
+                        <a id="preview" class="btn" type="button" href="#" target="_blank">
+                            <img class="btn-icon" src="{{ 'assets/icon/external-link-symbol.png' | relative_url }}" alt="Open in new tab">
+                        </a>
+                    </div>
+                    <pre id="view" class="hljs">Please choose a right encoding type!</pre>
+                </div>
             </form>
         </section>
     </div>
