@@ -12,6 +12,12 @@ $special-disabled-color: #000000;
 {% include highlight-js/styles/tomorrow-night-bright.css %}
 @import "magic-check/sass/magic-check.scss";
 
+body,
+textarea,
+code {
+  font-family: 'Roboto Mono', monospace;
+}
+
 .container {
   max-width: 1280px;
 }
