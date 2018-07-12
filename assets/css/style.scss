@@ -150,3 +150,34 @@ $special-disabled-color: #000000;
     border-color: $special-primary-color;
   }
 }
+
+pre {
+  counter-reset: line-numbers;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  padding: .5em .5em .5em 5em;
+  border-left: 1px solid #1d1f21;
+}
+
+code {
+  display: block;
+  position: relative;
+  margin-left: 3em;
+  padding-left: .5em;
+  min-height: 1em;
+  border-left: 1px solid #232323;
+
+  &:before {
+    counter-increment: line-numbers;
+    content: counter(line-numbers);
+    display: block;
+    position: absolute;
+    left: -3.5em;
+    top: 0;
+    width: 3em;
+    text-align: right;
+    color: #4a4a4a;
+    white-space: pre;
+  }
+}

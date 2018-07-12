@@ -28,7 +28,9 @@ self.addEventListener('message', function (e) {
     if (e.data.highlight) {
         self.importScripts('{{ "/assets/js/lib/highlight-js/highlight.pack.js" | relative_url }}');
         source = self.hljs.highlight('javascript', source).value;
-    }
+    source = source.split('\n');
+    source = source.join('</code><code>');
+    source = '<code>' + source + '</code>';
 
     self.postMessage(source);
 });
