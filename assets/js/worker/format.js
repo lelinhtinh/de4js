@@ -26,7 +26,7 @@ self.addEventListener('message', function (e) {
         self.window = self._window;
     }
 
-    self.importScripts('{{ "/assets/js/lib/highlight-js/highlight.pack.js" | relative_url }}');
+    self.importScripts('{{ "/assets/js/lib/highlight-js/highlight.min.js" | relative_url }}');
 
     source = self.hljs.highlight('javascript', source).value;
     source = source.split('\n');

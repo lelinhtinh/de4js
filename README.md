@@ -22,7 +22,7 @@ Install one of the following links:
 - Performance unpackers:
   - **Eval**, e.g. Packer, [WiseLoop](http://wiseloop.com/demo/php-javascript-obfuscator)
   - **Array**, e.g. Javascript Obfuscator
-  - [_Number](http://giapqb.blogspot.com/p/mahoa-javascript.html)
+  - [_Number](https://jsfiddle.net/ps5anL99/embedded/result,js,html,css/)
   - [Packer](http://dean.edwards.name/packer/)
   - [Javascript Obfuscator](https://javascriptobfuscator.com/Javascript-Obfuscator.aspx)
   - [My Obfuscate](http://myobfuscate.com/)
@@ -54,9 +54,13 @@ Install **Jekyll** and other [dependencies](https://pages.github.com/versions/) 
 
 ### Run
 
-    bundle exec jekyll serve
+    bundle exec jekyll serve --watch
 
 Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
+
+### Build
+
+    bundle exec jekyll build
 
 ## License
 
@@ -70,9 +74,9 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
 ### Open Source Contributors
 
-- [js-beautify@1.8.0-rc2](https://github.com/beautify-web/js-beautify)
-- [highlight.js@9.12.0](https://github.com/isagalaev/highlight.js)
-- [clipboard.js@2.0.1](https://github.com/zenorocha/clipboard.js)
+- [js-beautify@1.9.0-beta5](https://github.com/beautify-web/js-beautify)
+- [highlight.js@9.14.2](https://github.com/isagalaev/highlight.js)
+- [clipboard.js@2.0.4](https://github.com/zenorocha/clipboard.js)
 - [magic-check@1.0.3](https://github.com/forsigner/magic-check)
 - [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)
 - [Decoder-JJEncode](https://github.com/jacobsoo/Decoder-JJEncode)

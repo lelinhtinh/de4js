@@ -16,7 +16,7 @@ assets/icon/copy-document.png
 assets/js/lib/cat-in-136/aadecode.js
 assets/js/lib/clipboard-js/clipboard.min.js
 assets/js/lib/decoder-jjencode/jjdecode.js
-assets/js/lib/highlight-js/highlight.pack.js
+assets/js/lib/highlight-js/highlight.min.js
 assets/js/lib/js-beautify/unpackers/javascriptobfuscator_unpacker.js
 assets/js/lib/js-beautify/unpackers/myobfuscate_unpacker.js
 assets/js/lib/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js
