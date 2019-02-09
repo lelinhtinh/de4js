@@ -28,7 +28,8 @@
   "homepage": "https://lelinhtinh.github.io/de4js/",
   "devDependencies": {
     "eslint": "^5.13.0",
-    "eslint-plugin-frontmatter": "0.0.6"
+    "eslint-plugin-frontmatter": "0.0.8",
+    "lodash": ">=4.17.11"
   },
   "dependencies": {
     "clipboard": "^2.0.4",
