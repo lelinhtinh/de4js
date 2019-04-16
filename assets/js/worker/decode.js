@@ -55,8 +55,8 @@ self.addEventListener('message', function (e) {
 
                 var _arraysource = source.split(pattsplit),
                     _var = _arraysource[0] + lastchar + '"]',
-                    _name = _var.match(/var\s([\w\d]+)\s?=\s?\["/)[1],
-                    _code = _arraysource[1],
+                    _name = _var.match(/var\s([\w\d_$]+)\s?=\s?\["/)[1].replace(/(\$)/g, '\\$1'),
+                    _code = _arraysource.slice(0),
 
                     pattname = new RegExp('var\\s' + _name + '\\s?=\\s?\\["'),
                     pattkey = new RegExp(_name + '\\[(\\d+)\\]', 'g'),
@@ -84,13 +84,15 @@ self.addEventListener('message', function (e) {
                 _var = _var.replace(pattname, '["');
                 _var = eval(_var);
 
+                _code.shift();
+                _code = _code.join('');
                 _code.replace(pattkey, function (key, index) {
                     _code = _code.replace(key, '"' + quote(_var[index]) + '"');
                     return _code;
                 });
 
-                _arraysource = _code.replace(/(\["([a-z\d_]+)"\])/gi, '.$2');
-                source = _arraysource;
+                _code = _code.replace(/(\["([\w\d_$]+)"\])/gi, '.$2');
+                source = _code;
             }
         } catch (err) {
             console.log(err);
