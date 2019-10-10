@@ -74,8 +74,8 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
 ### Open Source Contributors
 
-- [js-beautify@1.9.0-beta5](https://github.com/beautify-web/js-beautify)
-- [highlight.js@9.14.2](https://github.com/isagalaev/highlight.js)
+- [js-beautify@1.10.2](https://github.com/beautify-web/js-beautify)
+- [highlight.js@9.15.10](https://github.com/isagalaev/highlight.js)
 - [clipboard.js@2.0.4](https://github.com/zenorocha/clipboard.js)
 - [magic-check@1.0.3](https://github.com/forsigner/magic-check)
 - [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)
