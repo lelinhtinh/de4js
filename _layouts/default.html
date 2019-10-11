@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: " en-US " }}" manifest="de4js.appcache">
+<html lang="{{ site.lang | default: 'en-US' }}" manifest="de4js.appcache">
 
 <head>
     <meta charset='utf-8'>
@@ -44,7 +44,6 @@
         <section id="main_content">
             <form class="wrap" name="bvDecode">
                 <textarea id="input" class="content" rows="7" placeholder="Paste code here..."></textarea>
-                <textarea id="output"></textarea>
 
                 <div class="config center">
                     <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
@@ -57,19 +56,12 @@
                     <label for="nicify">Unreadable</label>
                 </div>
 
-                <div class="config center">
-                    <input id="beautify" class="magic-checkbox" type="checkbox" name="beautify" checked>
-                    <label for="beautify">Beautify</label>
-                    <input id="auto" class="magic-checkbox" type="checkbox" name="auto">
-                    <label for="auto">Auto</label>
-                </div>
-
                 <div class="center">
-                    <button id="redecode" class="btn" type="button">
-                        Continue decoding
-                    </button>
                     <button id="clear" class="btn" type="reset">
                         Clear
+                    </button>
+                    <button id="auto" class="btn" type="button">
+                        Auto Decode
                     </button>
                 </div>
 
@@ -82,7 +74,7 @@
                             <img class="btn-icon" src="{{ 'assets/icon/external-link-symbol.png' | relative_url }}" alt="Open in new tab">
                         </a>
                     </div>
-                    <pre id="view" class="hljs">Please choose a right encoding type!</pre>
+                    <pre id="view" class="hljs"></pre>
                 </div>
             </form>
         </section>

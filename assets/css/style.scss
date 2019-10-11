@@ -9,7 +9,10 @@ $special-primary-color: #9C27B0;
 $special-disabled-color: #000000;
 
 @import "{{ site.theme }}";
-{% include highlight-js/styles/tomorrow-night-bright.css %}
+{% include highlight-js/styles/hljs-theme.css %}
+.hljs{
+  background: #030303;
+}
 @import "magic-check/sass/magic-check.scss";
 
 body,
@@ -33,10 +36,6 @@ code {
   resize: vertical;
 }
 
-#output {
-  display: none;
-}
-
 .config {
   font-size: smaller;
   color: #595656;
@@ -52,7 +51,7 @@ code {
 
   label {
     display: inline-block;
-    margin: .5em;
+    margin: .3em;
   }
 }
 
@@ -62,6 +61,8 @@ code {
 }
 
 .btn {
+  cursor: pointer;
+
   &:active,
   &:focus,
   &:hover {
@@ -76,6 +77,13 @@ code {
   &::-moz-focus-inner {
     border: 0 none;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    background: #141414;
+    border-color: #1b1b1b;
+    color: #525252;
+  }
 }
 
 #view {
@@ -83,6 +91,14 @@ code {
 
   &.waiting {
     opacity: .3;
+
+    &:empty:before {
+      content: 'Please wait...';
+    }
+  }
+
+  &:empty:before {
+    content: 'Please choose a right encoding type!';
   }
 }
 

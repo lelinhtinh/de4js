@@ -39,21 +39,28 @@
     }
 
     var input = document.getElementById('input'),
-        output = document.getElementById('output'),
         view = document.getElementById('view'),
+        temp = '',
 
         encode = document.getElementsByName('encode'),
+        packer = document.bvDecode.encode.value,
 
-        beautify = document.getElementById('beautify'),
-        auto = document.getElementById('auto'),
+        checkAll = function (check) {
+            for (var i = 0; i < encode.length; i++) {
+                if (encode[i].value === 'nicify') continue;
+                encode[i].disabled = check;
+            }
+        },
 
-        redecode = document.getElementById('redecode'),
         clear = document.getElementById('clear'),
+
+        autoBtn = document.getElementById('auto'),
+        isAuto = false,
 
         preview = document.getElementById('preview'),
 
         clipboard = new ClipboardJS('#copyjs', {
-            target: function() {
+            target: function () {
                 return view;
             }
         }),
@@ -61,29 +68,39 @@
         offlineBadge = document.getElementById('offline'),
 
         startEffect = function () {
-            if (output.value === '') view.textContent = 'Please wait...';
+            view.textContent = '';
             view.classList.add('waiting');
+            clear.disabled = true;
+            autoBtn.disabled = true;
+            checkAll(true);
         },
         stopEffect = function () {
+            isAuto = false;
             view.classList.remove('waiting');
+            clear.disabled = false;
+            autoBtn.disabled = false;
+            setTimeout(function () {
+                checkAll(false);
+                if (packer === '') temp = '';
+            }, 0);
         },
 
-        resetcopy = function (trigger) {
+        resetCopy = function (trigger) {
             if (!trigger.classList.contains('copied')) return;
             trigger.classList.remove('copied');
         },
-        timereset = function (trigger) {
+        timeReset = function (trigger) {
             setTimeout(function () {
-                resetcopy(trigger);
+                resetCopy(trigger);
             }, 800);
         },
 
-        externalStyle = '*{margin:0;padding:0}html{line-height:1em;background:#1d1f21;color:#c5c8c6}pre{white-space:pre-wrap;word-wrap:break-word;word-break:break-all}.hljs-comment,.hljs-quote{color:#969896}.hljs-variable,.hljs-template-variable,.hljs-tag,.hljs-name,.hljs-selector-id,.hljs-selector-class,.hljs-regexp,.hljs-deletion{color:#c66}.hljs-number,.hljs-built_in,.hljs-builtin-name,.hljs-literal,.hljs-type,.hljs-params,.hljs-meta,.hljs-link{color:#de935f}.hljs-attribute{color:#f0c674}.hljs-string,.hljs-symbol,.hljs-bullet,.hljs-addition{color:#b5bd68}.hljs-title,.hljs-section{color:#81a2be}.hljs-keyword,.hljs-selector-tag{color:#b294bb}.hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}',
+        externalStyle = '*{margin:0;padding:0}html{line-height:1em;background:#1d1f21;color:#c5c8c6}pre{white-space:pre-wrap;word-wrap:break-word;word-break:break-all}{% include highlight-js/styles/hljs-theme.css %}html,body,.hljs{background:#030303}',
         externalUrl,
         externalPreview = function (source) {
             if (externalUrl) URL.revokeObjectURL(externalUrl);
 
-            source = '<html><head><meta charset="utf-8"><link rel="shortcut icon" type="image/png" href="{{ "/favicon.png" | relative_url }}"><title>{{ site.name }} | Preview</title><style>' + externalStyle + '</style></head><body><pre class="hljs">' + source + '</pre></body></html>';
+            source = '<html><head><meta charset="utf-8"><link rel="shortcut icon" type="image/png" href="{{ site.url }}{{ site.baseurl }}{{ "/favicon.png" }}"><title>{{ site.name }} | Preview</title><style>' + externalStyle + '</style></head><body><pre class="hljs">' + source + '</pre></body></html>';
 
             externalUrl = new Blob([source], {
                 type: 'text/html'
@@ -98,9 +115,7 @@
         workerDecode,
 
         format = debounce(function () {
-            var source = output.value.trim();
-
-            if (source === '') return;
+            if (temp === '') return;
 
             if (!workerFormat) {
                 workerFormat = new Worker('{{ "/assets/js/worker/format.js" | relative_url }}');
@@ -114,8 +129,7 @@
 
             startEffect();
             workerFormat.postMessage({
-                source: source,
-                beautify: beautify.checked
+                source: temp
             });
         }, 250),
 
@@ -146,15 +160,13 @@
         },
 
         decode = debounce(function () {
-            var source = input.value.trim(),
-                packer = document.bvDecode.encode.value;
+            if (temp === '') temp = input.value.trim();
+            if (temp === '') return;
 
-            if (source === '') return;
-            if (auto.checked) packer = detect(source);
+            packer = isAuto ? detect(temp) : document.bvDecode.encode.value;
 
             if (packer === 'nicify') return;
             if (packer === '') {
-                output.value = source;
                 format();
                 return;
             }
@@ -162,61 +174,59 @@
             if (!workerDecode) {
                 workerDecode = new Worker('{{ "/assets/js/worker/decode.js" | relative_url }}');
                 workerDecode.addEventListener('message', function (e) {
-                    output.value = e.data;
+                    if (e.data !== temp) {
+                        temp = e.data;
 
-                    if (auto.checked && input.value !== output.value) {
-                        redecode.onclick();
-                    } else {
-                        format();
+                        if (isAuto) {
+                            decode();
+                            return;
+                        }
                     }
+
+                    format();
                 });
             }
 
             startEffect();
-            output.value = '';
             workerDecode.postMessage({
-                source: source,
+                source: temp,
                 packer: packer
             });
         }, 250);
 
-    input.oninput = debounce(function () {
+    input.oninput = function () {
+        temp = input.value.trim();
         decode();
-    });
-    for (var i = 0; i < encode.length; i++) {
-        encode[i].onchange = decode;
     }
 
-    beautify.onchange = format;
+    for (var i = 0; i < encode.length; i++) {
+        encode[i].onchange = function () {
+            decode();
+        };
+    }
 
-    auto.onchange = function () {
-        for (var i = 0; i < encode.length; i++) {
-            if (encode[i].value === 'nicify') continue;
-            encode[i].disabled = auto.checked;
-        }
+    autoBtn.onclick = function () {
+        isAuto = true;
         decode();
     };
 
     clipboard.on('success', function (e) {
         e.trigger.classList.add('copied');
         e.clearSelection();
-        timereset(e.trigger);
+        timeReset(e.trigger);
     });
     clipboard.on('error', function (e) {
         e.trigger.classList.add('selected');
-        timereset(e.trigger);
+        timeReset(e.trigger);
     });
 
-    redecode.onclick = function () {
-        input.value = output.value;
-        decode();
-    };
-
     clear.onclick = function () {
-        view.textContent = 'Please choose a right encoding type!';
+        view.textContent = '';
+
         stopEffect();
-        setTimeout(function() {
-            auto.onchange();
+        setTimeout(function () {
+            input.value = '';
+            temp = '';
         }, 0);
 
         if (workerDecode) {
@@ -231,7 +241,7 @@
         preview.classList.remove('show');
     };
 
-    window.addEventListener('online',  updateOnlineStatus);
+    window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
     updateOnlineStatus();
 
