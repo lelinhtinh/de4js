@@ -319,7 +319,7 @@
 
         fileName.textContent = fileObj.name;
 
-        if (fileObj.type !== 'text/javascript' && fileObj.type !== 'text/plain') {
+        if (!/((text|application)\/(ecmascript|(x-)?javascript)|text\/plain)/.test(fileObj.type)) {
             renderLocal.textContent = 'Invalid file type';
             return;
         }
@@ -359,7 +359,7 @@
             if (!res.ok) {
                 throw Error(res.statusText);
             }
-            if (res.headers.get('content-type').search(/(application\/javascript|text\/plain)/i) !== 0) {
+            if (res.headers.get('content-type').search(/((text|application)\/(ecmascript|(x-)?javascript)|text\/plain)/i) === -1) {
                 throw Error('Invalid file type');
             }
             return res.text();
