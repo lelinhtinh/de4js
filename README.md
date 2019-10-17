@@ -81,4 +81,3 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 - [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)
 - [Decoder-JJEncode](https://github.com/jacobsoo/Decoder-JJEncode)
 - [nderscore](https://codegolf.stackexchange.com/a/28745)
-- [Custom File Inputs](https://tympanus.net/Tutorials/CustomFileInputs/)
