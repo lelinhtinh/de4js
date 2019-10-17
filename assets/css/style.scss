@@ -331,6 +331,29 @@ pre {
   }
 }
 
+.drop-zone {
+  border: 2px solid #eee;
+
+  &:after {
+    content: "Drop file here";
+    color: #eee;
+  }
+
+  .box,
+  .render {
+    visibility: hidden;
+  }
+
+  &.drop-enter {
+    border-color: #b5e853;
+    background: rgba(0, 0, 0, 0.4);
+
+    &:after {
+      color: #b5e853;
+    }
+  }
+}
+
 .render {
   max-height: 150px;
   font-size: 12px;

@@ -77,6 +77,7 @@
         input = document.getElementById('input'),
         file = document.getElementById('file'),
         fileName = document.getElementById('fileName'),
+        contentLocal = document.getElementById('contentLocal'),
         renderLocal = document.getElementById('renderLocal'),
         formRemove = document.getElementById('formRemove'),
         urlRemove = document.getElementById('urlRemove'),
@@ -242,6 +243,35 @@
             var _this = e.target;
             if (_this.name !== 'encode') return;
             decode();
+        },
+
+        dragEnd = function () {
+            contentLocal.classList.remove('drop-zone', 'drop-enter');
+        },
+
+        uploadFile = function (fileObj) {
+            if (!fileObj) return;
+
+            var fragment = new DocumentFragment();
+            fileName.textContent = fileObj.name;
+
+            if (!/((text|application)\/(ecmascript|(x-)?javascript)|text\/plain)/.test(fileObj.type)) {
+                renderLocal.textContent = 'Invalid file type';
+                return;
+            }
+
+            temp = '';
+            renderLocal.textContent = '';
+
+            parseFile(fileObj, function (data) {
+                temp += data;
+                var txt = document.createTextNode(data);
+                fragment.appendChild(txt);
+            }, function () {
+                decode();
+                renderLocal.appendChild(fragment);
+                file.value = '';
+            });
         };
 
     input.oninput = function () {
@@ -271,6 +301,7 @@
         view.textContent = '';
         file.value = '';
         renderLocal.textContent = '';
+        dragEnd();
         fileName.textContent = '';
         renderRemove.textContent = '';
         urlRemove.value = '';
@@ -314,28 +345,7 @@
 
 
     file.onchange = function () {
-        var fragment = new DocumentFragment(),
-            fileObj = this.files[0];
-
-        fileName.textContent = fileObj.name;
-
-        if (!/((text|application)\/(ecmascript|(x-)?javascript)|text\/plain)/.test(fileObj.type)) {
-            renderLocal.textContent = 'Invalid file type';
-            return;
-        }
-
-        temp = '';
-        renderLocal.textContent = '';
-
-        parseFile(fileObj, function (data) {
-            temp += data;
-            var txt = document.createTextNode(data);
-            fragment.appendChild(txt);
-        }, function () {
-            decode();
-            renderLocal.appendChild(fragment);
-            file.value = '';
-        });
+        uploadFile(this.files[0]);
     };
 
     file.onfocus = function () {
@@ -344,6 +354,45 @@
 
     file.onblur = function () {
         this.classList.remove('has-focus');
+    };
+
+    document.ondrop = function (e) {
+        e.preventDefault();
+
+        dragEnd();
+        if (e.target.id !== 'contentLocal') return;
+
+        uploadFile(e.dataTransfer.files[0]);
+    };
+
+    document.ondragover = function (e) {
+        e.preventDefault();
+        contentLocal.classList.add('drop-zone');
+    };
+
+    document.ondragend = function (e) {
+        e.preventDefault();
+        dragEnd();
+    };
+
+    document.onkeyup = function (e) {
+        if (e.keyCode !== 27) return;
+        dragEnd();
+    };
+
+    contentLocal.onclick = function () {
+        if (!contentLocal.classList.contains('drop-zone')) return;
+        dragEnd();
+    };
+
+    contentLocal.ondragenter = function (e) {
+        e.preventDefault();
+        this.classList.add('drop-enter');
+    };
+
+    contentLocal.ondragleave = function (e) {
+        e.preventDefault();
+        this.classList.remove('drop-enter');
     };
 
 
