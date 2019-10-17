@@ -1,6 +1,6 @@
 {
   "name": "de4js",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "JavaScript Deobfuscator and Unpacker",
   "main": "/assets/js/main.js",
   "scripts": {
@@ -29,14 +29,13 @@
   },
   "homepage": "https://lelinhtinh.github.io/de4js/",
   "devDependencies": {
-    "eslint": "^5.13.0",
-    "eslint-plugin-frontmatter": "0.0.8",
-    "lodash": ">=4.17.13"
+    "eslint": "^6.5.1",
+    "eslint-plugin-frontmatter": "0.0.8"
   },
   "dependencies": {
     "clipboard": "^2.0.4",
-    "highlight.js": "^9.14.2",
-    "js-beautify": "^1.8.9",
+    "highlight.js": "^9.15.10",
+    "js-beautify": "^1.10.2",
     "magic-check": "^1.0.3"
   }
 }

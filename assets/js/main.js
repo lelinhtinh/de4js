@@ -30,22 +30,67 @@
         };
     }
 
+    // https://stackoverflow.com/a/28318964
+    function parseFile(file, chunk, done) {
+        var fileSize = file.size,
+            chunkSize = 64 * 1024,
+            offset = 0,
+            chunkReaderBlock = null,
+
+            readEventHandler = function (evt) {
+                if (evt.target.error == null) {
+                    chunk(evt.target.result);
+                } else {
+                    return;
+                }
+                if (offset >= fileSize) {
+                    done();
+                    return;
+                }
+                offset += chunkSize;
+                chunkReaderBlock(offset, chunkSize, file);
+            };
+
+        chunkReaderBlock = function (_offset, length, _file) {
+            var r = new FileReader();
+            var blob = _file.slice(_offset, length + _offset);
+            r.onload = readEventHandler;
+            r.readAsText(blob);
+        };
+
+        chunkReaderBlock(offset, chunkSize, file);
+    }
+
     function updateOnlineStatus() {
         if (navigator.onLine) {
             offlineBadge.classList.remove('show');
+            urlRemove.disabled = false;
+            submitRemove.disabled = false;
         } else {
             offlineBadge.classList.add('show');
+            urlRemove.disabled = true;
+            submitRemove.disabled = true;
         }
     }
 
-    var input = document.getElementById('input'),
+    var wrapper = document.getElementById('main_content'),
+        input = document.getElementById('input'),
+        file = document.getElementById('file'),
+        fileName = document.getElementById('fileName'),
+        renderLocal = document.getElementById('renderLocal'),
+        formRemove = document.getElementById('formRemove'),
+        urlRemove = document.getElementById('urlRemove'),
+        submitRemove = document.getElementById('submitRemove'),
+        renderRemove = document.getElementById('renderRemove'),
         view = document.getElementById('view'),
+        encode = document.getElementsByName('encode'),
+        none = document.getElementById('none'),
+        readable = document.getElementById('readable'),
+        form = document.de4js,
+        packer = form.encode.value,
         temp = '',
 
-        encode = document.getElementsByName('encode'),
-        packer = document.bvDecode.encode.value,
-
-        checkAll = function (check) {
+        disableAll = function (check) {
             for (var i = 0; i < encode.length; i++) {
                 if (encode[i].value === 'nicify') continue;
                 encode[i].disabled = check;
@@ -72,7 +117,7 @@
             view.classList.add('waiting');
             clear.disabled = true;
             autoBtn.disabled = true;
-            checkAll(true);
+            disableAll(true);
         },
         stopEffect = function () {
             isAuto = false;
@@ -80,8 +125,7 @@
             clear.disabled = false;
             autoBtn.disabled = false;
             setTimeout(function () {
-                checkAll(false);
-                if (packer === '') temp = '';
+                disableAll(false);
             }, 0);
         },
 
@@ -146,7 +190,7 @@
                 type = 'jsfuck';
             } else if (source.indexOf(' ') === -1 && (source.indexOf('%2') !== -1 || source.replace(/[^%]+/g, '').length > 3)) {
                 type = 'urlencode';
-            } else if (/^[\s\n]*var\s_0x\w+\s?=\s?\["/.test(source)) {
+            } else if (/^[\s\n]*var\s([\w\d_$]+)\s?=\s?\["/.test(source)) {
                 type = 'arrayencode';
             } else if (source.indexOf('eval(') !== -1) {
                 if (/\b(window|document|console)\.\b/i.test(source)) return type;
@@ -163,7 +207,7 @@
             if (temp === '') temp = input.value.trim();
             if (temp === '') return;
 
-            packer = isAuto ? detect(temp) : document.bvDecode.encode.value;
+            packer = isAuto ? detect(temp) : form.encode.value;
 
             if (packer === 'nicify') return;
             if (packer === '') {
@@ -192,18 +236,21 @@
                 source: temp,
                 packer: packer
             });
-        }, 250);
+        }, 250),
+
+        changeEncode = function (e) {
+            var _this = e.target;
+            if (_this.name !== 'encode') return;
+            decode();
+        };
 
     input.oninput = function () {
         temp = input.value.trim();
         decode();
-    }
+    };
 
-    for (var i = 0; i < encode.length; i++) {
-        encode[i].onchange = function () {
-            decode();
-        };
-    }
+    form.addEventListener('change', changeEncode);
+    form.addEventListener('click', changeEncode);
 
     autoBtn.onclick = function () {
         isAuto = true;
@@ -222,6 +269,12 @@
 
     clear.onclick = function () {
         view.textContent = '';
+        file.value = '';
+        renderLocal.textContent = '';
+        fileName.textContent = '';
+        renderRemove.textContent = '';
+        urlRemove.value = '';
+        none.click();
 
         stopEffect();
         setTimeout(function () {
@@ -244,5 +297,88 @@
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
     updateOnlineStatus();
+
+    // Tabs control
+    wrapper.addEventListener('click', function (e) {
+        var _this = e.target;
+        if (!_this.classList.contains('tab')) return;
+
+        clear.click();
+
+        wrapper.querySelector('.tab.active').classList.remove('active');
+        _this.classList.add('active');
+
+        wrapper.querySelector('.tab-content.show').classList.remove('show');
+        wrapper.querySelector('#content' + _this.dataset.target).classList.add('show');
+    });
+
+
+    file.onchange = function () {
+        var fragment = new DocumentFragment(),
+            fileObj = this.files[0];
+
+        fileName.textContent = fileObj.name;
+
+        if (fileObj.type !== 'text/javascript' && fileObj.type !== 'text/plain') {
+            renderLocal.textContent = 'Invalid file type';
+            return;
+        }
+
+        temp = '';
+        renderLocal.textContent = '';
+
+        parseFile(fileObj, function (data) {
+            temp += data;
+            var txt = document.createTextNode(data);
+            fragment.appendChild(txt);
+        }, function () {
+            decode();
+            renderLocal.appendChild(fragment);
+            file.value = '';
+        });
+    };
+
+    file.onfocus = function () {
+        this.classList.add('has-focus');
+    };
+
+    file.onblur = function () {
+        this.classList.remove('has-focus');
+    };
+
+
+    formRemove.onsubmit = function (e) {
+        e.preventDefault();
+        var fragment = new DocumentFragment(),
+            url = urlRemove.value;
+
+        temp = '';
+        renderRemove.textContent = '';
+
+        fetch(url).then(function (res) {
+            if (!res.ok) {
+                throw Error(res.statusText);
+            }
+            if (res.headers.get('content-type').search(/(application\/javascript|text\/plain)/i) !== 0) {
+                throw Error('Invalid file type');
+            }
+            return res.text();
+        }).then(function (data) {
+            temp = data;
+            decode();
+
+            var txt = document.createTextNode(data);
+            fragment.appendChild(txt);
+            renderRemove.appendChild(fragment);
+        }).catch(function (error) {
+            renderRemove.textContent = error.message;
+        });
+    };
+
+
+    readable.onchange = function () {
+        temp = readable.value;
+        format();
+    };
 
 })();

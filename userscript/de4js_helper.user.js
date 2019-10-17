@@ -24,8 +24,10 @@
     'use strict';
 
     var nicify = document.getElementById('nicify'),
+        label = nicify.nextSibling.nextSibling.textContent,
         none = document.getElementById('none'),
         input = document.getElementById('input'),
+        output = document.getElementById('readable'),
         view = document.getElementById('view');
 
     function jsnice() {
@@ -42,17 +44,19 @@
             onload: function (response) {
                 var source;
 
-                if (
-                    response.response && response.response.js &&
-                    response.response.js.indexOf('// Error compiling input') !== 0
-                )
+                if (response.response && response.response.js) {
                     source = response.response.js;
+                }
 
                 nicify.checked = false;
                 none.checked = true;
 
-                input.value = source;
-                input.oninput();
+                if (!source) {
+                    view.textContent = 'Unknown error';
+                } else {
+                    output.value = source;
+                    output.onchange();
+                }
             },
             onerror: function (e) {
                 console.error(e); // eslint-disable-line no-console
@@ -66,6 +70,7 @@
     }
 
     nicify.disabled = false;
+    nicify.nextSibling.nextSibling.textContent = label;
 
     input.addEventListener('input', function () {
         if (nicify.checked) jsnice();
