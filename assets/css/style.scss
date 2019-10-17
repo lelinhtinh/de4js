@@ -285,42 +285,37 @@ pre {
   z-index: -1;
 
   &+label {
-    color: #1d1f21;
-    border: 1px solid #1d1f21;
-    background-color: #6b6b6b;
-    font-size: 1.25rem;
-    font-weight: 700;
+    color: #eee;
+    border: 2px solid rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.7);
     cursor: pointer;
     display: block;
     position: relative;
+    border-radius: 50px;
+    overflow: hidden;
 
     span {
       display: block;
-      padding: 0 235px 0 10px;
+      padding: 0 245px 0 20px;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-    }
-
-    strong {
-      color: #6b6b6b;
-      background-color: #1d1f21;
-      display: block;
-      width: 225px;
-      position: absolute;
-      right: 0;
-      top: 0;
-      text-align: center;
-    }
-
-    span,
-    strong {
       height: 40px;
       line-height: 40px;
     }
 
-    svg {
-      fill: currentColor;
+    strong {
+      display: block;
+      width: 225px;
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      height: 36px;
+      line-height: 36px;
+      padding: 0;
+      text-align: center;
+      border-radius: 50px;
+      background: #222;
     }
   }
 
@@ -330,14 +325,9 @@ pre {
     border-color: #b5e853;
 
     strong {
-      background-color: #334217;
+      background: #b5e853;
+      color: #111;
     }
-  }
-}
-
-@media screen and (max-width: 50em) {
-  .inputfile+label strong {
-    display: block;
   }
 }
 
@@ -360,13 +350,14 @@ pre {
   input {
     width: 70%;
     height: 40px;
-    padding: 0 10px;
+    padding: 0 20px;
     float: left;
     border: 2px solid rgba(0, 0, 0, 0.7);
     background: rgba(0, 0, 0, 0.7);
     box-sizing: border-box;
     border-radius: 50px 0 0 50px;
     color: #eee;
+    box-shadow: initial;
 
     &::placeholder {
       color: #999;
