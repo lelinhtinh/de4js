@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: " en-US " }}" manifest="de4js.appcache">
+<html lang="{{ site.lang | default: 'en-US' }}" manifest="de4js.appcache">
 
 <head>
     <meta charset='utf-8'>
@@ -35,18 +35,45 @@
                 {% if site.show_downloads %}
                 <a href="{{ site.github.zip_url }}" class="btn">Download as .zip</a>
                 <a href="{{ site.github.tar_url }}" class="btn">Download as .tar.gz</a> {% endif %}
-                <a href="{{ site.github.repository_url }}" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+                <a href="{{ site.github.repository_url }}" target="_blank" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
             </section>
         </div>
     </header>
 
     <div class="container">
         <section id="main_content">
-            <form class="wrap" name="bvDecode">
-                <textarea id="input" class="content" rows="7" placeholder="Paste code here..."></textarea>
-                <textarea id="output"></textarea>
+            <div class="tabs">
+                <div class="tab active" data-target="String">String</div>
+                <div class="tab" data-target="Local">Local File</div>
+                <div class="tab" data-target="Remote">Remote File</div>
+            </div>
+            <div class="cf"></div>
+            <div class="tabs-contents">
+                <div class="tab-content show" id="contentString">
+                    <textarea id="input" class="content" rows="7" placeholder="Paste code here..."></textarea>
+                </div>
+                <div class="tab-content" id="contentLocal">
+                    <div class="box">
+                        <input type="file" name="file" id="file" class="inputfile" accept="text/javascript,text/plain">
+                        <label for="file" class="read-only">
+                            <span id="fileName"></span>
+                            <strong>Choose a file…</strong>
+                        </label>
+                    </div>
+                    <pre id="renderLocal" class="render read-only"></pre>
+                </div>
+                <div class="tab-content" id="contentRemote">
+                    <form class="form-wrapper cf" id="formRemove">
+                        <input type="url" placeholder="Enter a URL" id="urlRemove" required>
+                        <button type="submit" class="btn" id="submitRemove">Submit</button>
+                    </form>
+                    <small>Cross-origin requests require Access-Control-Allow-Origin header</small>
+                    <pre id="renderRemove" class="render read-only"></pre>
+                </div>
+            </div>
 
-                <div class="config center">
+            <div class="config center">
+                <form name="de4js">
                     <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
                     <label for="none">None</label>
                     {% for opt in site.data.options %}
@@ -54,37 +81,33 @@
                         <label for="{{ opt.key }}">{{ opt.name }}</label>
                     {% endfor %}
                     <input id="nicify" class="magic-radio" type="radio" value="nicify" name="encode" disabled>
-                    <label for="nicify">Unreadable</label>
-                </div>
+                    <label for="nicify">
+                        <a href="https://github.com/lelinhtinh/de4js/blob/master/README.md#helper" target="_blank" class="help">Unreadable</a>
+                    </label>
+                </form>
+            </div>
 
-                <div class="config center">
-                    <input id="beautify" class="magic-checkbox" type="checkbox" name="beautify" checked>
-                    <label for="beautify">Beautify</label>
-                    <input id="auto" class="magic-checkbox" type="checkbox" name="auto">
-                    <label for="auto">Auto</label>
-                </div>
+            <div class="center">
+                <button id="clear" class="btn" type="reset">
+                    Clear
+                </button>
+                <button id="auto" class="btn" type="button">
+                    Auto Decode
+                </button>
+            </div>
 
-                <div class="center">
-                    <button id="redecode" class="btn" type="button">
-                        Continue decoding
+            <div class="view-wrap">
+                <div class="view-control">
+                    <button id="copyjs" class="btn" type="button">
+                        <img class="btn-icon" src="{{ 'assets/icon/copy-document.png' | relative_url }}" alt="Copy to clipboard">
                     </button>
-                    <button id="clear" class="btn" type="reset">
-                        Clear
-                    </button>
+                    <a id="preview" class="btn" type="button" href="#" target="_blank">
+                        <img class="btn-icon" src="{{ 'assets/icon/external-link-symbol.png' | relative_url }}" alt="Open in new tab">
+                    </a>
                 </div>
-
-                <div class="view-wrap">
-                    <div class="view-control">
-                        <button id="copyjs" class="btn" type="button">
-                            <img class="btn-icon" src="{{ 'assets/icon/copy-document.png' | relative_url }}" alt="Copy to clipboard">
-                        </button>
-                        <a id="preview" class="btn" type="button" href="#" target="_blank">
-                            <img class="btn-icon" src="{{ 'assets/icon/external-link-symbol.png' | relative_url }}" alt="Open in new tab">
-                        </a>
-                    </div>
-                    <pre id="view" class="hljs">Please choose a right encoding type!</pre>
-                </div>
-            </form>
+                <textarea id="readable"></textarea>
+                <pre id="view" class="hljs"></pre>
+            </div>
         </section>
     </div>
 

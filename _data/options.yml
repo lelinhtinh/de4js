@@ -15,6 +15,6 @@
 - key: p_a_c_k_e_r
   name: Packer
 - key: javascriptobfuscator
-  name: Javascript Obfuscator
+  name: JS Obfuscator
 - key: myobfuscate
   name: My Obfuscate

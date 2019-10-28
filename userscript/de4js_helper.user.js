@@ -24,29 +24,39 @@
     'use strict';
 
     var nicify = document.getElementById('nicify'),
+        label = nicify.nextSibling.nextSibling.textContent,
+        none = document.getElementById('none'),
         input = document.getElementById('input'),
-        output = document.getElementById('output'),
-        view = document.getElementById('view'),
-        redecode = document.getElementById('redecode');
+        output = document.getElementById('readable'),
+        view = document.getElementById('view');
 
     function jsnice() {
         if (!isOnine()) return;
-        if (input.value.trim() === '') return;
+        var txt = view.textContent.trim() || input.value.trim();
+        if (!txt) return;
 
         view.classList.add('waiting');
         GM.xmlHttpRequest({
             method: 'POST',
             url: 'http://jsnice.org/beautify?pretty=0&rename=1&types=0&packers=0&transpile=0&suggest=0',
             responseType: 'json',
-            data: input.value,
+            data: txt,
             onload: function (response) {
-                var source = input.value;
+                var source;
 
-                if (response.response && response.response.js && response.response.js.indexOf('// Error compiling input') !== 0)
+                if (response.response && response.response.js) {
                     source = response.response.js;
+                }
 
-                output.value = source;
-                document.getElementById('beautify').onchange();
+                nicify.checked = false;
+                none.checked = true;
+
+                if (!source) {
+                    view.textContent = 'Unknown error';
+                } else {
+                    output.value = source;
+                    output.onchange();
+                }
             },
             onerror: function (e) {
                 console.error(e); // eslint-disable-line no-console
@@ -60,13 +70,17 @@
     }
 
     nicify.disabled = false;
-    nicify.onchange = jsnice;
+    nicify.nextSibling.nextSibling.textContent = label;
 
     input.addEventListener('input', function () {
         if (nicify.checked) jsnice();
     });
 
-    redecode.addEventListener('click', function () {
+    nicify.addEventListener('click', function () {
+        if (nicify.checked) jsnice();
+    });
+
+    nicify.addEventListener('onchange', function () {
         if (nicify.checked) jsnice();
     });
 
