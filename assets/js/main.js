@@ -191,7 +191,7 @@
                 type = 'jsfuck';
             } else if (source.indexOf(' ') === -1 && (source.indexOf('%2') !== -1 || source.replace(/[^%]+/g, '').length > 3)) {
                 type = 'urlencode';
-            } else if (/^[\s\n]*var\s([\w\d_$]+)\s?=\s?\["/.test(source)) {
+            } else if (/[\s\n]*var\s+([\w\d_$]+)\s*=\s*\[.*?\];/.test(source)) {
                 type = 'arrayencode';
             } else if (source.indexOf('eval(') !== -1) {
                 if (/\b(window|document|console)\.\b/i.test(source)) return type;

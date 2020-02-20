@@ -47,51 +47,31 @@ self.addEventListener('message', function (e) {
         }
     } else if (packer === 'arrayencode') {
         try {
-            var pattsplit = /(?:[^\\])"];/,
-                lastchar = '';
+            var pattarr = /[\s\n]*var\s+([\w\d_$]+)\s*=\s*\[.*?\];/,
+                _var = source.match(pattarr);
 
-            if (pattsplit.test(source)) {
-                lastchar = source.match(pattsplit)[0].charAt(0);
+            if (_var && _var.length === 2) {
+                var _name = _var[1],
+                    _code = source.replace(pattarr, ''),
 
-                var _arraysource = source.split(pattsplit),
-                    _var = _arraysource[0] + lastchar + '"]',
-                    _name = _var.match(/var\s([\w\d_$]+)\s?=\s?\["/)[1].replace(/(\$)/g, '\\$1'),
-                    _code = _arraysource.slice(0),
-
-                    pattname = new RegExp('var\\s' + _name + '\\s?=\\s?\\["'),
                     pattkey = new RegExp(_name + '\\[(\\d+)\\]', 'g'),
 
-                    escapable = /[\\\"\x00-\x1f\x7f-\uffff]/g, // eslint-disable-line
-                    meta = {
-                        '\b': '\\b',
-                        '\t': '\\t',
-                        '\n': '\\n',
-                        '\f': '\\f',
-                        '\r': '\\r',
-                        '"': '\\"',
-                        '\\': '\\\\'
-                    },
-                    quote = function (string) {
-                        escapable.lastIndex = 0;
-                        return escapable.test(string) ?
-                            string.replace(escapable, function (a) {
-                                var c = meta[a];
-                                return typeof c === 'string' ? c :
-                                    '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-                            }) : string;
+                    // e039c25 | https://github.com/benjamingr/RegExp.escape
+                    quote = function (s) {
+                        return String(s).replace(/[\\^$*+?.()|[\]{}]/g, '\\$&');
                     };
 
-                _var = _var.replace(pattname, '["');
+                _var = _var[0].replace(/[\s\S]*?\[/, '[');
                 _var = eval(_var);
 
-                _code.shift();
-                _code = _code.join('');
                 _code.replace(pattkey, function (key, index) {
-                    _code = _code.replace(key, '"' + quote(_var[index]) + '"');
+                    var item = quote(_var[index]),
+                        q = item.indexOf('"') !== -1 ? "'" : '"';
+                    _code = _code.replace(key, q + quote(_var[index]) + q);
                     return _code;
                 });
 
-                _code = _code.replace(/(\["([\w\d_$]+)"\])/gi, '.$2');
+                _code = _code.replace(/(\[("|')([\w\d_$]+)("|')\])/gi, '.$3');
                 source = _code;
             }
         } catch (err) {
