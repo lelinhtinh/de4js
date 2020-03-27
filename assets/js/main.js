@@ -63,11 +63,11 @@
 
     function updateOnlineStatus() {
         if (navigator.onLine) {
-            offlineBadge.classList.remove('show');
+            title.classList.remove('offline');
             urlRemove.disabled = false;
             submitRemove.disabled = false;
         } else {
-            offlineBadge.classList.add('show');
+            title.classList.add('offline');
             urlRemove.disabled = true;
             submitRemove.disabled = true;
         }
@@ -111,7 +111,7 @@
             }
         }),
 
-        offlineBadge = document.getElementById('offline'),
+        title = document.getElementById('title'),
 
         startEffect = function () {
             view.textContent = '';
