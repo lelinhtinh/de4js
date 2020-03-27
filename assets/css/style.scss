@@ -111,8 +111,7 @@ code {
   }
 }
 
-#offline {
-  display: none;
+sup {
   font-size: .4em;
   text-transform: uppercase;
   color: #afafaf;
@@ -122,10 +121,6 @@ code {
   background: #444;
   border-radius: 4px;
   text-shadow: initial;
-
-  &.show {
-    display: inline-block;
-  }
 }
 
 #nicify {
@@ -416,4 +411,8 @@ small {
 
 #readable {
   display: none;
+}
+
+#title.offline {
+  color: $disabled-color;
 }
