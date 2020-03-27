@@ -71,7 +71,7 @@ self.addEventListener('message', function (e) {
                     return _code;
                 });
 
-                _code = _code.replace(/(\[("|')([\w\d_$]+)("|')\])/gi, '.$3');
+                _code = _code.replace(/(\[("|')([\w\d_$]+)("|')\])/gi, '.$3 ');
                 source = _code;
             }
         } catch (err) {
@@ -80,7 +80,7 @@ self.addEventListener('message', function (e) {
     } else if (packer === 'jsfuck') {
         // v6 | https://codegolf.stackexchange.com/a/28745
         try {
-            source = /.+(?=\n})/.exec(eval(source.slice(0,-2)));
+            source = /.+(?=\n})/.exec(eval(source.slice(0, -2)));
         } catch (err) {
             console.log(err);
         }
