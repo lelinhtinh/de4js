@@ -54,20 +54,21 @@ self.addEventListener('message', function (e) {
                 var _name = _var[1],
                     _code = source.replace(pattarr, ''),
 
-                    pattkey = new RegExp(_name + '\\[(\\d+)\\]', 'g'),
+                    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
+                    quote = function (s, q) {
+                        return s.replace(new RegExp('[*+?^{}()|[\\]\\\\' + q + ']', 'g'), '\\$&');
+                    },
 
-                    // e039c25 | https://github.com/benjamingr/RegExp.escape
-                    quote = function (s) {
-                        return String(s).replace(/[\\^$*+?.()|[\]{}]/g, '\\$&');
-                    };
+                    pattkey = new RegExp(quote(_name, '$') + '\\[(\\d+)\\]', 'g');
 
                 _var = _var[0].replace(/[\s\S]*?\[/, '[');
                 _var = eval(_var);
 
                 _code.replace(pattkey, function (key, index) {
-                    var item = quote(_var[index]),
+                    var item = _var[index],
                         q = item.indexOf('"') !== -1 ? "'" : '"';
-                    _code = _code.replace(key, q + quote(_var[index]) + q);
+
+                    _code = _code.replace(key, q + quote(_var[index], q) + q);
                     return _code;
                 });
 
