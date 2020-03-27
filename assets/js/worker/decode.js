@@ -56,10 +56,10 @@ self.addEventListener('message', function (e) {
 
                     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
                     quote = function (s, q) {
-                        return s.replace(new RegExp('[*+?^{}()|[\\]\\\\' + q + ']', 'g'), '\\$&');
+                        return s.replace(new RegExp('[*+?^${}()|[\\]\\\\' + q + ']', 'g'), '\\$&');
                     },
 
-                    pattkey = new RegExp(quote(_name, '$') + '\\[(\\d+)\\]', 'g');
+                    pattkey = new RegExp(_name.replace(/\$/g, '\\$') + '\\[(\\d+)\\]', 'g');
 
                 _var = _var[0].replace(/[\s\S]*?\[/, '[');
                 _var = eval(_var);
