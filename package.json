@@ -30,11 +30,5 @@
   "homepage": "https://lelinhtinh.github.io/de4js/",
   "devDependencies": {
     "eslint-plugin-frontmatter": "0.0.8"
-  },
-  "dependencies": {
-    "clipboard": "^2.0.4",
-    "highlight.js": "^9.15.10",
-    "js-beautify": "^1.10.2",
-    "magic-check": "^1.0.3"
   }
 }
