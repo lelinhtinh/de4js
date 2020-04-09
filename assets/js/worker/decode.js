@@ -9,7 +9,7 @@
  * @license  {{ site.license }}
  */
 
-/* globals AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
+/* globals JSFuckDecode, AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
 /* eslint-disable no-console */
 
 self.addEventListener('message', function (e) {
@@ -79,9 +79,16 @@ self.addEventListener('message', function (e) {
             console.log(err);
         }
     } else if (packer === 'jsfuck') {
-        // v6 | https://codegolf.stackexchange.com/a/28745
         try {
-            source = /.+(?=\n})/.exec(eval(source.slice(0, -2)));
+            self._window = self.window;
+            self.window = {};
+            self.importScripts('{{ "/assets/js/lib/jsfuck/jsfuck.js" | relative_url }}');
+            self.JSFuck = self.window.JSFuck;
+            self.window = self._window;
+
+            self.importScripts('{{ "/assets/js/lib/enkhee-osiris/decoder-jsfuck.js" | relative_url }}');
+
+            source = JSFuckDecode.decode(source);
         } catch (err) {
             console.log(err);
         }
