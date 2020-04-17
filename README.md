@@ -31,6 +31,12 @@ Install one of the following links:
   - [JJencode](http://utf-8.jp/public/jjencode.html)
   - [AAencode](http://utf-8.jp/public/aaencode.html)
 
+## Running with Docker
+
+```docker
+docker-compose up --build
+```
+
 ## Development
 
 ### Install
