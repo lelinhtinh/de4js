@@ -77,6 +77,7 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 ### Active Contributors
 
 - [lelinhtinh](https://github.com/lelinhtinh)
+- [Himura2la](https://github.com/Himura2la)
 
 ### Open Source Contributors
 
