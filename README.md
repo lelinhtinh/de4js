@@ -16,9 +16,9 @@ Install one of the following links:
 
 ## Features
 
-- Work offline.
+- Works offline.
 - Source code beautifier / syntax highlighter.
-- Make obfuscated code [readable](#helper).
+- Makes obfuscated code [readable](#helper).
 - Performance unpackers:
   - **Eval**, e.g. Packer, [WiseLoop](http://wiseloop.com/demo/php-javascript-obfuscator)
   - **Array**, e.g. Javascript Obfuscator
