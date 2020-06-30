@@ -87,4 +87,3 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 - [magic-check@1.0.3](https://github.com/forsigner/magic-check)
 - [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)
 - [Decoder-JJEncode](https://github.com/jacobsoo/Decoder-JJEncode)
-- [Decoder-JSFuck](https://github.com/enkhee-Osiris/Decoder-JSFuck)
