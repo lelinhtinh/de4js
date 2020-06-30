@@ -80,15 +80,18 @@ self.addEventListener('message', function (e) {
         }
     } else if (packer === 'jsfuck') {
         try {
-            self._window = self.window;
-            self.window = {};
-            self.importScripts('{{ "/assets/js/lib/jsfuck/jsfuck.js" | relative_url }}');
-            self.JSFuck = self.window.JSFuck;
-            self.window = self._window;
+            var pattfuck = /\)(\(\)[\s\n]*)$/,
+                pattanon = /^[\s\n]*function\sanonymous\([\s\n]+\)\s\{[\s\n]+/,
+                _fucksource = source;
+            if (pattfuck.test(source)) _fucksource = _fucksource.replace(pattfuck, ')');
+            _fucksource = eval(_fucksource + '.toString()');
 
-            self.importScripts('{{ "/assets/js/lib/enkhee-osiris/decoder-jsfuck.js" | relative_url }}');
+            if (pattanon.test(_fucksource)) {
+                _fucksource = _fucksource.replace(pattanon, '');
+                _fucksource = _fucksource.replace(/[\s\n]+\}[\s\n]*$/, '');
+            }
 
-            source = JSFuckDecode.decode(source);
+            source = _fucksource;
         } catch (err) {
             console.log(err);
         }
