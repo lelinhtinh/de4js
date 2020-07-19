@@ -12,7 +12,7 @@
 self.addEventListener('message', function (e) {
     var source = e.data.source;
 
-    if (e.data.beautify) {
+    try {
         self._window = self.window;
         self.window = {};
 
@@ -24,14 +24,17 @@ self.addEventListener('message', function (e) {
         });
 
         self.window = self._window;
+    } catch (err) {
+        console.log(err);
     }
 
-    self.importScripts('{{ "/assets/js/lib/highlight-js/highlight.min.js" | relative_url }}');
+    try {
+        self.importScripts('{{ "/assets/js/lib/highlight-js/highlight.min.js" | relative_url }}');
 
-    source = self.hljs.highlight('javascript', source).value;
-    source = source.split('\n');
-    source = source.join('</code><code>');
-    source = '<code>' + source + '</code>';
+        source = self.hljs.highlight('javascript', source).value;
+    } catch (err) {
+        console.log(err);
+    }
 
     self.postMessage(source);
 });

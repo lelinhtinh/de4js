@@ -30,60 +30,129 @@
         };
     }
 
+    // https://stackoverflow.com/a/28318964
+    function parseFile(file, chunk, done) {
+        var fileSize = file.size,
+            chunkSize = 64 * 1024,
+            offset = 0,
+            chunkReaderBlock = null,
+
+            readEventHandler = function (evt) {
+                if (evt.target.error == null) {
+                    chunk(evt.target.result);
+                } else {
+                    return;
+                }
+                if (offset >= fileSize) {
+                    done();
+                    return;
+                }
+                offset += chunkSize;
+                chunkReaderBlock(offset, chunkSize, file);
+            };
+
+        chunkReaderBlock = function (_offset, length, _file) {
+            var r = new FileReader();
+            var blob = _file.slice(_offset, length + _offset);
+            r.onload = readEventHandler;
+            r.readAsText(blob);
+        };
+
+        chunkReaderBlock(offset, chunkSize, file);
+    }
+
     function updateOnlineStatus() {
         if (navigator.onLine) {
-            offlineBadge.classList.remove('show');
+            title.classList.remove('offline');
+            urlRemove.disabled = false;
+            submitRemove.disabled = false;
         } else {
-            offlineBadge.classList.add('show');
+            title.classList.add('offline');
+            urlRemove.disabled = true;
+            submitRemove.disabled = true;
         }
     }
 
-    var input = document.getElementById('input'),
-        output = document.getElementById('output'),
+    function onUpdateReady() {
+        if (confirm('A new version is downloaded. Launch it?')) {
+            window.location.reload();
+        }
+    }
+
+
+    var wrapper = document.getElementById('main_content'),
+        input = document.getElementById('input'),
+        file = document.getElementById('file'),
+        fileName = document.getElementById('fileName'),
+        contentLocal = document.getElementById('contentLocal'),
+        renderLocal = document.getElementById('renderLocal'),
+        formRemove = document.getElementById('formRemove'),
+        urlRemove = document.getElementById('urlRemove'),
+        submitRemove = document.getElementById('submitRemove'),
+        renderRemove = document.getElementById('renderRemove'),
         view = document.getElementById('view'),
-
         encode = document.getElementsByName('encode'),
+        none = document.getElementById('none'),
+        readable = document.getElementById('readable'),
+        form = document.de4js,
+        packer = form.encode.value,
+        temp = '',
 
-        beautify = document.getElementById('beautify'),
-        auto = document.getElementById('auto'),
+        disableAll = function (check) {
+            for (var i = 0; i < encode.length; i++) {
+                if (encode[i].value === 'nicify') continue;
+                encode[i].disabled = check;
+            }
+        },
 
-        redecode = document.getElementById('redecode'),
         clear = document.getElementById('clear'),
+
+        autoBtn = document.getElementById('auto'),
+        isAuto = false,
 
         preview = document.getElementById('preview'),
 
         clipboard = new ClipboardJS('#copyjs', {
-            target: function() {
+            target: function () {
                 return view;
             }
         }),
 
-        offlineBadge = document.getElementById('offline'),
+        title = document.getElementById('title'),
 
         startEffect = function () {
-            if (output.value === '') view.textContent = 'Please wait...';
+            view.textContent = '';
             view.classList.add('waiting');
+            clear.disabled = true;
+            autoBtn.disabled = true;
+            disableAll(true);
         },
         stopEffect = function () {
+            isAuto = false;
             view.classList.remove('waiting');
+            clear.disabled = false;
+            autoBtn.disabled = false;
+            setTimeout(function () {
+                disableAll(false);
+            }, 0);
         },
 
-        resetcopy = function (trigger) {
+        resetCopy = function (trigger) {
             if (!trigger.classList.contains('copied')) return;
             trigger.classList.remove('copied');
         },
-        timereset = function (trigger) {
+        timeReset = function (trigger) {
             setTimeout(function () {
-                resetcopy(trigger);
+                resetCopy(trigger);
             }, 800);
         },
 
-        externalStyle = '*{margin:0;padding:0}html{line-height:1em;background:#1d1f21;color:#c5c8c6}pre{counter-reset:line-numbers;white-space:pre-wrap;word-wrap:break-word;word-break:break-all}code::before{counter-increment:line-numbers;content:counter(line-numbers);display:block;position:absolute;left:-4.5em;top:0;width:4em;text-align:right;color:#60686f;white-space:pre}code{display:block;position:relative;margin-left:4em;padding-left:.5em;min-height:1em;border-left:1px solid #32363b}pre{padding:.5em .5em .5em 5em;border-left:1px solid #1d1f21}pre.hljs{padding-left:.5em;border-left:0 none}code::after{content:".";visibility:hidden} .hljs-comment,.hljs-quote{color:#969896}.hljs-variable,.hljs-template-variable,.hljs-tag,.hljs-name,.hljs-selector-id,.hljs-selector-class,.hljs-regexp,.hljs-deletion{color:#c66}.hljs-number,.hljs-built_in,.hljs-builtin-name,.hljs-literal,.hljs-type,.hljs-params,.hljs-meta,.hljs-link{color:#de935f}.hljs-attribute{color:#f0c674}.hljs-string,.hljs-symbol,.hljs-bullet,.hljs-addition{color:#b5bd68}.hljs-title,.hljs-section{color:#81a2be}.hljs-keyword,.hljs-selector-tag{color:#b294bb}.hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}',
+        externalStyle = '*{margin:0;padding:0}html{line-height:1em;background:#1d1f21;color:#c5c8c6}pre{white-space:pre-wrap;word-wrap:break-word;word-break:break-all}{% include highlight-js/styles/hljs-theme.css %}html,body,.hljs{background:#030303}',
         externalUrl,
         externalPreview = function (source) {
             if (externalUrl) URL.revokeObjectURL(externalUrl);
 
-            source = '<html><head><meta charset="utf-8"><link rel="shortcut icon" type="image/png" href="{{ "/favicon.png" | relative_url }}"><title>{{ site.name }} | Preview</title><style>' + externalStyle + '</style></head><body><pre class="hljs">' + source + '</pre></body></html>';
+            source = '<html><head><meta charset="utf-8"><link rel="shortcut icon" type="image/png" href="{{ site.url }}{{ site.baseurl }}{{ "/favicon.png" }}"><title>{{ site.name }} | Preview</title><style>' + externalStyle + '</style></head><body><pre class="hljs">' + source + '</pre></body></html>';
 
             externalUrl = new Blob([source], {
                 type: 'text/html'
@@ -98,9 +167,7 @@
         workerDecode,
 
         format = debounce(function () {
-            var source = output.value.trim();
-
-            if (source === '') return;
+            if (temp === '') return;
 
             if (!workerFormat) {
                 workerFormat = new Worker('{{ "/assets/js/worker/format.js" | relative_url }}');
@@ -114,8 +181,7 @@
 
             startEffect();
             workerFormat.postMessage({
-                source: source,
-                beautify: beautify.checked
+                source: temp
             });
         }, 250),
 
@@ -132,7 +198,7 @@
                 type = 'jsfuck';
             } else if (source.indexOf(' ') === -1 && (source.indexOf('%2') !== -1 || source.replace(/[^%]+/g, '').length > 3)) {
                 type = 'urlencode';
-            } else if (/^[\s\n]*var\s_0x\w+\s?=\s?\["/.test(source)) {
+            } else if (/[\s\n]*var\s+([\w\d_$]+)\s*=\s*\[.*?\];/.test(source)) {
                 type = 'arrayencode';
             } else if (source.indexOf('eval(') !== -1) {
                 if (/\b(window|document|console)\.\b/i.test(source)) return type;
@@ -146,15 +212,13 @@
         },
 
         decode = debounce(function () {
-            var source = input.value.trim(),
-                packer = document.bvDecode.encode.value;
+            if (temp === '') temp = input.value.trim();
+            if (temp === '') return;
 
-            if (source === '') return;
-            if (auto.checked) packer = detect(source);
+            packer = isAuto ? detect(temp) : form.encode.value;
 
             if (packer === 'nicify') return;
             if (packer === '') {
-                output.value = source;
                 format();
                 return;
             }
@@ -162,61 +226,98 @@
             if (!workerDecode) {
                 workerDecode = new Worker('{{ "/assets/js/worker/decode.js" | relative_url }}');
                 workerDecode.addEventListener('message', function (e) {
-                    output.value = e.data;
+                    if (e.data !== temp) {
+                        temp = e.data;
 
-                    if (auto.checked && input.value !== output.value) {
-                        redecode.onclick();
-                    } else {
-                        format();
+                        if (isAuto) {
+                            decode();
+                            return;
+                        }
                     }
+
+                    format();
                 });
             }
 
             startEffect();
-            output.value = '';
             workerDecode.postMessage({
-                source: source,
+                source: temp,
                 packer: packer
             });
-        }, 250);
+        }, 250),
 
-    input.oninput = debounce(function () {
+        changeEncode = function (e) {
+            var _this = e.target;
+            if (_this.name !== 'encode') return;
+            decode();
+        },
+
+        dragEnd = function () {
+            contentLocal.classList.remove('drop-zone', 'drop-enter');
+        },
+
+        uploadFile = function (fileObj) {
+            if (!fileObj) return;
+
+            var fragment = new DocumentFragment();
+            fileName.textContent = fileObj.name;
+
+            if (!/((text|application)\/(ecmascript|(x-)?javascript)|text\/plain)/.test(fileObj.type)) {
+                renderLocal.textContent = 'Invalid file type';
+                return;
+            }
+
+            temp = '';
+            renderLocal.textContent = '';
+
+            parseFile(fileObj, function (data) {
+                temp += data;
+                var txt = document.createTextNode(data);
+                fragment.appendChild(txt);
+            }, function () {
+                decode();
+                renderLocal.appendChild(fragment);
+                file.value = '';
+            });
+        };
+
+    input.oninput = function () {
+        temp = input.value.trim();
         decode();
-    });
-    for (var i = 0; i < encode.length; i++) {
-        encode[i].onchange = decode;
-    }
+    };
 
-    beautify.onchange = format;
+    form.addEventListener('change', changeEncode);
+    form.addEventListener('click', changeEncode);
 
-    auto.onchange = function () {
-        for (var i = 0; i < encode.length; i++) {
-            if (encode[i].value === 'nicify') continue;
-            encode[i].disabled = auto.checked;
-        }
+    autoBtn.onclick = function () {
+        isAuto = true;
         decode();
     };
 
     clipboard.on('success', function (e) {
         e.trigger.classList.add('copied');
         e.clearSelection();
-        timereset(e.trigger);
+        timeReset(e.trigger);
     });
     clipboard.on('error', function (e) {
         e.trigger.classList.add('selected');
-        timereset(e.trigger);
+        timeReset(e.trigger);
     });
 
-    redecode.onclick = function () {
-        input.value = output.value;
-        decode();
-    };
-
     clear.onclick = function () {
-        view.textContent = 'Please choose a right encoding type!';
+        view.textContent = '';
+        file.value = '';
+        renderLocal.textContent = '';
+        dragEnd();
+        fileName.textContent = '';
+        renderRemove.textContent = '';
+        urlRemove.value = '';
+        none.click();
+
         stopEffect();
-        setTimeout(function() {
-            auto.onchange();
+        setTimeout(function () {
+            input.value = '';
+            temp = '';
         }, 0);
 
         if (workerDecode) {
@@ -231,8 +332,114 @@
         preview.classList.remove('show');
     };
 
-    window.addEventListener('online',  updateOnlineStatus);
+    window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
     updateOnlineStatus();
+
+    // Tabs control
+    wrapper.addEventListener('click', function (e) {
+        var _this = e.target;
+        if (!_this.classList.contains('tab')) return;
+
+        clear.click();
+
+        wrapper.querySelector('.tab.active').classList.remove('active');
+        _this.classList.add('active');
+
+        wrapper.querySelector('.tab-content.show').classList.remove('show');
+        wrapper.querySelector('#content' + _this.dataset.target).classList.add('show');
+    });
+
+
+    file.onchange = function () {
+        uploadFile(this.files[0]);
+    };
+
+    file.onfocus = function () {
+        this.classList.add('has-focus');
+    };
+
+    file.onblur = function () {
+        this.classList.remove('has-focus');
+    };
+
+    document.ondrop = function (e) {
+        e.preventDefault();
+
+        dragEnd();
+        if (e.target.id !== 'contentLocal') return;
+
+        uploadFile(e.dataTransfer.files[0]);
+    };
+
+    document.ondragover = function (e) {
+        e.preventDefault();
+        contentLocal.classList.add('drop-zone');
+    };
+
+    document.ondragend = function (e) {
+        e.preventDefault();
+        dragEnd();
+    };
+
+    document.onkeyup = function (e) {
+        if (e.keyCode !== 27) return;
+        dragEnd();
+    };
+
+    contentLocal.onclick = function () {
+        if (!contentLocal.classList.contains('drop-zone')) return;
+        dragEnd();
+    };
+
+    contentLocal.ondragenter = function (e) {
+        e.preventDefault();
+        this.classList.add('drop-enter');
+    };
+
+    contentLocal.ondragleave = function (e) {
+        e.preventDefault();
+        this.classList.remove('drop-enter');
+    };
+
+
+    formRemove.onsubmit = function (e) {
+        e.preventDefault();
+        var fragment = new DocumentFragment(),
+            url = urlRemove.value;
+
+        temp = '';
+        renderRemove.textContent = '';
+
+        fetch(url).then(function (res) {
+            if (!res.ok) {
+                throw Error(res.statusText);
+            }
+            if (res.headers.get('content-type').search(/((text|application)\/(ecmascript|(x-)?javascript)|text\/plain)/i) === -1) {
+                throw Error('Invalid file type');
+            }
+            return res.text();
+        }).then(function (data) {
+            temp = data;
+            decode();
+
+            var txt = document.createTextNode(data);
+            fragment.appendChild(txt);
+            renderRemove.appendChild(fragment);
+        }).catch(function (error) {
+            renderRemove.textContent = error.message;
+        });
+    };
+
+
+    readable.onchange = function () {
+        temp = readable.value;
+        format();
+    };
+
+    window.applicationCache.addEventListener('updateready', onUpdateReady);
+    if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+        onUpdateReady();
+    }
 
 })();

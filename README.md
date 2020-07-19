@@ -16,9 +16,9 @@ Install one of the following links:
 
 ## Features
 
-- Work offline.
+- Works offline.
 - Source code beautifier / syntax highlighter.
-- Make obfuscated code [readable](#helper).
+- Makes obfuscated code [readable](#helper).
 - Performance unpackers:
   - **Eval**, e.g. Packer, [WiseLoop](http://wiseloop.com/demo/php-javascript-obfuscator)
   - **Array**, e.g. Javascript Obfuscator
@@ -30,6 +30,12 @@ Install one of the following links:
   - [JSFuck](https://github.com/aemkei/jsfuck)
   - [JJencode](http://utf-8.jp/public/jjencode.html)
   - [AAencode](http://utf-8.jp/public/aaencode.html)
+
+## Running with Docker
+
+```docker
+docker-compose up --build
+```
 
 ## Development
 
@@ -71,13 +77,13 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 ### Active Contributors
 
 - [lelinhtinh](https://github.com/lelinhtinh)
+- [Himura2la](https://github.com/Himura2la)
 
 ### Open Source Contributors
 
-- [js-beautify@1.9.0-beta5](https://github.com/beautify-web/js-beautify)
-- [highlight.js@9.14.2](https://github.com/isagalaev/highlight.js)
+- [js-beautify@1.10.3](https://github.com/beautify-web/js-beautify)
+- [highlight.js@9.18.1](https://github.com/isagalaev/highlight.js)
 - [clipboard.js@2.0.4](https://github.com/zenorocha/clipboard.js)
 - [magic-check@1.0.3](https://github.com/forsigner/magic-check)
 - [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)
 - [Decoder-JJEncode](https://github.com/jacobsoo/Decoder-JJEncode)
-- [nderscore](https://codegolf.stackexchange.com/a/28745)
