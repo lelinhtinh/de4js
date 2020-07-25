@@ -65,7 +65,7 @@ Install **Jekyll** and other [dependencies](https://pages.github.com/versions/) 
 
 ### Running
 
-    bundle exec jekyll serve --watch --config _config.yml,_config_development.yml
+    bundle exec jekyll serve --watch --config _config.yml,_config_development.yml --livereload
 
 Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
