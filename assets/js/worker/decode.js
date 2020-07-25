@@ -9,7 +9,7 @@
  * @license  {{ site.license }}
  */
 
-/* globals JSFuckDecode, AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
+/* globals AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
 /* eslint-disable no-console */
 
 self.addEventListener('message', function (e) {
