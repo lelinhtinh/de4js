@@ -56,7 +56,7 @@ self.addEventListener('message', function (e) {
 
                     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
                     quote = function (s, q) {
-                        return s.replace(new RegExp('[*+?^${}()|[\\]\\\\' + q + ']', 'g'), '\\$&');
+                        return s.replace(new RegExp('[\\n*+?^${}()|[\\]\\\\' + q + ']', 'g'), '\\$&');
                     },
 
                     pattkey = new RegExp(_name.replace(/\$/g, '\\$') + '\\[(\\d+)\\]', 'g');
@@ -64,13 +64,20 @@ self.addEventListener('message', function (e) {
                 _var = _var[0].replace(/[\s\S]*?\[/, '[');
                 _var = eval(_var);
 
-                _code.replace(pattkey, function (key, index) {
-                    var item = _var[index],
-                        q = item.indexOf('"') !== -1 ? "'" : '"';
+                _code = _code.split(';');
+                _code = _code.map(function (piece) {
+                    piece.replace(pattkey, function (key, index) {
+                        var item = _var[index],
+                            q = item.indexOf('"') !== -1 ? "'" : '"';
 
-                    _code = _code.replace(key, q + quote(_var[index], q) + q);
-                    return _code;
+                        piece = piece.replace(key, q + quote(item, q) + q);
+
+                        return piece;
+                    });
+
+                    return piece;
                 });
+                _code = _code.join(';');
 
                 _code = _code.replace(/(\[("|')([\w\d_$]+)("|')\])/gi, '.$3 ');
                 source = _code;
