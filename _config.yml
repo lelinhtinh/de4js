@@ -15,5 +15,17 @@ google_analytics: UA-106940288-1
 sass:
   style: compressed
 
-exclude: ['Gemfile', 'Gemfile.lock', 'node_modules', 'package.json', 'package-lock.json']
+exclude:
+  [
+    "Gemfile",
+    "Gemfile.lock",
+    "node_modules",
+    "package.json",
+    "package-lock.json",
+    "Dockerfile",
+    "docker-compose.yml",
+    "docker-entrypoint.sh",
+  ]
 incremental: false
+
+environment: production
