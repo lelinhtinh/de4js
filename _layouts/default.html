@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: 'en-US' }}" manifest="de4js.appcache">
+<html lang="{{ site.lang | default: 'en-US' }}"{% if site.environment == "production" or jekyll.environment == "production" %} manifest="de4js.appcache"{% endif %}>
 
 <head>
     <meta charset='utf-8'>
@@ -101,7 +101,10 @@
                     <button id="copyjs" class="btn" type="button">
                         <img class="btn-icon" src="{{ 'assets/icon/copy-document.png' | relative_url }}" alt="Copy to clipboard">
                     </button>
-                    <a id="preview" class="btn" type="button" href="#" target="_blank">
+                    <a id="download" class="btn" type="button" href="#" download="result.js">
+                        <img class="btn-icon" src="{{ 'assets/icon/download.png' | relative_url }}" alt="Download file">
+                    </a>
+                    <a id="preview" class="btn" type="button" href="#">
                         <img class="btn-icon" src="{{ 'assets/icon/external-link-symbol.png' | relative_url }}" alt="Open in new tab">
                     </a>
                 </div>
@@ -113,6 +116,7 @@
 
     <script type="text/javascript" src="{{ '/assets/js/lib/clipboard-js/clipboard.min.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/main.js' | relative_url }}" type="text/javascript"></script>
+
 </body>
 
 </html>

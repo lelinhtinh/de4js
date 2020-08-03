@@ -111,6 +111,7 @@
         isAuto = false,
 
         preview = document.getElementById('preview'),
+        download = document.getElementById('download'),
 
         clipboard = new ClipboardJS('#copyjs', {
             target: function () {
@@ -163,6 +164,19 @@
             preview.href = externalUrl;
         },
 
+        downloadUrl,
+        downloadResult = function (source) {
+            if (downloadUrl) URL.revokeObjectURL(downloadUrl);
+
+            downloadUrl = new Blob([source], {
+                type: 'text/javascript'
+            });
+            downloadUrl = URL.createObjectURL(downloadUrl);
+
+            download.classList.add('show');
+            download.href = downloadUrl;
+        },
+
         workerFormat,
         workerDecode,
 
@@ -172,8 +186,13 @@
             if (!workerFormat) {
                 workerFormat = new Worker('{{ "/assets/js/worker/format.js" | relative_url }}');
                 workerFormat.addEventListener('message', function (e) {
-                    view.innerHTML = e.data;
-                    externalPreview(e.data);
+                    if (!e.data.highlight) {
+                        downloadResult(e.data.result);
+                        return;
+                    }
+
+                    view.innerHTML = e.data.result;
+                    externalPreview(e.data.result);
 
                     stopEffect();
                 });

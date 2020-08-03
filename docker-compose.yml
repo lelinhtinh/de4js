@@ -1,5 +1,28 @@
-version: '3'
+version: "3"
+
 services:
-  web:
-    build: .
-    ports: [ "4000:4000" ]
+  app:
+    container_name: de4js_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+      - "35729:35729"
+    volumes:
+      - .:/srv/jekyll
+    command:
+      [
+        "bundle",
+        "exec",
+        "jekyll",
+        "serve",
+        "--force_polling",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "4000",
+        "--config",
+        "_config.yml,_config_development.yml",
+        "--livereload"
+      ]

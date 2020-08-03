@@ -1,7 +1,8 @@
 {
   "javascript.validate.enable": false,
-  "files.exclude": {
-    "_site/*": true,
-    "node_modules/*": true
-  }
+  "files.watcherExclude": {
+    "**/_site/**": true
+  },
+  "docker.commands.composeUp": "docker-compose up",
+  "docker.commands.composeDown": "docker-compose down",
 }

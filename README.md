@@ -33,11 +33,16 @@ Install one of the following links:
 
 ## Running with Docker
 
-```docker
-docker-compose up --build
-```
+    docker-compose up
 
-## Development
+Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
+
+### Attach Shell
+
+    docker exec -it de4js_app /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
+    jekyll build
+
+## Local Development
 
 ### Install
 
@@ -58,9 +63,9 @@ Install **Jekyll** and other [dependencies](https://pages.github.com/versions/) 
 
     bundle install
 
-### Run
+### Running
 
-    bundle exec jekyll serve --watch
+    bundle exec jekyll serve --watch --config _config.yml,_config_development.yml --livereload
 
 Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
@@ -78,11 +83,12 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
 - [lelinhtinh](https://github.com/lelinhtinh)
 - [Himura2la](https://github.com/Himura2la)
+- [Flleeppyy](https://github.com/flleeppyy)
 
 ### Open Source Contributors
 
-- [js-beautify@1.10.3](https://github.com/beautify-web/js-beautify)
-- [highlight.js@9.18.1](https://github.com/isagalaev/highlight.js)
+- [js-beautify@1.11.0](https://github.com/beautify-web/js-beautify)
+- [highlight.js@10.1.2](https://github.com/isagalaev/highlight.js)
 - [clipboard.js@2.0.4](https://github.com/zenorocha/clipboard.js)
 - [magic-check@1.0.3](https://github.com/forsigner/magic-check)
 - [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)

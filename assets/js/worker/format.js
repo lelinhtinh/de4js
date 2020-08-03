@@ -28,6 +28,11 @@ self.addEventListener('message', function (e) {
         console.log(err);
     }
 
+    self.postMessage({
+        result: source,
+        highlight: false
+    });
+
     try {
         self.importScripts('{{ "/assets/js/lib/highlight-js/highlight.min.js" | relative_url }}');
 
@@ -36,5 +41,8 @@ self.addEventListener('message', function (e) {
         console.log(err);
     }
 
-    self.postMessage(source);
+    self.postMessage({
+        result: source,
+        highlight: true
+    });
 });

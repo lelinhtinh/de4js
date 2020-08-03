@@ -1,7 +1,7 @@
 name: de4js
 title: de4js
 description: JavaScript Deobfuscator and Unpacker
-version: 1.6.4
+version: 1.6.6
 author: Zzbaivong
 author_email: Zzbaivong@gmail.com
 url: https://lelinhtinh.github.io
@@ -15,5 +15,17 @@ google_analytics: UA-106940288-1
 sass:
   style: compressed
 
-exclude: ['Gemfile', 'Gemfile.lock', 'node_modules', 'package.json', 'package-lock.json']
+exclude:
+  [
+    "Gemfile",
+    "Gemfile.lock",
+    "node_modules",
+    "package.json",
+    "package-lock.json",
+    "Dockerfile",
+    "docker-compose.yml",
+    "docker-entrypoint.sh",
+  ]
 incremental: false
+
+environment: production
