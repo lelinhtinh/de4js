@@ -63,6 +63,11 @@ Install **Jekyll** and other [dependencies](https://pages.github.com/versions/) 
 
     bundle install
 
+Fix EventMachine C extension not loading on **Windows 10**:
+
+    gem uninstall eventmachine
+    gem install eventmachine --platform ruby
+
 ### Running
 
     bundle exec jekyll serve --watch --config _config.yml,_config_development.yml --livereload
