@@ -79,7 +79,7 @@ self.addEventListener('message', function (e) {
                 });
                 _code = _code.join(';');
 
-                _code = _code.replace(/(\[("|')([\w\d_$]+)("|')\])/gi, '.$3 ');
+                _code = _code.replace(/(\[("|')((?!\d)[a-z_\d$]+)("|')\])/gi, '.$3 ');
                 source = _code;
             }
         } catch (err) {
