@@ -9,7 +9,7 @@
  * @license  {{ site.license }}
  */
 
-/* globals EvalDecode, ArrayDecode, _NumberDecode, JSFuckDecode, AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
+/* globals EvalDecode, ArrayDecode, _NumberDecode, JSFuckDecode, ObfuscatorIO, AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
 /* eslint-disable no-console */
 
 self.addEventListener('message', function (e) {
@@ -33,6 +33,11 @@ self.addEventListener('message', function (e) {
         jsfuck: function () {
             self.importScripts('{{ "/assets/js/lib/jsfuckdecode.js" | relative_url }}');
             return JSFuckDecode(source);
+        },
+        obfuscatorio: function () {
+            self.importScripts('{{ "/assets/js/lib/utils.js" | relative_url }}');
+            self.importScripts('{{ "/assets/js/lib/obfuscatorio.js" | relative_url }}');
+            return ObfuscatorIO(source);
         },
         aaencode: function () {
             self.importScripts('{{ "/assets/js/vendor/cat-in-136/aadecode.js" | relative_url }}');

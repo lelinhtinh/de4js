@@ -2,6 +2,8 @@
   name: Eval
 - key: arrayencode
   name: Array
+- key: obfuscatorio
+  name: Obfuscator IO
 - key: _numberencode
   name: _Number
 - key: jsfuck
