@@ -232,6 +232,7 @@
 
         decode = debounce(function () {
             if (temp === '') temp = input.value.trim();
+            temp = temp.replace(/\/\*(?!\s*@de4js)[\s\S]*?\*\/|^[\s\t]*\/\/.*/gm, '');
             if (temp === '') return;
 
             packer = isAuto ? detect(temp) : form.encode.value;
