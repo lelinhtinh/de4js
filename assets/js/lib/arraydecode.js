@@ -1,7 +1,7 @@
 /* global utils */
 // eslint-disable-next-line no-unused-vars
 function ArrayDecode(source) {
-    var detectPattern = /[\s\n]*var\s+((?!\d)[a-z_\d$]*)\s*=\s*\[.*?\];/,
+    var detectPattern = /^var\s+((?!\d)[a-z_\d$]*)\s*=\s*\[.*?\];/,
         _var = source.match(detectPattern);
 
     if (!_var || _var.length !== 2) throw 'Not matched';
