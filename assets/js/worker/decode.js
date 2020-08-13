@@ -9,7 +9,7 @@
  * @license  {{ site.license }}
  */
 
-/* globals AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
+/* globals EvalDecode, ArrayDecode, _NumberDecode, JSFuckDecode, AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
 /* eslint-disable no-console */
 
 self.addEventListener('message', function (e) {
@@ -18,81 +18,21 @@ self.addEventListener('message', function (e) {
 
     var methods = {
         evalencode: function () {
-            self._eval = self.eval;
-            self.eval = function (_evalsource) {
-                return _evalsource;
-            };
-            setTimeout(function () {
-                self.eval = self._eval;
-            }, 0);
-            return self._eval(source);
+            self.importScripts('{{ "/assets/js/lib/evaldecode.js" | relative_url }}');
+            return EvalDecode(source);
         },
         _numberencode: function () {
-            var patt = /_\d{4}\((_\d{4})\);\}/,
-                _numbersource = source;
-
-            if (!patt.test(_numbersource)) throw 'Not matched';
-
-            _numbersource = _numbersource.replace(/var\s/g, 'this.');
-            _numbersource = _numbersource.replace(/function\s(_\d{4})\(/, 'this.$1=function(');
-            _numbersource = _numbersource.replace(patt, 'self.sourceNumberEncodeZz=$1;};');
-
-            _numbersource = '(function(){' + _numbersource + '})();';
-            eval(_numbersource);
-
-            return self.sourceNumberEncodeZz;
+            self.importScripts('{{ "/assets/js/lib/numberdecode.js" | relative_url }}');
+            return _NumberDecode(source);
         },
         arrayencode: function () {
-            var pattarr = /[\s\n]*var\s+([\w\d_$]+)\s*=\s*\[.*?\];/,
-                _var = source.match(pattarr);
-
-            if (!_var || _var.length !== 2) throw 'Not matched';
-
-            var _name = _var[1],
-                _code = source.replace(pattarr, ''),
-
-                quote = function (s, q) {
-                    return s.replace(new RegExp('[\\n*+?^${}()|[\\]\\\\' + q + ']', 'g'), '\\$&');
-                },
-
-                pattkey = new RegExp(_name.replace(/\$/g, '\\$') + '\\[(\\d+)\\]', 'g');
-
-            _var = _var[0].replace(/[\s\S]*?\[/, '[');
-            _var = eval(_var);
-
-            _code = _code.split(';');
-            _code = _code.map(function (piece) {
-                piece.replace(pattkey, function (key, index) {
-                    var item = _var[index],
-                        q = item.indexOf('"') !== -1 ? "'" : '"';
-
-                    piece = piece.replace(key, q + quote(item, q) + q);
-
-                    return piece;
-                });
-
-                return piece;
-            });
-            _code = _code.join(';');
-
-            _code = _code.replace(/(\[("|')((?!\d)[a-z_\d$]+)("|')\])/gi, '.$3 ');
-
-            return _code;
+            self.importScripts('{{ "/assets/js/lib/utils.js" | relative_url }}');
+            self.importScripts('{{ "/assets/js/lib/arraydecode.js" | relative_url }}');
+            return ArrayDecode(source);
         },
         jsfuck: function () {
-            var pattfuck = /\)(\(\)[\s\n]*)$/,
-                pattanon = /^[\s\n]*function\sanonymous\([\s\n]+\)\s\{[\s\n]+/,
-                _fucksource = source;
-
-            if (pattfuck.test(source)) _fucksource = _fucksource.replace(pattfuck, ')');
-            _fucksource = eval(_fucksource + '.toString()');
-
-            if (pattanon.test(_fucksource)) {
-                _fucksource = _fucksource.replace(pattanon, '');
-                _fucksource = _fucksource.replace(/[\s\n]+\}[\s\n]*$/, '');
-            }
-
-            return _fucksource;
+            self.importScripts('{{ "/assets/js/lib/jsfuckdecode.js" | relative_url }}');
+            return JSFuckDecode(source);
         },
         aaencode: function () {
             self.importScripts('{{ "/assets/js/vendor/cat-in-136/aadecode.js" | relative_url }}');

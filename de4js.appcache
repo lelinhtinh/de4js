@@ -22,6 +22,11 @@ assets/js/vendor/js-beautify/unpackers/myobfuscate_unpacker.js
 assets/js/vendor/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js
 assets/js/vendor/js-beautify/unpackers/urlencode_unpacker.js
 assets/js/vendor/js-beautify/beautify.min.js
+assets/js/lib/arraydecode.js
+assets/js/lib/evaldecode.js
+assets/js/lib/jsfuckdecode.js
+assets/js/lib/numberdecode.js
+assets/js/lib/utils.js
 assets/js/worker/decode.js
 assets/js/worker/format.js
 assets/js/main.js
