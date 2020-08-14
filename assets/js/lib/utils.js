@@ -2,7 +2,7 @@
 var utils = {
     strWrap: function (str) {
         if (str.includes('\n') || (str.includes('"') && str.includes("'"))) return '`';
-        return str.includes('"') ? "'" : '"';
+        return !str.includes("'") ? "'" : '"';
     },
 
     escapeRegExp: function (str, q) {
