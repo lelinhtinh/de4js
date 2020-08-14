@@ -21,10 +21,12 @@ Install one of the following links:
 - Makes obfuscated code [readable](#helper).
 - Performance unpackers:
   - **Eval**, e.g. Packer, [WiseLoop](http://wiseloop.com/demo/php-javascript-obfuscator)
-  - **Array**, e.g. Javascript Obfuscator
-  - [_Number](https://jsfiddle.net/ps5anL99/embedded/result,js,html,css/)
-  - [Packer](http://dean.edwards.name/packer/)
+  - **Array**, e.g. Javascript Obfuscator, Free JS Obfuscator
+  - [_Number](https://jsfiddle.net/ps5anL99/embedded/result,js,html,css/) _(not correct name)_
+  - [Packer](https://github.com/evanw/packer)
   - [Javascript Obfuscator](https://javascriptobfuscator.com/Javascript-Obfuscator.aspx)
+  - [Free JS Obfuscator](http://www.freejsobfuscator.com/)
+  - [Obfuscator.IO](https://obfuscator.io/) _(but not all cases)_
   - [My Obfuscate](http://myobfuscate.com/)
   - **URL encode**, e.g. bookmarklet
   - [JSFuck](https://github.com/aemkei/jsfuck)
