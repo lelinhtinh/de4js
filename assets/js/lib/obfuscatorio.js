@@ -8,8 +8,7 @@ function ObfuscatorIO(source) {
     if (!_var) throw 'Not matched';
 
     var _name = _var[1],
-        varPattern = '\\bvar\\s+' + _name + '\\s*=\\s*',
-        varIndex = source.search(new RegExp(varPattern)),
+        varIndex = source.search(new RegExp('\\bvar\\s+' + _name + '\\s*=\\s*')),
         sourceSize = source.length;
 
     if (varIndex === -1) throw 'Not found';
@@ -18,28 +17,21 @@ function ObfuscatorIO(source) {
         bo = 0,
         bc = 0,
         splitSource = function (pos) {
-            eval(source.slice(0, pos + 1));
+            eval(source.slice(0, pos));
             _var = eval(_name);
-            _code = source.slice(pos + 1);
-        },
-        isArrVar = (new RegExp(varPattern + '\\[')).test(source);
+            _code = source.slice(pos);
+        };
 
     while (pos < sourceSize) {
-        if (isArrVar) {
-            if (source.charAt(pos) === ';') {
-                splitSource(pos + 1);
-                break;
-            }
-        } else {
-            if (source.charAt(pos) === '{') bo++;
-            if (source.charAt(pos) === '}') bc++;
-            if (bc === bo && bo !== 0) {
-                splitSource(pos + 1);
-                break;
-            }
+        if (source.charAt(pos) === '{') bo++;
+        if (source.charAt(pos) === '}') bc++;
+        if (bc === bo && bo !== 0) {
+            splitSource(pos + 2);
+            break;
         }
         pos++;
     }
+
     if (!_code) throw 'Not splits';
 
     _code = _code.split(';');
