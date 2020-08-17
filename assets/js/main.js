@@ -207,7 +207,7 @@
         detect = function (source) {
             var type = '';
 
-            if (/^[\s\n]*var\s_\d{4};[\s\n]*var\s_\d{4}\s?=/.test(source)) {
+            if (/^var\s_\d{4};[\s\n]*var\s_\d{4}\s?=/.test(source)) {
                 type = '_numberencode';
             } else if (source.indexOf("/｀ｍ´）ﾉ ~┻━┻   //*´∇｀*/ ['_'];") !== -1) { // eslint-disable-line quotes
                 type = 'aaencode';
@@ -217,7 +217,9 @@
                 type = 'jsfuck';
             } else if (source.indexOf(' ') === -1 && (source.indexOf('%2') !== -1 || source.replace(/[^%]+/g, '').length > 3)) {
                 type = 'urlencode';
-            } else if (/[\s\n]*var\s+([\w\d_$]+)\s*=\s*\[.*?\];/.test(source)) {
+            } else if (/((?!\d)[a-z\d_$]*)\s*\(\s*('|")(0x[a-f\d]+|\\x30\\x78[\\xa-f\d]+)('|")(\s*,\s*('|").+?('|"))?\s*\)/i.test(source)) {
+                type = 'obfuscatorio';
+            } else if (/^var\s+((?!\d)[a-z_\d$]*)\s*=\s*\[.*?\];/.test(source)) {
                 type = 'arrayencode';
             } else if (source.indexOf('eval(') !== -1) {
                 if (/\b(window|document|console)\.\b/i.test(source)) return type;
@@ -232,6 +234,7 @@
 
         decode = debounce(function () {
             if (temp === '') temp = input.value.trim();
+            temp = temp.replace(/\/\*(?!\s*@de4js)[\s\S]*?\*\/|^[\s\t]*\/\/.*/gm, '');
             if (temp === '') return;
 
             packer = isAuto ? detect(temp) : form.encode.value;
