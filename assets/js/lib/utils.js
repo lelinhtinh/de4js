@@ -23,7 +23,7 @@ var utils = {
     str.replace(/(?<!('|"))([+\-*/]*(?<!\w)0x[a-f\d]+[+\-*/]*)+(?!('|"))/gi, (m) => {
       const notChain = m.match(/^(([+\-*/]+)((?<!\w)0x[a-f\d]+)|((?<!\w)0x[a-f\d]+)([+\-*/]+))$/i);
       if (!notChain) return eval(m);
-      if (notChain[2]) return notChain[1] + eval(notChain[2]);
-      return eval(notChain[3]) + notChain[4];
+      if (notChain[3]) return notChain[2] + eval(notChain[3]);
+      return eval(notChain[4]) + notChain[5];
     }),
 };
