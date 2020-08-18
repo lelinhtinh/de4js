@@ -262,6 +262,10 @@
       workerDecode.postMessage({
         source: temp,
         packer: packer,
+        options: Array.from(document.querySelectorAll('.de4js-option')).reduce((obj, e) => {
+          obj[e.name] = e.checked;
+          return obj;
+        }, {}),
       });
     }, 250),
     changeEncode = function (e) {

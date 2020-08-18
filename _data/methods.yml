@@ -1,0 +1,22 @@
+- key: evalencode
+  name: Eval
+- key: arrayencode
+  name: Array
+- key: obfuscatorio
+  name: Obfuscator IO
+- key: _numberencode
+  name: _Number
+- key: jsfuck
+  name: JSFuck
+- key: jjencode
+  name: JJencode
+- key: aaencode
+  name: AAencode
+- key: urlencode
+  name: URLencode
+- key: p_a_c_k_e_r
+  name: Packer
+- key: javascriptobfuscator
+  name: JS Obfuscator
+- key: myobfuscate
+  name: My Obfuscate

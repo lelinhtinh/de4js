@@ -15,6 +15,7 @@
 self.addEventListener('message', (e) => {
   let source = e.data.source;
   const packer = e.data.packer;
+  const options = e.data.options;
 
   const methods = {
     evalencode: () => {
@@ -28,7 +29,7 @@ self.addEventListener('message', (e) => {
     arrayencode: () => {
       self.importScripts('{{ "/assets/js/lib/utils.js" | relative_url }}');
       self.importScripts('{{ "/assets/js/lib/arraydecode.js" | relative_url }}');
-      return ArrayDecode(source);
+      return ArrayDecode(source, options);
     },
     jsfuck: () => {
       self.importScripts('{{ "/assets/js/lib/jsfuckdecode.js" | relative_url }}');
@@ -37,7 +38,7 @@ self.addEventListener('message', (e) => {
     obfuscatorio: () => {
       self.importScripts('{{ "/assets/js/lib/utils.js" | relative_url }}');
       self.importScripts('{{ "/assets/js/lib/obfuscatorio.js" | relative_url }}');
-      return ObfuscatorIO(source);
+      return ObfuscatorIO(source, options);
     },
     aaencode: () => {
       self.importScripts('{{ "/assets/js/vendor/cat-in-136/aadecode.js" | relative_url }}');

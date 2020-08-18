@@ -1,6 +1,6 @@
 /* global utils */
 // eslint-disable-next-line no-unused-vars
-function ObfuscatorIO(source) {
+function ObfuscatorIO(source, options) {
   const detectPattern = /((?!\d)[a-z\d_$]*)\s*\(\s*('|")(0x[a-f\d]+|\\x30\\x78[\\xa-f\d]+)('|")(\s*,\s*('|").+?('|"))?\s*\)/;
   let _var = source.match(new RegExp(detectPattern, 'i')),
     _code;
@@ -43,15 +43,15 @@ function ObfuscatorIO(source) {
       return q + utils.escapeRegExp(item, q) + q;
     });
 
-    piece = utils.calc(piece);
-    piece = utils._unescape(piece);
+    if (options.calc) piece = utils.calc(piece);
+    if (options._unescape) piece = utils._unescape(piece);
 
     return piece;
   });
   _code = _code.join(';');
 
-  _code = utils.strMerge(_code);
-  _code = utils.methodChain(_code);
+  if (options.strMerge) _code = utils.strMerge(_code);
+  if (options.methodChain) _code = utils.methodChain(_code);
 
   return _code;
 }

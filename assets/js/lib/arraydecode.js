@@ -1,6 +1,6 @@
 /* global utils */
 // eslint-disable-next-line no-unused-vars
-function ArrayDecode(source) {
+function ArrayDecode(source, options) {
   const detectPattern = /^var\s+((?!\d)[a-z_\d$]*)\s*=\s*\[.*?\];/;
   let _var = source.match(detectPattern);
 
@@ -24,8 +24,8 @@ function ArrayDecode(source) {
   );
   _code = _code.join(';');
 
-  _code = utils.strMerge(_code);
-  _code = utils.methodChain(_code);
+  if (options.strMerge) _code = utils.strMerge(_code);
+  if (options.methodChain) _code = utils.methodChain(_code);
 
   return _code;
 }

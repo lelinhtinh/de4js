@@ -82,17 +82,26 @@
 
       <div class="config center">
         <form name="de4js">
-          <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
-          <label for="none">None</label>
-          {% for opt in site.data.options %}
-          <input id="{{ opt.key }}" class="magic-radio" type="radio" value="{{ opt.key }}" name="encode">
-          <label for="{{ opt.key }}">{{ opt.name }}</label>
-          {% endfor %}
-          <input id="nicify" class="magic-radio" type="radio" value="nicify" name="encode" disabled>
-          <label for="nicify">
-            <a href="https://github.com/lelinhtinh/de4js/blob/master/README.md#helper" target="_blank"
-              class="help">Unreadable</a>
-          </label>
+          <div>
+            <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
+            <label for="none">None</label>
+            {% for opt in site.data.methods %}
+            <input id="{{ opt.key }}" class="magic-radio de4js-method" type="radio" value="{{ opt.key }}" name="encode">
+            <label for="{{ opt.key }}">{{ opt.name }}</label>
+            {% endfor %}
+            <input id="nicify" class="magic-radio" type="radio" value="nicify" name="encode" disabled>
+            <label for="nicify">
+              <a href="https://github.com/lelinhtinh/de4js/blob/master/README.md#helper" target="_blank"
+                class="help">Unreadable</a>
+            </label>
+          </div>
+          <div>
+            {% for opt in site.data.options %}
+            <input id="{{ opt.key }}" class="magic-checkbox de4js-option" type="checkbox" value="yes" name="{{ opt.key }}"
+              {% if opt.checked %} checked {% endif %}>
+            <label for="{{ opt.key }}">{{ opt.name }}</label>
+            {% endfor %}
+          </div>
         </form>
       </div>
 
