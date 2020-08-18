@@ -43,7 +43,7 @@ function ObfuscatorIO(source) {
       return q + utils.escapeRegExp(item, q) + q;
     });
 
-    piece = piece.replace(/(?<!('|"))0x[a-f\d]+/gi, (m) => eval(m));
+    piece = utils.calc(piece);
 
     return piece;
   });

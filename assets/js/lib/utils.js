@@ -6,7 +6,7 @@ var utils = {
   },
 
   escapeRegExp: (str, q) => {
-    return str.replace(new RegExp(`[\\n*+?^\${}()|[\\]\\\\${q}]`, 'g'), '\\$&');
+    return str.replace(new RegExp(`[\\\\${q}\\n]`, 'g'), '\\$&').replace(/-/g, '\\x2d');
   },
 
   strMerge: (str) => {
@@ -15,5 +15,9 @@ var utils = {
 
   methodChain: (str) => {
     return str.replace(/(?<!\()\[("|')((?!\d)[a-z_\d$]*)("|')\]/gi, '.$2 ');
+  },
+
+  calc: (str) => {
+    return str.replace(/(?<!('|"))([+\-*/]*(?<!\w)0x[a-f\d]+[+\-*/]*)+(?!('|"))/gi, (m) => eval(m));
   },
 };
