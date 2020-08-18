@@ -14,6 +14,6 @@ var utils = {
     },
 
     methodChain: function (str) {
-        return str.replace(/(\[("|')((?!\d)[a-z_\d$]*)("|')\])/gi, '.$3 ');
+        return str.replace(/(?<!\()\[("|')((?!\d)[a-z_\d$]*)("|')\]/gi, '.$2 ');
     }
 };
