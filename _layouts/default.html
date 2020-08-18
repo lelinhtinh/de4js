@@ -1,121 +1,131 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: 'en-US' }}"{% if site.environment == "production" or jekyll.environment == "production" %} manifest="de4js.appcache"{% endif %}>
+<html lang="{{ site.lang | default: 'en-US' }}"
+  {% if site.environment == "production" or jekyll.environment == "production" %} manifest="de4js.appcache" {% endif %}>
 
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google-site-verification" content="BbaaM88Az_X9Kkutg_1d0lgK5u9URFdntKd8lB41hLs">
-    <link rel="icon" href="favicon.ico">
-    <link rel="shortcut icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=latin-ext,vietnamese" rel="stylesheet">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-    {% seo %}
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="BbaaM88Az_X9Kkutg_1d0lgK5u9URFdntKd8lB41hLs">
+  <link rel="icon" href="favicon.ico">
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=latin-ext,vietnamese" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  {% seo %}
 
-    {% if site.google_analytics %}
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+  {% if site.google_analytics %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-        gtag('config', '{{ site.google_analytics }}');
-    </script>
-    {% endif %}
+    function gtag() {
+      dataLayer.push(arguments)
+    };
+    gtag('js', new Date());
+
+    gtag('config', '{{ site.google_analytics }}');
+
+  </script>
+  {% endif %}
 </head>
 
 <body>
 
-    <header>
-        <div class="container">
-            <h1 id="title">{{ site.name }}<sup>{{ site.version }}</sup></h1>
-            <h2>{{ site.description }}</h2>
-
-            <section id="downloads">
-                {% if site.show_downloads %}
-                <a href="{{ site.github.zip_url }}" class="btn">Download as .zip</a>
-                <a href="{{ site.github.tar_url }}" class="btn">Download as .tar.gz</a> {% endif %}
-                <a href="{{ site.github.repository_url }}" target="_blank" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-            </section>
-        </div>
-    </header>
-
+  <header>
     <div class="container">
-        <section id="main_content">
-            <div class="tabs">
-                <div class="tab active" data-target="String">String</div>
-                <div class="tab" data-target="Local">Local File</div>
-                <div class="tab" data-target="Remote">Remote File</div>
-            </div>
-            <div class="cf"></div>
-            <div class="tabs-contents">
-                <div class="tab-content show" id="contentString">
-                    <textarea id="input" class="content" rows="7" placeholder="Paste code here..."></textarea>
-                </div>
-                <div class="tab-content" id="contentLocal">
-                    <div class="box">
-                        <input type="file" name="file" id="file" class="inputfile" accept="text/javascript,text/plain">
-                        <label for="file" class="read-only">
-                            <span id="fileName"></span>
-                            <strong>Choose a file…</strong>
-                        </label>
-                    </div>
-                    <pre id="renderLocal" class="render read-only"></pre>
-                </div>
-                <div class="tab-content" id="contentRemote">
-                    <form class="form-wrapper cf" id="formRemove">
-                        <input type="url" placeholder="Enter a URL" id="urlRemove" required>
-                        <button type="submit" class="btn" id="submitRemove">Submit</button>
-                    </form>
-                    <small>Cross-origin requests require Access-Control-Allow-Origin header</small>
-                    <pre id="renderRemove" class="render read-only"></pre>
-                </div>
-            </div>
+      <h1 id="title">{{ site.name }}<sup>{{ site.version }}</sup></h1>
+      <h2>{{ site.description }}</h2>
 
-            <div class="config center">
-                <form name="de4js">
-                    <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
-                    <label for="none">None</label>
-                    {% for opt in site.data.options %}
-                        <input id="{{ opt.key }}" class="magic-radio" type="radio" value="{{ opt.key }}" name="encode">
-                        <label for="{{ opt.key }}">{{ opt.name }}</label>
-                    {% endfor %}
-                    <input id="nicify" class="magic-radio" type="radio" value="nicify" name="encode" disabled>
-                    <label for="nicify">
-                        <a href="https://github.com/lelinhtinh/de4js/blob/master/README.md#helper" target="_blank" class="help">Unreadable</a>
-                    </label>
-                </form>
-            </div>
-
-            <div class="center">
-                <button id="clear" class="btn" type="reset">
-                    Clear
-                </button>
-                <button id="auto" class="btn" type="button">
-                    Auto Decode
-                </button>
-            </div>
-
-            <div class="view-wrap">
-                <div class="view-control">
-                    <button id="copyjs" class="btn" type="button">
-                        <img class="btn-icon" src="{{ 'assets/icon/copy-document.png' | relative_url }}" alt="Copy to clipboard">
-                    </button>
-                    <a id="download" class="btn" type="button" href="#" download="result.js">
-                        <img class="btn-icon" src="{{ 'assets/icon/download.png' | relative_url }}" alt="Download file">
-                    </a>
-                    <a id="preview" class="btn" type="button" href="#">
-                        <img class="btn-icon" src="{{ 'assets/icon/external-link-symbol.png' | relative_url }}" alt="Open in new tab">
-                    </a>
-                </div>
-                <textarea id="readable"></textarea>
-                <pre id="view" class="hljs"></pre>
-            </div>
-        </section>
+      <section id="downloads">
+        {% if site.show_downloads %}
+        <a href="{{ site.github.zip_url }}" class="btn">Download as .zip</a>
+        <a href="{{ site.github.tar_url }}" class="btn">Download as .tar.gz</a> {% endif %}
+        <a href="{{ site.github.repository_url }}" target="_blank" class="btn btn-github">
+          <span class="icon"></span>
+          View on GitHub
+        </a>
+      </section>
     </div>
+  </header>
 
-    <script type="text/javascript" src="{{ '/assets/js/vendor/clipboard-js/clipboard.min.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/main.js' | relative_url }}" type="text/javascript"></script>
+  <div class="container">
+    <section id="main_content">
+      <div class="tabs">
+        <div class="tab active" data-target="String">String</div>
+        <div class="tab" data-target="Local">Local File</div>
+        <div class="tab" data-target="Remote">Remote File</div>
+      </div>
+      <div class="cf"></div>
+      <div class="tabs-contents">
+        <div class="tab-content show" id="contentString">
+          <textarea id="input" class="content" rows="7" placeholder="Paste code here..."></textarea>
+        </div>
+        <div class="tab-content" id="contentLocal">
+          <div class="box">
+            <input type="file" name="file" id="file" class="inputfile" accept="text/javascript,text/plain">
+            <label for="file" class="read-only">
+              <span id="fileName"></span>
+              <strong>Choose a file…</strong>
+            </label>
+          </div>
+          <pre id="renderLocal" class="render read-only"></pre>
+        </div>
+        <div class="tab-content" id="contentRemote">
+          <form class="form-wrapper cf" id="formRemove">
+            <input type="url" placeholder="Enter a URL" id="urlRemove" required>
+            <button type="submit" class="btn" id="submitRemove">Submit</button>
+          </form>
+          <small>Cross-origin requests require Access-Control-Allow-Origin header</small>
+          <pre id="renderRemove" class="render read-only"></pre>
+        </div>
+      </div>
+
+      <div class="config center">
+        <form name="de4js">
+          <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
+          <label for="none">None</label>
+          {% for opt in site.data.options %}
+          <input id="{{ opt.key }}" class="magic-radio" type="radio" value="{{ opt.key }}" name="encode">
+          <label for="{{ opt.key }}">{{ opt.name }}</label>
+          {% endfor %}
+          <input id="nicify" class="magic-radio" type="radio" value="nicify" name="encode" disabled>
+          <label for="nicify">
+            <a href="https://github.com/lelinhtinh/de4js/blob/master/README.md#helper" target="_blank"
+              class="help">Unreadable</a>
+          </label>
+        </form>
+      </div>
+
+      <div class="center">
+        <button id="clear" class="btn" type="reset">
+          Clear
+        </button>
+        <button id="auto" class="btn" type="button">
+          Auto Decode
+        </button>
+      </div>
+
+      <div class="view-wrap">
+        <div class="view-control">
+          <button id="copyjs" class="btn" type="button">
+            <img class="btn-icon" src="{{ 'assets/icon/copy-document.png' | relative_url }}" alt="Copy to clipboard">
+          </button>
+          <a id="download" class="btn" type="button" href="#" download="result.js">
+            <img class="btn-icon" src="{{ 'assets/icon/download.png' | relative_url }}" alt="Download file">
+          </a>
+          <a id="preview" class="btn" type="button" href="#">
+            <img class="btn-icon" src="{{ 'assets/icon/external-link-symbol.png' | relative_url }}"
+              alt="Open in new tab">
+          </a>
+        </div>
+        <textarea id="readable"></textarea>
+        <pre id="view" class="hljs"></pre>
+      </div>
+    </section>
+  </div>
+
+  <script type="text/javascript" src="{{ '/assets/js/vendor/clipboard-js/clipboard.min.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/main.js' | relative_url }}" type="text/javascript"></script>
 
 </body>
 

@@ -20,72 +20,69 @@
 // @grant        GM.xmlHttpRequest
 // ==/UserScript==
 
-(function () {
-    'use strict';
+'use strict';
 
-    var nicify = document.getElementById('nicify'),
-        label = nicify.nextSibling.nextSibling.textContent,
-        none = document.getElementById('none'),
-        input = document.getElementById('input'),
-        output = document.getElementById('readable'),
-        view = document.getElementById('view');
+const nicify = document.getElementById('nicify'),
+  label = nicify.nextSibling.nextSibling.textContent,
+  none = document.getElementById('none'),
+  input = document.getElementById('input'),
+  output = document.getElementById('readable'),
+  view = document.getElementById('view');
 
-    function jsnice() {
-        if (!isOnine()) return;
-        var txt = view.textContent.trim() || input.value.trim();
-        if (!txt) return;
+function jsnice() {
+  if (!isOnine()) return;
+  const txt = view.textContent.trim() || input.value.trim();
+  if (!txt) return;
 
-        view.classList.add('waiting');
-        GM.xmlHttpRequest({
-            method: 'POST',
-            url: 'http://jsnice.org/beautify?pretty=0&rename=1&types=0&packers=0&transpile=0&suggest=0',
-            responseType: 'json',
-            data: txt,
-            onload: function (response) {
-                var source;
+  view.classList.add('waiting');
+  GM.xmlHttpRequest({
+    method: 'POST',
+    url: 'http://jsnice.org/beautify?pretty=0&rename=1&types=0&packers=0&transpile=0&suggest=0',
+    responseType: 'json',
+    data: txt,
+    onload: (response) => {
+      let source;
 
-                if (response.response && response.response.js) {
-                    source = response.response.js;
-                }
+      if (response.response && response.response.js) {
+        source = response.response.js;
+      }
 
-                nicify.checked = false;
-                none.checked = true;
+      nicify.checked = false;
+      none.checked = true;
 
-                if (!source) {
-                    view.textContent = 'Unknown error';
-                } else {
-                    output.value = source;
-                    output.onchange();
-                }
-            },
-            onerror: function (e) {
-                console.error(e); // eslint-disable-line no-console
-            }
-        });
-    }
+      if (!source) {
+        view.textContent = 'Unknown error';
+      } else {
+        output.value = source;
+        output.onchange();
+      }
+    },
+    onerror: (err) => {
+      console.error(err); // eslint-disable-line no-console
+    },
+  });
+}
 
-    function isOnine() {
-        nicify.disabled = !navigator.onLine;
-        return navigator.onLine;
-    }
+function isOnine() {
+  nicify.disabled = !navigator.onLine;
+  return navigator.onLine;
+}
 
-    nicify.disabled = false;
-    nicify.nextSibling.nextSibling.textContent = label;
+nicify.disabled = false;
+nicify.nextSibling.nextSibling.textContent = label;
 
-    input.addEventListener('input', function () {
-        if (nicify.checked) jsnice();
-    });
+input.addEventListener('input', () => {
+  if (nicify.checked) jsnice();
+});
 
-    nicify.addEventListener('click', function () {
-        if (nicify.checked) jsnice();
-    });
+nicify.addEventListener('click', () => {
+  if (nicify.checked) jsnice();
+});
 
-    nicify.addEventListener('onchange', function () {
-        if (nicify.checked) jsnice();
-    });
+nicify.addEventListener('onchange', () => {
+  if (nicify.checked) jsnice();
+});
 
-    window.addEventListener('online', isOnine);
-    window.addEventListener('offline', isOnine);
-    isOnine();
-
-})();
+window.addEventListener('online', isOnine);
+window.addEventListener('offline', isOnine);
+isOnine();

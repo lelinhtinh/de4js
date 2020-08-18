@@ -1,14 +1,14 @@
 // eslint-disable-next-line no-unused-vars
 function EvalDecode(source) {
-    self._eval = self.eval;
+  self._eval = self.eval;
 
-    self.eval = function (_evalsource) {
-        return _evalsource;
-    };
+  self.eval = (_code) => {
+    return _code;
+  };
 
-    setTimeout(function () {
-        self.eval = self._eval;
-    }, 0);
+  setTimeout(() => {
+    self.eval = self._eval;
+  }, 0);
 
-    return self._eval(source);
+  return self._eval(source);
 }

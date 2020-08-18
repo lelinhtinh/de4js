@@ -9,40 +9,40 @@
  * @license  {{ site.license }}
  */
 
-self.addEventListener('message', function (e) {
-    var source = e.data.source;
+self.addEventListener('message', (e) => {
+  let source = e.data.source;
 
-    try {
-        self._window = self.window;
-        self.window = {};
+  try {
+    self._window = self.window;
+    self.window = {};
 
-        self.importScripts('{{ "/assets/js/vendor/js-beautify/beautify.min.js" | relative_url }}');
+    self.importScripts('{{ "/assets/js/vendor/js-beautify/beautify.min.js" | relative_url }}');
 
-        source = self.window.js_beautify(source, {
-            unescape_strings: true,
-            jslint_happy: true
-        });
-
-        self.window = self._window;
-    } catch (err) {
-        console.log(err);
-    }
-
-    self.postMessage({
-        result: source,
-        highlight: false
+    source = self.window.js_beautify(source, {
+      unescape_strings: true,
+      jslint_happy: true,
     });
 
-    try {
-        self.importScripts('{{ "/assets/js/vendor/highlight-js/highlight.min.js" | relative_url }}');
+    self.window = self._window;
+  } catch (err) {
+    console.log(err);
+  }
 
-        source = self.hljs.highlight('javascript', source).value;
-    } catch (err) {
-        console.log(err);
-    }
+  self.postMessage({
+    result: source,
+    highlight: false,
+  });
 
-    self.postMessage({
-        result: source,
-        highlight: true
-    });
+  try {
+    self.importScripts('{{ "/assets/js/vendor/highlight-js/highlight.min.js" | relative_url }}');
+
+    source = self.hljs.highlight('javascript', source).value;
+  } catch (err) {
+    console.log(err);
+  }
+
+  self.postMessage({
+    result: source,
+    highlight: true,
+  });
 });
