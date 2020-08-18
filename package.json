@@ -1,6 +1,6 @@
 {
   "name": "de4js",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "JavaScript Deobfuscator and Unpacker",
   "main": "/assets/js/main.js",
   "scripts": {
@@ -28,6 +28,10 @@
     "url": "https://github.com/lelinhtinh/de4js/issues"
   },
   "homepage": "https://lelinhtinh.github.io/de4js/",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/de4js"
+  },
   "devDependencies": {
     "eslint-plugin-frontmatter": "0.0.8"
   }
