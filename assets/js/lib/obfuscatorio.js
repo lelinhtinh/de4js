@@ -44,6 +44,7 @@ function ObfuscatorIO(source) {
     });
 
     piece = utils.calc(piece);
+    piece = utils._unescape(piece);
 
     return piece;
   });
