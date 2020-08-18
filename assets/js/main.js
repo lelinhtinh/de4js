@@ -89,6 +89,7 @@
     renderRemove = document.getElementById('renderRemove'),
     view = document.getElementById('view'),
     encode = document.getElementsByName('encode'),
+    options,
     none = document.getElementById('none'),
     readable = document.getElementById('readable'),
     form = document.de4js,
@@ -117,6 +118,11 @@
       clear.disabled = true;
       autoBtn.disabled = true;
       disableAll(true);
+
+      options = Array.from(document.querySelectorAll('.de4js-option')).reduce((obj, e) => {
+        obj[e.name] = e.checked;
+        return obj;
+      }, {});
     },
     stopEffect = function () {
       isAuto = false;
@@ -137,7 +143,7 @@
       }, 800);
     },
     externalStyle =
-      '*{margin:0;padding:0}html{line-height:1em;background:#1d1f21;color:#c5c8c6}pre{white-space:pre-wrap;word-wrap:break-word;word-break:break-all}{% include highlight-js/styles/hljs-theme.css %}html,body,.hljs{background:#030303}',
+      '*{margin:0;padding:0}html{line-height:1em;background:#1d1f21;color:#c5c8c6}pre{white-space:pre-wrap;word-wrap:break-word;word-break:break-all}{% include highlight-js/styles/hljs-theme.css %}{% include highlight-js/styles/hljs-line-numbers.css %}html,body,.hljs{background:#030303}',
     externalUrl,
     externalPreview = function (source) {
       if (externalUrl) URL.revokeObjectURL(externalUrl);
@@ -192,6 +198,7 @@
       startEffect();
       workerFormat.postMessage({
         source: temp,
+        options: options,
       });
     }, 250),
     detect = function (source) {
@@ -262,10 +269,7 @@
       workerDecode.postMessage({
         source: temp,
         packer: packer,
-        options: Array.from(document.querySelectorAll('.de4js-option')).reduce((obj, e) => {
-          obj[e.name] = e.checked;
-          return obj;
-        }, {}),
+        options: options,
       });
     }, 250),
     changeEncode = function (e) {

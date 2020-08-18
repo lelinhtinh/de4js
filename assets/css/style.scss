@@ -10,6 +10,7 @@ $special-disabled-color: #000000;
 
 @import "{{ site.theme }}";
 {% include highlight-js/styles/hljs-theme.css %}
+{% include highlight-js/styles/hljs-line-numbers.css %}
 .hljs{
   background: #030303;
 }

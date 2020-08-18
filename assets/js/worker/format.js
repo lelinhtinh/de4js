@@ -11,6 +11,7 @@
 
 self.addEventListener('message', (e) => {
   let source = e.data.source;
+  const options = e.data.options;
 
   try {
     self._window = self.window;
@@ -37,6 +38,12 @@ self.addEventListener('message', (e) => {
     self.importScripts('{{ "/assets/js/vendor/highlight-js/highlight.min.js" | relative_url }}');
 
     source = self.hljs.highlight('javascript', source).value;
+
+    if (options.lineNumbers) {
+      source = source.split('\n');
+      source = source.join('</code><code>');
+      source = `<code>${source}</code>`;
+    }
   } catch (err) {
     console.log(err);
   }

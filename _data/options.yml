@@ -1,3 +1,6 @@
+- key: lineNumbers
+  name: Line numbers
+  checked: false
 - key: _unescape
   name: Unescape
   checked: false
