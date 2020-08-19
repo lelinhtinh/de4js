@@ -8,7 +8,7 @@ function ObfuscatorIO(source, options) {
   if (!_var) throw 'Not matched';
 
   const _name = _var[1],
-    varIndex = source.search(new RegExp('\\bvar\\s+' + _name + '\\s*=\\s*')),
+    varIndex = source.search(new RegExp('\\b(var|const|let)\\s+' + _name + '\\s*=\\s*')),
     sourceSize = source.length;
 
   if (varIndex === -1) throw 'Not found';
