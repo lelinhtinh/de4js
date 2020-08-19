@@ -36,4 +36,8 @@ var utils = {
     });
     return str;
   },
+
+  _boolean: (str) => str.replace(/((?<=([=:(,|&[]|return|=>))|^)!{1,2}(\[\]|0|1)((?=[;,)}|&\]])|$)/g, (m) => eval(m).toString()),
+
+  propArr: (str) => str.replace(/\[\((['"])((?!\d)[a-z_\d$]*)['"]\)\]/gi, '[$1$2$1]'),
 };

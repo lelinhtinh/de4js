@@ -45,6 +45,8 @@ function ObfuscatorIO(source, options) {
 
     if (options.calc) piece = utils.calcHex(piece);
     if (options._unescape) piece = utils._unescape(piece);
+    piece = utils._boolean(piece);
+    piece = utils.propArr(piece);
 
     return piece;
   });
