@@ -80,9 +80,9 @@
         </div>
       </div>
 
-      <div class="config center">
+      <div class="config tab-content show">
         <form name="de4js">
-          <div>
+          <div class="methods-wrap">
             <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
             <label for="none">None</label>
             {% for opt in site.data.methods %}
@@ -95,7 +95,7 @@
                 class="help">Unreadable</a>
             </label>
           </div>
-          <div>
+          <div class="options-wrap">
             {% for opt in site.data.options %}
             <input id="{{ opt.key }}" class="magic-checkbox de4js-option" type="checkbox" value="yes" name="{{ opt.key }}"
               {% if opt.checked %} checked {% endif %}>

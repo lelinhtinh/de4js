@@ -4,12 +4,9 @@
 - key: _unescape
   name: Unescape
   checked: false
-- key: strMerge
-  name: Merge string
-  checked: true
 - key: methodChain
-  name: Method Chaining
+  name: Method chaining
   checked: true
 - key: calc
-  name: Evaluate an expression
+  name: Math calculation
   checked: true

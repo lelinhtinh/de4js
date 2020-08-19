@@ -53,7 +53,7 @@ function ObfuscatorIO(source, options) {
   _code = _code.join(';');
 
   if (options.calc) _code = utils.calcNumber(_code);
-  if (options.strMerge) _code = utils.strMerge(_code);
+  _code = utils.strMerge(_code);
   if (options.methodChain) _code = utils.methodChain(_code);
 
   return _code;

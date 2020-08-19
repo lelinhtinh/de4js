@@ -11,8 +11,8 @@ $special-disabled-color: #000000;
 @import "{{ site.theme }}";
 {% include highlight-js/styles/hljs-theme.css %}
 {% include highlight-js/styles/hljs-line-numbers.css %}
-.hljs{
-  background: #030303;
+.hljs {
+	background: #030303;
 }
 @import "magic-check/sass/magic-check.scss";
 
@@ -31,8 +31,8 @@ code {
   background: rgba(0, 0, 0, 0.9);
   color: $base-color;
   display: block;
-  width: 100%!important;
-  padding: .5em;
+  width: 100% !important;
+  padding: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.15);
   resize: vertical;
 }
@@ -40,6 +40,16 @@ code {
 .config {
   font-size: smaller;
   color: #595656;
+
+  &.tab-content {
+    padding: 0 1rem 0;
+    text-align: center;
+  }
+
+  .methods-wrap {
+    border-bottom: 1px solid #292929;
+    margin-bottom: 1rem;
+  }
 
   input {
     margin-right: 4px;
@@ -52,7 +62,7 @@ code {
 
   label {
     display: inline-block;
-    margin: .3em;
+    margin: 0 1rem 1rem 0;
   }
 }
 
@@ -88,10 +98,10 @@ code {
 }
 
 #view {
-  transition: opacity ease-in-out .2s;
+  transition: opacity ease-in-out 0.2s;
 
   &.waiting {
-    opacity: .3;
+    opacity: 0.3;
 
     &:empty:before {
       content: 'Please wait...';
@@ -113,10 +123,10 @@ code {
 }
 
 sup {
-  font-size: .4em;
+  font-size: 0.7rem;
   text-transform: uppercase;
   color: #afafaf;
-  margin-left: 1em;
+  margin-left: 1rem;
   padding: 1px 4px;
   border: 1px solid #111;
   background: #444;
@@ -125,23 +135,23 @@ sup {
 }
 
 #nicify {
-  &+label {
+  & + label {
     color: $special-base-color;
 
     &:before {
       border-color: $special-base-color;
     }
 
-    &:hover:before{
+    &:hover:before {
       animation-name: special-hover-color;
     }
 
-    &:after{
+    &:after {
       background: $special-primary-color;
     }
   }
 
-  &[disabled]+label {
+  &[disabled] + label {
     color: $special-disabled-color;
 
     &:before {
@@ -153,7 +163,7 @@ sup {
     }
   }
 
-  &:checked+label {
+  &:checked + label {
     color: $special-primary-color;
 
     &:before {
@@ -176,7 +186,7 @@ pre {
   white-space: pre-wrap;
   word-wrap: break-word;
   word-break: break-all;
-  padding: 0.5em;
+  padding: 0.5rem;
   margin-bottom: 0;
   color: #6a707e;
 }
@@ -249,18 +259,18 @@ pre {
 }
 
 .tab-content {
-  padding: 1em;
+  padding: 1rem;
   background: rgba(0, 0, 0, 0.2);
 }
 
 .tab {
   cursor: pointer;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.1), 0 0 5px rgba(181,232,83,0.1), 0 0 10px rgba(181,232,83,0.1);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(181, 232, 83, 0.1), 0 0 10px rgba(181, 232, 83, 0.1);
   color: #999;
   font-size: 30px;
   float: left;
-  margin-bottom: 0.5em;
-  margin-right: 1.5em;
+  margin-bottom: 0.5rem;
+  margin-right: 1.5rem;
 
   &:last-child {
     margin-right: 0;
@@ -281,10 +291,10 @@ pre {
   position: absolute;
   z-index: -1;
 
-  &+label {
+  & + label {
     color: #eee;
-    border: 2px solid rgba(0,0,0,0.7);
-    background-color: rgba(0,0,0,0.7);
+    border: 2px solid rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7);
     cursor: pointer;
     display: block;
     position: relative;
@@ -316,9 +326,9 @@ pre {
     }
   }
 
-  &:focus+label,
-  &.has-focus+label,
-  &+label:hover {
+  &:focus + label,
+  &.has-focus + label,
+  & + label:hover {
     border-color: #b5e853;
 
     strong {
@@ -332,7 +342,7 @@ pre {
   border: 2px solid #eee;
 
   &:after {
-    content: "Drop file here";
+    content: 'Drop file here';
     color: #eee;
   }
 
@@ -388,7 +398,7 @@ pre {
     &:focus {
       outline: 0;
       background: #5d5c5c;
-      box-shadow: 0 0 2px rgba(0, 0, 0, .8) inset;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
     }
   }
 
