@@ -26,7 +26,7 @@ self.addEventListener('message', (e) => {
 
     self.window = self._window;
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 
   self.postMessage({
@@ -45,7 +45,7 @@ self.addEventListener('message', (e) => {
       source = `<code>${source}</code>`;
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 
   self.postMessage({

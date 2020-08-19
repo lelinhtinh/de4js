@@ -43,13 +43,14 @@ function ObfuscatorIO(source, options) {
       return q + utils.escapeRegExp(item, q) + q;
     });
 
-    if (options.calc) piece = utils.calc(piece);
+    if (options.calc) piece = utils.calcHex(piece);
     if (options._unescape) piece = utils._unescape(piece);
 
     return piece;
   });
   _code = _code.join(';');
 
+  if (options.calc) _code = utils.calcNumber(_code);
   if (options.strMerge) _code = utils.strMerge(_code);
   if (options.methodChain) _code = utils.methodChain(_code);
 

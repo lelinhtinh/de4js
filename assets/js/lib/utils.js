@@ -1,3 +1,4 @@
+/* global math */
 /* eslint-disable no-unused-vars */
 var utils = {
   strWrap: (str) => {
@@ -19,11 +20,20 @@ var utils = {
 
   methodChain: (str) => str.replace(/(?<!\()\[("|')((?!\d)[a-z_\d$]*)("|')\]/gi, '.$2 '),
 
-  calc: (str) =>
-    str.replace(/(?<!('|"))([+\-*/]*(?<!\w)0x[a-f\d]+[+\-*/]*)+(?!('|"))/gi, (m) => {
-      const notChain = m.match(/^(([+\-*/]+)((?<!\w)0x[a-f\d]+)|((?<!\w)0x[a-f\d]+)([+\-*/]+))$/i);
-      if (!notChain) return eval(m);
-      if (notChain[3]) return notChain[2] + eval(notChain[3]);
-      return eval(notChain[4]) + notChain[5];
-    }),
+  calcHex: (str) => {
+    str = str.replace(/(?<!['"])(?<!\w)0x[a-f\d]+((?<!\w)0x[a-f\d]+|[+\-*/])*(?<!\w)0x[a-f\d]+(?!['"])/gi, (m) =>
+      math.format(eval(m), 14),
+    );
+    str = str.replace(/(?<!['"])(?<!\w)0x[a-f\d]+(?!['"])/gi, (m) => eval(m));
+    return str;
+  },
+
+  calcNumber: (str) => {
+    str = str.replace(/\(([\d.]+)\)/g, '$1');
+    str = str.replace(/(?<!['"\w])\d[+\-*/\d.]*\d(?!['"\w])/g, (m) => {
+      if (!/[+\-*/]/.test(m)) return m;
+      return math.format(math.evaluate(m), 14);
+    });
+    return str;
+  },
 };

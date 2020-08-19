@@ -36,6 +36,7 @@ self.addEventListener('message', (e) => {
       return JSFuckDecode(source);
     },
     obfuscatorio: () => {
+      self.importScripts('{{ "/assets/js/vendor/mathjs/math.min.js" | relative_url }}');
       self.importScripts('{{ "/assets/js/lib/utils.js" | relative_url }}');
       self.importScripts('{{ "/assets/js/lib/obfuscatorio.js" | relative_url }}');
       return ObfuscatorIO(source, options);
@@ -75,7 +76,7 @@ self.addEventListener('message', (e) => {
   try {
     source = methods[packer]();
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 
   self.postMessage(source);
