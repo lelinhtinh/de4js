@@ -2,11 +2,11 @@
   name: Line numbers
   checked: false
 - key: _unescape
-  name: Unescape
+  name: Unescape strings
   checked: false
 - key: methodChain
-  name: Method chaining
+  name: Recover object-path
   checked: true
 - key: calc
-  name: Math calculation
+  name: Execute expression
   checked: true
