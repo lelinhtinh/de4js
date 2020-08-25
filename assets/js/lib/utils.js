@@ -18,7 +18,7 @@ var utils = {
 
   strMerge: (str) => str.replace(/'\s*\+\s*'|"\s*\+\s*"/g, ''),
 
-  methodChain: (str) => str.replace(/(?<!\()\[("|')((?!\d)[a-z_\d$]*)("|')\]/gi, '.$2 '),
+  methodChain: (str) => str.replace(/(?<![(}][\s\n\t]*)\[("|')((?!\d)[a-z_\d$]*)("|')\]/gi, '.$2 '),
 
   calcHex: (str) => {
     str = str.replace(/(?<!['"])(?<!\w)0x[a-f\d]+((?<!\w)0x[a-f\d]+|[+\-*/])*(?<!\w)0x[a-f\d]+(?!['"])/gi, (m) =>
