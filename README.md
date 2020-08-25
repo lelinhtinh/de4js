@@ -23,7 +23,7 @@ Install one of the following links:
   - **Eval**, e.g. Packer, [WiseLoop](http://wiseloop.com/demo/php-javascript-obfuscator)
   - **Array**, e.g. Javascript Obfuscator, Free JS Obfuscator
   - [_Number](https://jsfiddle.net/ps5anL99/embedded/result,js,html,css/) _(not correct name)_
-  - [Packer](https://github.com/evanw/packer)
+  - [Packer](https://www.cleancss.com/javascript-obfuscate/)
   - [Javascript Obfuscator](https://javascriptobfuscator.com/Javascript-Obfuscator.aspx)
   - [Free JS Obfuscator](http://www.freejsobfuscator.com/)
   - [Obfuscator.IO](https://obfuscator.io/) _(but not all cases)_
@@ -101,3 +101,12 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 - [magic-check](https://github.com/forsigner/magic-check)
 - [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)
 - [Decoder-JJEncode](https://github.com/jacobsoo/Decoder-JJEncode)
+
+## Related projects
+
+- [IlluminateJS](https://github.com/geeksonsecurity/illuminatejs): A static JavaScript deobfuscator.
+- [JStillery](https://github.com/mindedsecurity/JStillery): Advanced JavaScript Deobfuscation via Partial Evaluation.
+- [Akamai Deobfuscator](https://github.com/char/akamai-deobfuscator): A tool to help you deobfuscate Akamai scripts.
+- [Nice2Predict](https://github.com/eth-sri/Nice2Predict): Learning framework for program property prediction.
+- [Javascript deobfuscation AMA](https://github.com/jsoverson/javascript-deobfuscation-AMA): General questions about deobfuscating JavaScript.
+- _Should be added more, PR is welcome._
