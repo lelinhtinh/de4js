@@ -18,7 +18,7 @@ var utils = {
 
   strMerge: (str) => str.replace(/'\s*\+\s*'|"\s*\+\s*"/g, ''),
 
-  methodChain: (str) => str.replace(/(?<![(}][\s\n\t]*)\[("|')((?!\d)[a-z_\d$]*)("|')\]/gi, '.$2 '),
+  methodChain: (str) => str.replace(/(?<!\()\[("|')((?!\d)[a-z_\d$]*)("|')\]/gi, '.$2 '),
 
   calcHex: (str) => {
     str = str.replace(/(?<!['"])(?<!\w)0x[a-f\d]+((?<!\w)0x[a-f\d]+|[+\-*/])*(?<!\w)0x[a-f\d]+(?!['"])/gi, (m) =>
@@ -37,7 +37,8 @@ var utils = {
     return str;
   },
 
-  _boolean: (str) => str.replace(/((?<=([=:(,|&[]|return|=>))|^)!{1,2}(\[\]|0|1)((?=[;,)}|&\]])|$)/g, (m) => eval(m).toString()),
+  _boolean: (str) =>
+    str.replace(/((?<=([=:(,|&[]|return|=>))|^)!{1,2}(\[\]|0|1)((?=[;,)}|&\]])|$)/g, (m) => eval(m).toString()),
 
   propArr: (str) => str.replace(/\[\((['"])((?!\d)[a-z_\d$]*)['"]\)\]/gi, '[$1$2$1]'),
 };
