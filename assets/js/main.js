@@ -71,12 +71,6 @@
     }
   }
 
-  function onUpdateReady() {
-    if (confirm('A new version is downloaded. Launch it?')) {
-      window.location.reload();
-    }
-  }
-
   var wrapper = document.getElementById('main_content'),
     input = document.getElementById('input'),
     file = document.getElementById('file'),
@@ -467,9 +461,4 @@
     temp = readable.value;
     format();
   };
-
-  window.applicationCache.addEventListener('updateready', onUpdateReady);
-  if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-    onUpdateReady();
-  }
 })();
