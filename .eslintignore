@@ -1,4 +1,4 @@
-/assets/js/vendor
-/_site
+js/vendor
+_site
 sw.js
 workbox-*.js

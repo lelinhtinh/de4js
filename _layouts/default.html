@@ -9,7 +9,7 @@
   <link rel="icon" href="favicon.ico">
   <link rel="manifest" href="manifest.webmanifest">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=latin-ext,vietnamese" rel="stylesheet">
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
   {% seo %}
 
   {% if site.google_analytics %}
@@ -116,13 +116,14 @@
       <div class="view-wrap">
         <div class="view-control">
           <button id="copyjs" class="btn" type="button">
-            <img class="btn-icon" src="{{ 'assets/icon/copy-document.png' | relative_url }}" alt="Copy to clipboard">
+            <img class="btn-icon" src="{{ 'assets/images/buttons/copy-document.png' | relative_url }}"
+              alt="Copy to clipboard">
           </button>
           <a id="download" class="btn" type="button" href="#" download="result.js">
-            <img class="btn-icon" src="{{ 'assets/icon/download.png' | relative_url }}" alt="Download file">
+            <img class="btn-icon" src="{{ 'assets/images/buttons/download.png' | relative_url }}" alt="Download file">
           </a>
           <a id="preview" class="btn" type="button" href="#">
-            <img class="btn-icon" src="{{ 'assets/icon/external-link-symbol.png' | relative_url }}"
+            <img class="btn-icon" src="{{ 'assets/images/buttons/external-link-symbol.png' | relative_url }}"
               alt="Open in new tab">
           </a>
         </div>
@@ -139,8 +140,10 @@
     </footer>
   </div>
 
-  <script type="text/javascript" src="{{ '/assets/js/vendor/clipboard-js/clipboard.min.js' | relative_url }}"></script>
-  <script src="{{ '/assets/js/main.js' | relative_url }}" type="text/javascript"></script>
+  <script type="text/javascript" src="{{ 'js/vendor/clipboard-js/clipboard.min.js' | relative_url }}"></script>
+  <script src="{{ 'js/main.js' | relative_url }}" type="text/javascript"></script>
+
+  {% if site.environment == "production" or jekyll.environment == "production" %}
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -149,6 +152,7 @@
     }
 
   </script>
+  {% endif %}
 </body>
 
 </html>

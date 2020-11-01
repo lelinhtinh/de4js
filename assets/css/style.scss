@@ -428,3 +428,15 @@ small {
 #title.offline {
   color: $disabled-color;
 }
+
+.credit {
+  color: $special-disabled-color;
+  a {
+    color: $special-disabled-color;
+    text-decoration: none;
+  }
+
+  text-align: right;
+  font-size: small;
+  margin-top: 40px;
+}
