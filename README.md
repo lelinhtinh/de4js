@@ -115,4 +115,6 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 - [Akamai Deobfuscator](https://github.com/char/akamai-deobfuscator): A tool to help you deobfuscate Akamai scripts.
 - [Nice2Predict](https://github.com/eth-sri/Nice2Predict): Learning framework for program property prediction.
 - [Javascript deobfuscation AMA](https://github.com/jsoverson/javascript-deobfuscation-AMA): General questions about deobfuscating JavaScript.
+- [Deobfuscator IO](https://github.com/sd-soleaio/deobfuscator-io): A (incomplete) deobfuscator for scripts obfuscated with obfuscator.io
+- [JavaScript Deobfuscator](https://github.com/LostMyCode/javascript-deobfuscator): Deobfuscation tool for obfuscated JavaScript using obfuscator.io
 - _Should be added more, PR is welcome._
