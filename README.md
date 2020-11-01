@@ -1,5 +1,7 @@
 # de4js
 
+![Logo](/assets/images/icons/icon-128x128.png)
+
 JavaScript Deobfuscator and Unpacker
 
 ## Helper
@@ -101,6 +103,10 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 - [magic-check](https://github.com/forsigner/magic-check)
 - [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)
 - [Decoder-JJEncode](https://github.com/jacobsoo/Decoder-JJEncode)
+
+### Resources
+
+- Icons made by [Eucalyp](https://www.flaticon.com/free-icon/artificial-intelligence_653469) from [Flaticon](https://www.flaticon.com/).
 
 ## Related projects
 
