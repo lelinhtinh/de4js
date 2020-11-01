@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 function JSFuckDecode(source) {
-  const detectPattern = /\)(\(\)[\s\n]*)$/,
+  const detectPattern = /\)[\s\n]*\(('.*?'|".*?")?\)[\s\n;]*$/,
     anonPattern = /^[\s\n]*function\sanonymous\([\s\n]+\)\s\{[\s\n]+/;
   let _code = source;
 
