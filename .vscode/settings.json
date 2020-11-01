@@ -1,7 +1,14 @@
 {
   "javascript.validate.enable": false,
   "files.watcherExclude": {
-    "**/_site/**": true
+    "_site": true,
+    "third_partye": true,
+  },
+  "search.exclude": {
+    "third_partye": true,
+    "workbox-*.js": true,
+    "sw.js": true,
+    "**/*.map": true
   },
   "docker.commands.composeUp": "docker-compose up",
   "docker.commands.composeDown": "docker-compose down",
