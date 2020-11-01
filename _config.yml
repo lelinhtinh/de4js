@@ -1,7 +1,7 @@
 name: de4js
 title: de4js
 description: JavaScript Deobfuscator and Unpacker
-version: 1.8.5
+version: 1.9.0
 author: Zzbaivong
 author_email: Zzbaivong@gmail.com
 url: https://lelinhtinh.github.io
@@ -25,6 +25,7 @@ exclude:
     "Dockerfile",
     "docker-compose.yml",
     "docker-entrypoint.sh",
+    "workbox-config.js"
   ]
 incremental: false
 
