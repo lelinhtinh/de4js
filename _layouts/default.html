@@ -96,8 +96,8 @@
           </div>
           <div class="options-wrap">
             {% for opt in site.data.options %}
-            <input id="{{ opt.key }}" class="magic-checkbox de4js-option" type="checkbox" value="yes" name="{{ opt.key }}"
-              {% if opt.checked %} checked {% endif %}>
+            <input id="{{ opt.key }}" class="magic-checkbox de4js-option" type="checkbox" value="yes"
+              name="{{ opt.key }}" {% if opt.checked %} checked {% endif %}>
             <label for="{{ opt.key }}">{{ opt.name }}</label>
             {% endfor %}
           </div>
@@ -134,7 +134,14 @@
 
   <script type="text/javascript" src="{{ '/assets/js/vendor/clipboard-js/clipboard.min.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/main.js' | relative_url }}" type="text/javascript"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register("{{ '/sw.js' | relative_url }}");
+      });
+    }
 
+  </script>
 </body>
 
 </html>
