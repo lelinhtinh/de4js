@@ -175,7 +175,7 @@
       if (temp === '') return;
 
       if (!workerFormat) {
-        workerFormat = new Worker('{{ "js/worker/format.js" | relative_url }}');
+        workerFormat = new Worker('{{ "worker/format.js" | relative_url }}');
         workerFormat.addEventListener('message', function (e) {
           if (!e.data.highlight) {
             downloadResult(e.data.result);
@@ -244,7 +244,7 @@
       }
 
       if (!workerDecode) {
-        workerDecode = new Worker('{{ "js/worker/decode.js" | relative_url }}');
+        workerDecode = new Worker('{{ "worker/decode.js" | relative_url }}');
         workerDecode.addEventListener('message', function (e) {
           if (e.data !== temp) {
             temp = e.data;

@@ -17,7 +17,7 @@ self.addEventListener('message', (e) => {
     self._window = self.window;
     self.window = {};
 
-    self.importScripts('{{ "js/vendor/js-beautify/beautify.min.js" | relative_url }}');
+    self.importScripts('{{ "third_party/js-beautify/beautify.min.js" | relative_url }}');
 
     source = self.window.js_beautify(source, {
       unescape_strings: true,
@@ -35,7 +35,7 @@ self.addEventListener('message', (e) => {
   });
 
   try {
-    self.importScripts('{{ "js/vendor/highlight-js/highlight.min.js" | relative_url }}');
+    self.importScripts('{{ "third_party/highlight-js/highlight.min.js" | relative_url }}');
 
     source = self.hljs.highlight('javascript', source).value;
 

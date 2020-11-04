@@ -19,55 +19,55 @@ self.addEventListener('message', (e) => {
 
   const methods = {
     evalencode: () => {
-      self.importScripts('{{ "js/lib/evaldecode.js" | relative_url }}');
+      self.importScripts('{{ "lib/evaldecode.js" | relative_url }}');
       return EvalDecode(source);
     },
     _numberencode: () => {
-      self.importScripts('{{ "js/lib/numberdecode.js" | relative_url }}');
+      self.importScripts('{{ "lib/numberdecode.js" | relative_url }}');
       return _NumberDecode(source);
     },
     arrayencode: () => {
-      self.importScripts('{{ "js/lib/utils.js" | relative_url }}');
-      self.importScripts('{{ "js/lib/arraydecode.js" | relative_url }}');
+      self.importScripts('{{ "lib/utils.js" | relative_url }}');
+      self.importScripts('{{ "lib/arraydecode.js" | relative_url }}');
       return ArrayDecode(source, options);
     },
     jsfuck: () => {
-      self.importScripts('{{ "js/lib/jsfuckdecode.js" | relative_url }}');
+      self.importScripts('{{ "lib/jsfuckdecode.js" | relative_url }}');
       return JSFuckDecode(source);
     },
     obfuscatorio: () => {
-      self.importScripts('{{ "js/vendor/mathjs/math.min.js" | relative_url }}');
-      self.importScripts('{{ "js/lib/utils.js" | relative_url }}');
-      self.importScripts('{{ "js/lib/obfuscatorio.js" | relative_url }}');
+      self.importScripts('{{ "third_party/mathjs/math.min.js" | relative_url }}');
+      self.importScripts('{{ "lib/utils.js" | relative_url }}');
+      self.importScripts('{{ "lib/obfuscatorio.js" | relative_url }}');
       return ObfuscatorIO(source, options);
     },
     aaencode: () => {
-      self.importScripts('{{ "js/vendor/cat-in-136/aadecode.js" | relative_url }}');
+      self.importScripts('{{ "third_party/cat-in-136/aadecode.js" | relative_url }}');
       return AADecode.decode(source);
     },
     jjencode: () => {
-      self.importScripts('{{ "js/vendor/decoder-jjencode/jjdecode.js" | relative_url }}');
+      self.importScripts('{{ "third_party/decoder-jjencode/jjdecode.js" | relative_url }}');
       return JJdecode.decode(source);
     },
     urlencode: () => {
-      self.importScripts('{{ "js/vendor/js-beautify/unpackers/urlencode_unpacker.js" | relative_url }}');
+      self.importScripts('{{ "third_party/js-beautify/unpackers/urlencode_unpacker.js" | relative_url }}');
       if (Urlencoded.detect(source)) return Urlencoded.unpack(source);
       throw 'Not matched';
     },
     p_a_c_k_e_r: () => {
-      self.importScripts('{{ "js/vendor/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js" | relative_url }}');
+      self.importScripts('{{ "third_party/js-beautify/unpackers/p_a_c_k_e_r_unpacker.js" | relative_url }}');
       if (P_A_C_K_E_R.detect(source)) return P_A_C_K_E_R.unpack(source);
       throw 'Not matched';
     },
     javascriptobfuscator: () => {
       self.importScripts(
-        '{{ "js/vendor/js-beautify/unpackers/javascriptobfuscator_unpacker.js" | relative_url }}',
+        '{{ "third_party/js-beautify/unpackers/javascriptobfuscator_unpacker.js" | relative_url }}',
       );
       if (JavascriptObfuscator.detect(source)) return JavascriptObfuscator.unpack(source);
       throw 'Not matched';
     },
     myobfuscate: () => {
-      self.importScripts('{{ "js/vendor/js-beautify/unpackers/myobfuscate_unpacker.js" | relative_url }}');
+      self.importScripts('{{ "third_party/js-beautify/unpackers/myobfuscate_unpacker.js" | relative_url }}');
       if (MyObfuscate.detect(source)) return MyObfuscate.unpack(source);
       throw 'Not matched';
     },

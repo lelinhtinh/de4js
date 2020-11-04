@@ -140,14 +140,14 @@
     </footer>
   </div>
 
-  <script type="text/javascript" src="{{ 'js/vendor/clipboard-js/clipboard.min.js' | relative_url }}"></script>
-  <script src="{{ 'js/main.js' | relative_url }}" type="text/javascript"></script>
+  <script type="text/javascript" src="{{ 'third_party/clipboard-js/clipboard.min.js' | relative_url }}"></script>
+  <script src="{{ 'main.js' | relative_url }}" type="text/javascript"></script>
 
   {% if site.environment == "production" or jekyll.environment == "production" %}
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register("{{ '/sw.js' | relative_url }}");
+        navigator.serviceWorker.register("{{ 'sw.js' | relative_url }}");
       });
     }
 
