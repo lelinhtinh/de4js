@@ -1,11 +1,12 @@
 {
   "name": "de4js",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "JavaScript Deobfuscator and Unpacker",
-  "main": "js/main.js",
+  "main": "main.js",
   "scripts": {
-    "start": "bundle exec jekyll serve --watch --config _config.yml,_config_development.yml --livereload",
     "build": "bundle exec jekyll build && workbox generateSW workbox-config.js",
+    "start": "bundle exec jekyll serve --watch --config _config.yml",
+    "watch": "bundle exec jekyll serve --watch --config _config.yml,_config_development.yml --livereload",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
