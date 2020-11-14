@@ -1,6 +1,6 @@
 {
   "name": "de4js",
-  "version": "1.9.1",
+  "version": "1.10.0",
   "description": "JavaScript Deobfuscator and Unpacker",
   "main": "main.js",
   "scripts": {
