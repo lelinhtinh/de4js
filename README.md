@@ -43,7 +43,7 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
 ### Attach Shell
 
-    docker exec -it de4js_app /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
+    docker exec -it de4js_app bash
     jekyll build
 
 ## Local Development
@@ -117,4 +117,3 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 - [Javascript deobfuscation AMA](https://github.com/jsoverson/javascript-deobfuscation-AMA): General questions about deobfuscating JavaScript.
 - [Deobfuscator IO](https://github.com/sd-soleaio/deobfuscator-io): A (incomplete) deobfuscator for scripts obfuscated with obfuscator.io
 - [JavaScript Deobfuscator](https://github.com/LostMyCode/javascript-deobfuscator): Deobfuscation tool for obfuscated JavaScript using obfuscator.io
-- _Should be added more, PR is welcome._
