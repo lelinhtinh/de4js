@@ -7,22 +7,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '4000:4000'
-      - '35729:35729'
+      - '${APP_PORT}:4000'
+      - '${WATCH_PORT}:35729'
     volumes:
       - .:/srv/jekyll
-    command:
-      [
-        'bundle',
-        'exec',
-        'jekyll',
-        'serve',
-        '--force_polling',
-        '--host',
-        '0.0.0.0',
-        '--port',
-        '4000',
-        '--config',
-        '_config.yml,_config_development.yml',
-        '--livereload',
-      ]
+    command: bundle exec jekyll serve --force_polling --host 0.0.0.0 --port 4000 --config ${CONFIG:-'_config.yml,_config_development.yml'} --livereload
