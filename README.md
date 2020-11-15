@@ -1,6 +1,6 @@
 # de4js
 
-![Logo](/assets/images/icons/icon-128x128.png)
+![Logo](assets/images/icons/icon-128x128.png)
 
 JavaScript Deobfuscator and Unpacker
 
@@ -44,7 +44,7 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 ### Attach Shell
 
     docker exec -it de4js_app bash
-    jekyll build
+    bundle exec jekyll build
 
 ## Local Development
 
@@ -72,15 +72,23 @@ Fix EventMachine C extension not loading on **Windows 10**:
     gem uninstall eventmachine
     gem install eventmachine --platform ruby
 
-### Running
+Install Workbox CLI:
 
-    bundle exec jekyll serve --watch --config _config.yml,_config_development.yml --livereload
+    npm install workbox-cli --global
+
+### Start serve
+
+    npm start
+
+Or, with livereload:
+
+    npm run watch
 
 Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
 ### Build
 
-    bundle exec jekyll build
+    npm run build
 
 ## License
 
