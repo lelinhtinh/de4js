@@ -144,13 +144,31 @@
   <script src="{{ 'main.js' | relative_url }}" type="text/javascript"></script>
 
   {% if site.environment == "production" or jekyll.environment == "production" %}
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register("{{ 'sw.js' | relative_url }}");
-      });
-    }
+  <script type="module">
+    import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-window.prod.mjs';
 
+    if ('serviceWorker' in navigator) {
+      const wb = new Workbox("{{ 'sw.js' | relative_url }}");
+
+      wb.addEventListener('installed', (event) => {
+        if (!event.isUpdate) return;
+
+        caches.keys().then((cacheNames) =>
+          Promise.all(
+            cacheNames.map((cacheName) => {
+              console.log('Clear cache', cacheName);
+              return caches.delete(cacheName);
+            })
+          )
+        );
+
+        if (confirm('A new version is downloaded. Launch it?')) {
+          location.reload(true);
+        }
+      });
+
+      wb.register();
+    }
   </script>
   {% endif %}
 </body>
