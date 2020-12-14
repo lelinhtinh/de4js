@@ -45,7 +45,7 @@ self.addEventListener('message', (e) => {
       source = `<code>${source}</code>`;
     }
   } catch (err) {
-    console.error(err);
+    throw new Error(err);
   }
 
   self.postMessage({

@@ -13,6 +13,9 @@
 /* eslint-disable no-console */
 
 self.addEventListener('message', (e) => {
+  self.importScripts('{{ "third_party/mathjs/math.min.js" | relative_url }}');
+  self.importScripts('{{ "lib/utils.js" | relative_url }}');
+
   let source = e.data.source;
   const packer = e.data.packer;
   const options = e.data.options;
@@ -20,14 +23,13 @@ self.addEventListener('message', (e) => {
   const methods = {
     evalencode: () => {
       self.importScripts('{{ "lib/evaldecode.js" | relative_url }}');
-      return EvalDecode(source);
+      return EvalDecode(source, options);
     },
     _numberencode: () => {
       self.importScripts('{{ "lib/numberdecode.js" | relative_url }}');
       return _NumberDecode(source);
     },
     arrayencode: () => {
-      self.importScripts('{{ "lib/utils.js" | relative_url }}');
       self.importScripts('{{ "lib/arraydecode.js" | relative_url }}');
       return ArrayDecode(source, options);
     },
@@ -36,8 +38,6 @@ self.addEventListener('message', (e) => {
       return JSFuckDecode(source);
     },
     obfuscatorio: () => {
-      self.importScripts('{{ "third_party/mathjs/math.min.js" | relative_url }}');
-      self.importScripts('{{ "lib/utils.js" | relative_url }}');
       self.importScripts('{{ "lib/obfuscatorio.js" | relative_url }}');
       return ObfuscatorIO(source, options);
     },
@@ -60,9 +60,7 @@ self.addEventListener('message', (e) => {
       throw 'Not matched';
     },
     javascriptobfuscator: () => {
-      self.importScripts(
-        '{{ "third_party/js-beautify/unpackers/javascriptobfuscator_unpacker.js" | relative_url }}',
-      );
+      self.importScripts('{{ "third_party/js-beautify/unpackers/javascriptobfuscator_unpacker.js" | relative_url }}');
       if (JavascriptObfuscator.detect(source)) return JavascriptObfuscator.unpack(source);
       throw 'Not matched';
     },
@@ -76,7 +74,7 @@ self.addEventListener('message', (e) => {
   try {
     source = methods[packer]();
   } catch (err) {
-    console.error(err);
+    throw new Error(err);
   }
 
   self.postMessage(source);

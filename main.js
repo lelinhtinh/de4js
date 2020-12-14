@@ -194,6 +194,9 @@
         source: temp,
         options: options,
       });
+      workerFormat.addEventListener('error', function (err) {
+        console.error('Format Error!', err);
+      });
     }, 250),
     detect = function (source) {
       var type = '';
@@ -254,6 +257,9 @@
           }
 
           format();
+        });
+        workerDecode.addEventListener('error', function (err) {
+          console.error('Decode Error!', err);
         });
       }
 
