@@ -8,6 +8,7 @@
     "third_partye": true,
     "workbox-*.js": true,
     "sw.js": true,
+    "**/*.min.*": true,
     "**/*.map": true
   },
   "docker.commands.composeUp": "docker-compose up",
