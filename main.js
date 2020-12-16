@@ -216,10 +216,10 @@
       ) {
         type = 'urlencode';
       } else if (
-        /((?![\d\W])[\w$]*)\(-?('|")(0x[a-f\d]+|\\x30\\x78[\\xa-f\d]+)\2(\s*,\s*('|").+?\5)?\)/i.test(source)
+        /((?![^_a-zA-Z$])[\w$]*)\(-?('|")(0x[a-f\d]+|\\x30\\x78[\\xa-f\d]+)\2(\s*,\s*('|").+?\5)?\)/i.test(source)
       ) {
         type = 'obfuscatorio';
-      } else if (/^var\s+((?![\d\W])[\w$]*)\s*=\s*\[.*?\];/.test(source)) {
+      } else if (/^var\s+((?![^_a-zA-Z$])[\w$]*)\s*=\s*\[.*?\];/.test(source)) {
         type = 'arrayencode';
       } else if (source.indexOf('eval(') !== -1) {
         if (/\b(window|document|console)\.\b/i.test(source)) return type;
