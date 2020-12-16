@@ -9,7 +9,7 @@
  * @license  {{ site.license }}
  */
 
-/* globals EvalDecode, ArrayDecode, _NumberDecode, JSFuckDecode, ObfuscatorIO, AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
+/* globals EvalDecode, ArrayDecode, _NumberDecode, JSFuckDecode, ObfuscatorIO, CleanSource, AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
 /* eslint-disable no-console */
 
 self.addEventListener('message', (e) => {
@@ -40,6 +40,10 @@ self.addEventListener('message', (e) => {
     obfuscatorio: () => {
       self.importScripts('{{ "lib/obfuscatorio.js" | relative_url }}');
       return ObfuscatorIO(source, options);
+    },
+    cleansource: () => {
+      self.importScripts('{{ "lib/cleansource.js" | relative_url }}');
+      return CleanSource(source, options);
     },
     aaencode: () => {
       self.importScripts('{{ "third_party/cat-in-136/aadecode.js" | relative_url }}');
