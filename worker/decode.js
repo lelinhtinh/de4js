@@ -23,7 +23,7 @@ self.addEventListener('message', (e) => {
   const methods = {
     evalencode: () => {
       self.importScripts('{{ "lib/evaldecode.js" | relative_url }}');
-      return EvalDecode(source, options);
+      return EvalDecode(source);
     },
     _numberencode: () => {
       self.importScripts('{{ "lib/numberdecode.js" | relative_url }}');
