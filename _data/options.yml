@@ -1,6 +1,9 @@
 - key: lineNumbers
   name: Line numbers
   checked: false
+- key: formatCode
+  name: Format Code
+  checked: true
 - key: _unescape
   name: Unescape strings
   checked: false
@@ -9,4 +12,10 @@
   checked: true
 - key: calc
   name: Execute expression
+  checked: false
+- key: strMerge
+  name: Merge strings
   checked: true
+- key: removeGrouping
+  name: Remove grouping
+  checked: false

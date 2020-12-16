@@ -13,6 +13,14 @@ self.addEventListener('message', (e) => {
   let source = e.data.source;
   const options = e.data.options;
 
+  if (!options.formatCode) {
+    self.postMessage({
+      result: source,
+      highlight: true,
+    });
+    return;
+  }
+
   try {
     self._window = self.window;
     self.window = {};
