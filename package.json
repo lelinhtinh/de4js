@@ -1,10 +1,11 @@
 {
   "name": "de4js",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "JavaScript Deobfuscator and Unpacker",
   "main": "main.js",
   "scripts": {
     "build": "bundle exec jekyll build && workbox generateSW workbox-config.js",
+    "d-build": "docker exec -it de4js_app bundle exec jekyll build && workbox generateSW workbox-config.js",
     "start": "bundle exec jekyll serve --watch --config _config.yml",
     "watch": "bundle exec jekyll serve --watch --config _config.yml,_config_development.yml --livereload",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -34,6 +35,7 @@
     "url": "https://opencollective.com/de4js"
   },
   "devDependencies": {
-    "eslint-plugin-frontmatter": "0.0.8"
+    "eslint-plugin-frontmatter": "0.0.8",
+    "workbox-cli": "^6.0.2"
   }
 }
