@@ -171,6 +171,10 @@
     },
     workerFormat,
     workerDecode,
+    workerError = (err) => {
+      stopEffect();
+      view.innerHTML = `<span class="hljs-variable">${err.message}</span>`;
+    },
     format = debounce(function () {
       if (temp === '') return;
 
@@ -194,9 +198,7 @@
         source: temp,
         options: options,
       });
-      workerFormat.addEventListener('error', function (err) {
-        console.error('Format Error!', err);
-      });
+      workerFormat.addEventListener('error', workerError);
     }, 250),
     detect = function (source) {
       var type = '';
@@ -258,9 +260,7 @@
 
           format();
         });
-        workerDecode.addEventListener('error', function (err) {
-          console.error('Decode Error!', err);
-        });
+        workerDecode.addEventListener('error', workerError);
       }
 
       startEffect();
@@ -456,8 +456,8 @@
         fragment.appendChild(txt);
         renderRemove.appendChild(fragment);
       })
-      .catch(function (error) {
-        renderRemove.textContent = error.message;
+      .catch(function (err) {
+        renderRemove.innerHTML = `<span class="hljs-variable">${err.message}</span>`;
       });
   };
 
