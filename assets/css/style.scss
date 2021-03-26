@@ -429,14 +429,22 @@ small {
   color: $disabled-color;
 }
 
-.credit {
-  color: $special-disabled-color;
+#footer {
+  color: #666;
+  font-size: small;
+  margin-top: 80px;
+
   a {
-    color: $special-disabled-color;
     text-decoration: none;
+    color: $special-primary-color;
   }
 
-  text-align: right;
-  font-size: small;
-  margin-top: 40px;
+  .sponsors {
+    float: left;
+  }
+
+  .credits {
+    float: right;
+    text-align: right;
+  }
 }
