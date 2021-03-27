@@ -20,5 +20,7 @@
   name: JS Obfuscator
 - key: myobfuscate
   name: My Obfuscate
+- key: wiseloop
+  name: NotSoWise
 - key: cleansource
   name: Clean Source

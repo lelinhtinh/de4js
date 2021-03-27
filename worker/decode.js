@@ -9,7 +9,7 @@
  * @license  {{ site.license }}
  */
 
-/* globals EvalDecode, ArrayDecode, _NumberDecode, JSFuckDecode, ObfuscatorIO, CleanSource, AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
+/* globals EvalDecode, NotSoWise, ArrayDecode, _NumberDecode, JSFuckDecode, ObfuscatorIO, CleanSource, AADecode, JJdecode, Urlencoded, P_A_C_K_E_R, JavascriptObfuscator, MyObfuscate */
 /* eslint-disable no-console */
 
 self.addEventListener('message', (e) => {
@@ -72,6 +72,10 @@ self.addEventListener('message', (e) => {
       self.importScripts('{{ "third_party/js-beautify/unpackers/myobfuscate_unpacker.js" | relative_url }}');
       if (MyObfuscate.detect(source)) return MyObfuscate.unpack(source);
       throw 'Not matched';
+    },
+    wiseloop: () => {
+      self.importScripts('{{ "third_party/NotSoWise/notsowise.js" | relative_url }}');
+      return NotSoWise(source);
     },
   };
 

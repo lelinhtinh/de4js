@@ -223,6 +223,11 @@
         type = 'obfuscatorio';
       } else if (/^var\s+((?![^_a-zA-Z$])[\w$]*)\s*=\s*\[.*?\];/.test(source)) {
         type = 'arrayencode';
+      } else if (
+        source.startsWith('//Protected by WiseLoop PHP JavaScript Obfuscator') ||
+        source.includes(';eval(function(w,i,s,e)')
+      ) {
+        type = 'wiseloop';
       } else if (source.indexOf('eval(') !== -1) {
         if (/\b(window|document|console)\.\b/i.test(source)) return type;
         type = 'evalencode';
