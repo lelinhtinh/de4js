@@ -130,5 +130,6 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 - [Prepack](https://github.com/facebook/prepack): A JavaScript bundle optimizer.
 - [JS Deobfuscate](https://github.com/RuochenLyu/js-deobfuscate): JavaScript deobfuscate for JSjiami, Sojson, ...
 - [JSDec](https://github.com/liulihaocai/JSDec): Online JavaScript decoder. Supported sojson v4/Premium/v5 and more (No longer update).
+- [Synchrony](https://github.com/uwu/synchrony): Kavascript-obfuscator cleaner & deobfuscator.
 
 `*` _[**Obfuscator.IO**](https://obfuscator.io/) is always up to date. The automatic deobfuscation tools (including this project) will usually not match its latest version. But that doesn't mean it's a safe tool to secure your source code._
