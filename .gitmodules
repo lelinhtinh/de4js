@@ -1,0 +1,3 @@
+[submodule "third_party/NotSoWise"]
+	path = third_party/NotSoWise
+	url = https://github.com/FAKE1007/NotSoWise.git

@@ -22,7 +22,7 @@ Install one of the following links:
 - Source code beautifier / syntax highlighter.
 - Makes obfuscated code [readable](#helper).
 - Performance unpackers:
-  - **Eval**, e.g. Packer, [WiseLoop](http://wiseloop.com/demo/php-javascript-obfuscator)
+  - **Eval**, e.g. Packer, WiseLoop
   - **Array**, e.g. Javascript Obfuscator, Free JS Obfuscator
   - [_Number](https://jsfiddle.net/ps5anL99/embedded/result,js,html,css/) _(not correct name)_
   - [Packer](http://dean.edwards.name/packer/)
@@ -34,6 +34,7 @@ Install one of the following links:
   - [JSFuck](https://github.com/aemkei/jsfuck)
   - [JJencode](http://utf-8.jp/public/jjencode.html)
   - [AAencode](http://utf-8.jp/public/aaencode.html)
+  - [WiseLoop](http://wiseloop.com/demo/php-javascript-obfuscator)
 
 ## Running with Docker
 
@@ -111,6 +112,7 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 - [magic-check](https://github.com/forsigner/magic-check)
 - [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)
 - [Decoder-JJEncode](https://github.com/jacobsoo/Decoder-JJEncode)
+- [NotSoWise](https://github.com/FAKE1007/NotSoWise)
 
 ### Resources
 

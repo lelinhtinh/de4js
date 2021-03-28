@@ -227,7 +227,7 @@
         source.startsWith('//Protected by WiseLoop PHP JavaScript Obfuscator') ||
         source.includes(';eval(function(w,i,s,e)')
       ) {
-        type = 'wiseloop';
+        type = 'wisefunction';
       } else if (source.indexOf('eval(') !== -1) {
         if (/\b(window|document|console)\.\b/i.test(source)) return type;
         type = 'evalencode';
