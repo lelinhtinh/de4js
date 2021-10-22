@@ -40,7 +40,7 @@ Install one of the following links:
 
     docker-compose up
 
-Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
+Preview **de4js** in your web browser at <http://localhost:60649/de4js/>
 
 ### Attach Shell
 
